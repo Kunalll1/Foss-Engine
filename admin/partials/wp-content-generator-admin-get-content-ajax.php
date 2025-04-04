@@ -3,7 +3,7 @@
 /**
  * Handle AJAX request to get topic content
  *
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  * @subpackage WP_Content_Generator/admin
  */
 
@@ -28,7 +28,7 @@ function wp_content_generator_get_topic_content()
     // Check permissions
     if (!current_user_can('manage_options')) {
         wp_send_json_error(array(
-            'message' => __('You do not have permission to perform this action.', 'wp-content-generator-security-enhanced')
+            'message' => __('You do not have permission to perform this action.', 'foss_engine')
         ));
     }
 
@@ -38,7 +38,7 @@ function wp_content_generator_get_topic_content()
     // Stronger validation
     if ($topic_id <= 0 || $topic_id > PHP_INT_MAX) {
         wp_send_json_error(array(
-            'message' => __('Invalid topic ID provided.', 'wp-content-generator-security-enhanced')
+            'message' => __('Invalid topic ID provided.', 'foss_engine')
         ));
         exit; // Ensure execution stops here
     }
@@ -57,7 +57,7 @@ function wp_content_generator_get_topic_content()
 
         if (!$topic) {
             wp_send_json_error(array(
-                'message' => __('Topic not found.', 'wp-content-generator-security-enhanced')
+                'message' => __('Topic not found.', 'foss_engine')
             ));
         }
 
@@ -65,7 +65,7 @@ function wp_content_generator_get_topic_content()
         if ($wpdb->last_error) {
             // error_log('WP Content Generator - Database Error: ' . $wpdb->last_error);
             wp_send_json_error(array(
-                'message' => __('Database error: ', 'wp-content-generator-security-enhanced') . $wpdb->last_error
+                'message' => __('Database error: ', 'foss_engine') . $wpdb->last_error
             ));
         }
 
@@ -83,7 +83,7 @@ function wp_content_generator_get_topic_content()
     } catch (Exception $e) {
         // error_log('WP Content Generator - Exception in get_topic_content: ' . $e->getMessage());
         wp_send_json_error(array(
-            'message' => __('An unexpected error occurred: ', 'wp-content-generator-security-enhanced') . $e->getMessage()
+            'message' => __('An unexpected error occurred: ', 'foss_engine') . $e->getMessage()
         ));
     }
 }

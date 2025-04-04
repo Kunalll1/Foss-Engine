@@ -3,10 +3,10 @@
 /**
  * OpenAI API Integration Class
  *
- * @link       https://example.com
+ * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  * @subpackage WP_Content_Generator/includes
  */
 
@@ -16,7 +16,7 @@
  * This class handles all interactions with the OpenAI API.
  *
  * @since      1.0.0
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  * @subpackage WP_Content_Generator/includes
  * @author     Your Name <email@example.com>
  */
@@ -62,7 +62,7 @@ class WP_Content_Generator_OpenAI
     public function generate_content($topic)
     {
         if (empty($this->api_key)) {
-            return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'wp-content-generator-security-enhanced'));
+            return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'foss_engine'));
         }
 
         // Get and sanitize prompt template
@@ -104,7 +104,7 @@ class WP_Content_Generator_OpenAI
             'messages' => array(
                 array(
                     'role' => 'system',
-                    'content' => sanitize_text_field('You are a professional content writer who creates high-quality, SEO-friendly blog posts. Format your content with proper HTML structure using h2, h3, and h4 tags for headings and subheadings. Include relevant semantic HTML like p, ul, ol, strong, and em tags. Add a compelling h1-equivalent title at the beginning. Organize content with a clear hierarchy: introduction, multiple sections with appropriate headings, and a conclusion. Ensure proper keyword placement in headings and first paragraphs. Use descriptive anchor text for any links. Make content scannable with short paragraphs and bullet points where appropriate.')
+                    'content' => sanitize_text_field('You are a professional content writer who creates high-quality, SEO-friendly blog posts. Format your content with proper HTML structure using h2, h3, and h4 tags for headings and subheadings. Include relevant semantic HTML like p, ul, ol, strong, and em tags. DO NOT add a title at the beginning - the title will be added separately. Start directly with an engaging introduction paragraph. Organize content with a clear hierarchy: introduction, multiple sections with appropriate headings, and a conclusion. Ensure proper keyword placement in headings and first paragraphs. Use descriptive anchor text for any links. Make content scannable with short paragraphs and bullet points where appropriate.')
                 ),
                 array(
                     'role' => 'user',
@@ -155,7 +155,7 @@ class WP_Content_Generator_OpenAI
         // Ensure the API key is valid
         if (empty($this->api_key) || strlen($this->api_key) < 20) {
             // error_log('WP Content Generator - API Key appears to be invalid or too short: ' . substr($this->api_key, 0, 5) . '...');
-            return new WP_Error('invalid_api_key', __('The OpenAI API key appears to be invalid. It should be a long token starting with "sk-".', 'wp-content-generator-security-enhanced'));
+            return new WP_Error('invalid_api_key', __('The OpenAI API key appears to be invalid. It should be a long token starting with "sk-".', 'foss_engine'));
         }
 
         // Make the API call
@@ -172,7 +172,7 @@ class WP_Content_Generator_OpenAI
                 // error_log('WP Content Generator - This is likely a connection error. Check server connectivity to api.openai.com.');
             }
 
-            return new WP_Error($error_code, __('API Connection Error: ', 'wp-content-generator-security-enhanced') . $error_message);
+            return new WP_Error($error_code, __('API Connection Error: ', 'foss_engine') . $error_message);
         }
 
         // Log response status for debugging, but filter out sensitive data
@@ -205,14 +205,14 @@ class WP_Content_Generator_OpenAI
         }
 
         if (isset($data['error'])) {
-            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'wp-content-generator-security-enhanced');
+            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'foss_engine');
             // error_log('WP Content Generator - OpenAI API Error: ' . $error_message);
             return new WP_Error('openai_api_error', $error_message);
         }
 
         if (!isset($data['choices'][0]['message']['content'])) {
             // error_log('WP Content Generator - OpenAI API Invalid Response structure received');
-            return new WP_Error('invalid_response', __('Invalid response from OpenAI API.', 'wp-content-generator-security-enhanced'));
+            return new WP_Error('invalid_response', __('Invalid response from OpenAI API.', 'foss_engine'));
         }
 
         return array(
@@ -232,7 +232,7 @@ class WP_Content_Generator_OpenAI
     public function test_connection()
     {
         if (empty($this->api_key)) {
-            return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'wp-content-generator-security-enhanced'));
+            return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'foss_engine'));
         }
 
         // Get preferred model, default to GPT-3.5-Turbo if not set
@@ -302,7 +302,7 @@ class WP_Content_Generator_OpenAI
         }
 
         if (isset($data['error'])) {
-            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'wp-content-generator-security-enhanced');
+            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'foss_engine');
             // error_log('WP Content Generator - OpenAI API Connection Test Error: ' . $error_message);
             return new WP_Error('openai_api_error', $error_message);
         }

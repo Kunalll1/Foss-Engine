@@ -5,10 +5,10 @@
  *
  * This file is used to markup the admin-facing settings aspects of the plugin.
  *
- * @link       https://example.com
+ * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  * @subpackage WP_Content_Generator/admin/partials
  */
 
@@ -28,9 +28,9 @@ if (!empty($openai_key)) {
     $test_result = $openai->test_connection();
 
     if (is_wp_error($test_result)) {
-        $connection_status = '<span class="connection-error">' . esc_html__('Connection Error: ', 'wp-content-generator-security-enhanced') . esc_html($test_result->get_error_message()) . '</span>';
+        $connection_status = '<span class="connection-error">' . esc_html__('Connection Error: ', 'foss_engine') . esc_html($test_result->get_error_message()) . '</span>';
     } else {
-        $connection_status = '<span class="connection-success">' . esc_html__('Connected successfully to OpenAI API.', 'wp-content-generator-security-enhanced') . '</span>';
+        $connection_status = '<span class="connection-success">' . esc_html__('Connected successfully to OpenAI API.', 'foss_engine') . '</span>';
     }
 }
 ?>
@@ -45,12 +45,12 @@ if (!empty($openai_key)) {
         ?>
 
         <div class="wp-content-generator-settings-section">
-            <h2><?php esc_html_e('OpenAI API Settings', 'wp-content-generator-security-enhanced'); ?></h2>
+            <h2><?php esc_html_e('OpenAI API Settings', 'foss_engine'); ?></h2>
 
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row">
-                        <label for="wp_content_generator_openai_key"><?php esc_html_e('OpenAI API Key', 'wp-content-generator-security-enhanced'); ?></label>
+                        <label for="wp_content_generator_openai_key"><?php esc_html_e('OpenAI API Key', 'foss_engine'); ?></label>
                     </th>
                     <td>
                         <input type="password"
@@ -58,9 +58,9 @@ if (!empty($openai_key)) {
                             name="wp_content_generator_openai_key"
                             value="<?php echo esc_attr($openai_key); ?>"
                             class="regular-text" />
-                        <button type="button" id="toggle-api-key" class="button button-secondary"><?php esc_html_e('Show', 'wp-content-generator-security-enhanced'); ?></button>
+                        <button type="button" id="toggle-api-key" class="button button-secondary"><?php esc_html_e('Show', 'foss_engine'); ?></button>
                         <p class="description">
-                            <?php echo wp_kses(__('Enter your OpenAI API key. You can get one from <a href="https://platform.openai.com/account/api-keys" target="_blank">OpenAI dashboard</a>.', 'wp-content-generator-security-enhanced'), array(
+                            <?php echo wp_kses(__('Enter your OpenAI API key. You can get one from <a href="https://platform.openai.com/account/api-keys" target="_blank">OpenAI dashboard</a>.', 'foss_engine'), array(
                                 'a' => array(
                                     'href' => array(),
                                     'target' => array(),
@@ -74,24 +74,24 @@ if (!empty($openai_key)) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="wp_content_generator_model"><?php esc_html_e('OpenAI Model', 'wp-content-generator-security-enhanced'); ?></label>
+                        <label for="wp_content_generator_model"><?php esc_html_e('OpenAI Model', 'foss_engine'); ?></label>
                     </th>
                     <td>
                         <?php
                         $current_model = get_option('wp_content_generator_model', 'gpt-3.5-turbo');
                         ?>
                         <select id="wp_content_generator_model" name="wp_content_generator_model">
-                            <option value="gpt-3.5-turbo" <?php selected($current_model, 'gpt-3.5-turbo'); ?>><?php esc_html_e('GPT-3.5 Turbo (Faster)', 'wp-content-generator-security-enhanced'); ?></option>
-                            <option value="gpt-3.5-turbo-16k" <?php selected($current_model, 'gpt-3.5-turbo-16k'); ?>><?php esc_html_e('GPT-3.5 Turbo 16K (Longer Content)', 'wp-content-generator-security-enhanced'); ?></option>
-                            <option value="gpt-4" <?php selected($current_model, 'gpt-4'); ?>><?php esc_html_e('GPT-4 (Better Quality)', 'wp-content-generator-security-enhanced'); ?></option>
-                            <option value="gpt-4-turbo" <?php selected($current_model, 'gpt-4-turbo'); ?>><?php esc_html_e('GPT-4 Turbo (Latest)', 'wp-content-generator-security-enhanced'); ?></option>
+                            <option value="gpt-3.5-turbo" <?php selected($current_model, 'gpt-3.5-turbo'); ?>><?php esc_html_e('GPT-3.5 Turbo (Faster)', 'foss_engine'); ?></option>
+                            <option value="gpt-3.5-turbo-16k" <?php selected($current_model, 'gpt-3.5-turbo-16k'); ?>><?php esc_html_e('GPT-3.5 Turbo 16K (Longer Content)', 'foss_engine'); ?></option>
+                            <option value="gpt-4" <?php selected($current_model, 'gpt-4'); ?>><?php esc_html_e('GPT-4 (Better Quality)', 'foss_engine'); ?></option>
+                            <option value="gpt-4-turbo" <?php selected($current_model, 'gpt-4-turbo'); ?>><?php esc_html_e('GPT-4 Turbo (Latest)', 'foss_engine'); ?></option>
                         </select>
                         <p class="description">
-                            <?php esc_html_e('Select which OpenAI model to use. GPT-4 may produce better quality content but is slower and more expensive than GPT-3.5 Turbo. Make sure your API key has access to the selected model.', 'wp-content-generator-security-enhanced'); ?>
+                            <?php esc_html_e('Select which OpenAI model to use. GPT-4 may produce better quality content but is slower and more expensive than GPT-3.5 Turbo. Make sure your API key has access to the selected model.', 'foss_engine'); ?>
                         </p>
                         <p style="padding: 10px; background-color: #f8f8f8; border-left: 4px solid #ffb900; margin-top: 10px;">
-                            <strong><?php esc_html_e('Troubleshooting Tip:', 'wp-content-generator-security-enhanced'); ?></strong>
-                            <?php echo wp_kses(__('If you encounter errors when generating content, your API key might not have access to all models. Try using <code>gpt-3.5-turbo</code>, which is available to most API keys.', 'wp-content-generator-security-enhanced'), array(
+                            <strong><?php esc_html_e('Troubleshooting Tip:', 'foss_engine'); ?></strong>
+                            <?php echo wp_kses(__('If you encounter errors when generating content, your API key might not have access to all models. Try using <code>gpt-3.5-turbo</code>, which is available to most API keys.', 'foss_engine'), array(
                                 'code' => array(),
                             )); ?>
                         </p>
@@ -101,12 +101,12 @@ if (!empty($openai_key)) {
         </div>
 
         <div class="wp-content-generator-settings-section">
-            <h2><?php esc_html_e('Content Generation Settings', 'wp-content-generator-security-enhanced'); ?></h2>
+            <h2><?php esc_html_e('Content Generation Settings', 'foss_engine'); ?></h2>
 
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row">
-                        <label for="wp_content_generator_prompt_template"><?php esc_html_e('Prompt Template', 'wp-content-generator-security-enhanced'); ?></label>
+                        <label for="wp_content_generator_prompt_template"><?php esc_html_e('Prompt Template', 'foss_engine'); ?></label>
                     </th>
                     <td>
                         <textarea id="wp_content_generator_prompt_template"
@@ -114,14 +114,14 @@ if (!empty($openai_key)) {
                             rows="5"
                             class="large-text"><?php echo esc_textarea($prompt_template); ?></textarea>
                         <p class="description">
-                            <?php esc_html_e('Enter the prompt template for content generation. Use [TOPIC] as a placeholder for the actual topic.', 'wp-content-generator-security-enhanced'); ?>
+                            <?php esc_html_e('Enter the prompt template for content generation. Use [TOPIC] as a placeholder for the actual topic.', 'foss_engine'); ?>
                         </p>
                     </td>
                 </tr>
             </table>
         </div>
 
-        <?php submit_button(esc_html__('Save Settings', 'wp-content-generator-security-enhanced'), 'primary', 'submit', true); ?>
+        <?php submit_button(esc_html__('Save Settings', 'foss_engine'), 'primary', 'submit', true); ?>
     </form>
 
     <script>
@@ -133,10 +133,10 @@ if (!empty($openai_key)) {
 
                 if ($apiKey.attr('type') === 'password') {
                     $apiKey.attr('type', 'text');
-                    $button.text('<?php echo esc_js(__('Hide', 'wp-content-generator-security-enhanced')); ?>');
+                    $button.text('<?php echo esc_js(__('Hide', 'foss_engine')); ?>');
                 } else {
                     $apiKey.attr('type', 'password');
-                    $button.text('<?php echo esc_js(__('Show', 'wp-content-generator-security-enhanced')); ?>');
+                    $button.text('<?php echo esc_js(__('Show', 'foss_engine')); ?>');
                 }
             });
         });

@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Fired during plugin activation
  *
- * @link       https://example.com
+ * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  * @subpackage WP_Content_Generator/includes
  */
 
@@ -15,20 +16,22 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  * @subpackage WP_Content_Generator/includes
  * @author     Your Name <email@example.com>
  */
-class WP_Content_Generator_Activator {
+class WP_Content_Generator_Activator
+{
 
     /**
      * Set up the database tables and plugin options on activation.
      *
      * @since    1.0.0
      */
-    public static function activate() {
+    public static function activate()
+    {
         global $wpdb;
-        
+
         $charset_collate = $wpdb->get_charset_collate();
         $table_name = $wpdb->prefix . 'content_generator_topics';
 

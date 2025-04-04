@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Fired when the plugin is uninstalled.
  *
- * @link       https://example.com
+ * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  */
 
 // If uninstall not called from WordPress, then exit.

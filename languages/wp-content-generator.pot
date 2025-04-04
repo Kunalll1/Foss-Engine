@@ -19,7 +19,7 @@ msgid "WordPress Content Generator"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://example.com/wp-content-generator-uri/"
+msgid "https://designomate.com//wp-content-generator-uri/"
 msgstr ""
 
 #. Description of the plugin
@@ -31,7 +31,7 @@ msgid "Your Name"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "https://example.com/"
+msgid "https://designomate.com//"
 msgstr ""
 
 #: admin/class-wp-content-generator-admin.php:98

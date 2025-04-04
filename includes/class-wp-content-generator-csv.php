@@ -3,10 +3,10 @@
 /**
  * CSV processing Class
  *
- * @link       https://example.com
+ * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  * @subpackage WP_Content_Generator/includes
  */
 
@@ -16,7 +16,7 @@
  * This class handles CSV file processing.
  *
  * @since      1.0.0
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  * @subpackage WP_Content_Generator/includes
  * @author     Your Name <email@example.com>
  */
@@ -34,13 +34,13 @@ class WP_Content_Generator_CSV
     {
         // File validation - existence and permissions
         if (!file_exists($file_path) || !is_readable($file_path)) {
-            return new WP_Error('file_not_found', __('The uploaded CSV file could not be found or is not readable.', 'wp-content-generator-security-enhanced'));
+            return new WP_Error('file_not_found', __('The uploaded CSV file could not be found or is not readable.', 'foss_engine'));
         }
 
         // Additional file validation - check file type and extension
         $file_info = wp_check_filetype(basename($file_path));
         if ($file_info['ext'] !== 'csv') {
-            return new WP_Error('invalid_file_type', __('The uploaded file is not a valid CSV file.', 'wp-content-generator-security-enhanced'));
+            return new WP_Error('invalid_file_type', __('The uploaded file is not a valid CSV file.', 'foss_engine'));
         }
 
         // Size validation
@@ -48,13 +48,13 @@ class WP_Content_Generator_CSV
         $max_size = apply_filters('wp_content_generator_max_csv_size', 1048576); // 1MB default
 
         if ($filesize <= 0) {
-            return new WP_Error('empty_file', __('The uploaded CSV file is empty.', 'wp-content-generator-security-enhanced'));
+            return new WP_Error('empty_file', __('The uploaded CSV file is empty.', 'foss_engine'));
         }
 
         if ($filesize > $max_size) {
             return new WP_Error('file_too_large', sprintf(
                 /* translators: %s: maximum allowed file size (e.g. "2 MB") */
-                __('The uploaded CSV file exceeds the maximum allowed size of %s.', 'wp-content-generator-security-enhanced'),
+                __('The uploaded CSV file exceeds the maximum allowed size of %s.', 'foss_engine'),
                 size_format($max_size)
             ));
         }
@@ -67,7 +67,7 @@ class WP_Content_Generator_CSV
             // Open the file for reading
             $handle = fopen($file_path, 'r');
             if (!$handle) {
-                return new WP_Error('file_open_error', __('Could not open the CSV file.', 'wp-content-generator-security-enhanced'));
+                return new WP_Error('file_open_error', __('Could not open the CSV file.', 'foss_engine'));
             }
 
             // Try to determine if there's a header row
@@ -76,7 +76,7 @@ class WP_Content_Generator_CSV
 
             if ($first_row === false) {
                 fclose($handle);
-                return new WP_Error('csv_read_error', __('Could not read the CSV file.', 'wp-content-generator-security-enhanced'));
+                return new WP_Error('csv_read_error', __('Could not read the CSV file.', 'foss_engine'));
             }
 
             // If there's only one column and it contains "topic" (case insensitive), assume it's a header
@@ -125,7 +125,7 @@ class WP_Content_Generator_CSV
 
         // Final validation
         if (empty($topics)) {
-            return new WP_Error('no_topics', __('No valid topics were found in the CSV file.', 'wp-content-generator-security-enhanced'));
+            return new WP_Error('no_topics', __('No valid topics were found in the CSV file.', 'foss_engine'));
         }
 
         // Security measure: limit number of topics
@@ -173,7 +173,7 @@ class WP_Content_Generator_CSV
 
         // Security: validate input
         if (!is_array($topics)) {
-            return new WP_Error('invalid_input', __('Invalid topics data provided.', 'wp-content-generator-security-enhanced'));
+            return new WP_Error('invalid_input', __('Invalid topics data provided.', 'foss_engine'));
         }
 
         // Get the correct table name with prefix
@@ -226,7 +226,7 @@ class WP_Content_Generator_CSV
                         $inserted++;
                     } else {
                         // Log the error with safe error message (no sensitive details)
-                        $errors[] = __('Failed to insert topic into database.', 'wp-content-generator-security-enhanced');
+                        $errors[] = __('Failed to insert topic into database.', 'foss_engine');
                         // error_log('WP Content Generator - DB insert error: ' . $wpdb->last_error);
                     }
                 }
@@ -249,7 +249,7 @@ class WP_Content_Generator_CSV
             // Rollback on any exceptions
             $wpdb->query('ROLLBACK');
             // error_log('WP Content Generator - Exception during topic save: ' . $e->getMessage());
-            return new WP_Error('db_error', __('A database error occurred while saving topics.', 'wp-content-generator-security-enhanced'));
+            return new WP_Error('db_error', __('A database error occurred while saving topics.', 'foss_engine'));
         }
 
         return $inserted;

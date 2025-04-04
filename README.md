@@ -1,6 +1,6 @@
 ## Description
 
-WordPress Content Generator is a powerful tool that automates your content creation process by leveraging OpenAI's API. This plugin allows you to upload a CSV file containing topics, generate content for each topic using OpenAI, edit the generated content, and publish it as WordPress posts or pages.
+Foss Engine is a powerful tool that automates your content creation process by leveraging OpenAI's API. This plugin allows you to upload a CSV file containing topics, generate content for each topic using OpenAI, edit the generated content, and publish it as WordPress posts or pages.
 
 ### Features
 
@@ -29,10 +29,15 @@ WordPress Content Generator is a powerful tool that automates your content creat
 
 ## Installation
 
-1. Upload the `wp-content-generator` folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to Content Generator > Settings to enter your OpenAI API key
-4. Visit Content Generator > Topics to start generating content
+1. Click the `CODE` button on the GitHub page and choose `Download ZIP` to download the plugin.
+
+2. Upload the wp-content-generator.zip file via the `Plugins > Add New section` in your WordPress dashboard.
+
+3. Activate the plugin from the Plugins menu in WordPress.
+
+4. Go to Content Generator > Settings and enter your OpenAI API key.
+
+5. Navigate to Content Generator > Topics to begin generating content.
 
 ## Frequently Asked Questions
 
@@ -79,7 +84,7 @@ Initial release
 # WordPress Content Generator
 
 **Contributors:** kunal kumar  
-**Donate link:** https://kunalkr.in/  
+**Donate link:** https://designomate.com/
 **Tags:** content generation, openai, artificial intelligence, content writing, csv upload  
 **Requires at least:** 5.0  
 **Tested up to:** 6.7  

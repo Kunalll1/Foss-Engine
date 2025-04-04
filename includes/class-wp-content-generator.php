@@ -1,14 +1,15 @@
 <?php
+
 /**
  * The file that defines the core plugin class
  *
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://example.com
+ * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  * @subpackage WP_Content_Generator/includes
  */
 
@@ -22,11 +23,12 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    WP_Content_Generator
+ * @package     Foss Engine
  * @subpackage WP_Content_Generator/includes
  * @author     Your Name <email@example.com>
  */
-class WP_Content_Generator {
+class WP_Content_Generator
+{
 
     /**
      * The loader that's responsible for maintaining and registering all hooks that power
@@ -65,9 +67,10 @@ class WP_Content_Generator {
      *
      * @since    1.0.0
      */
-    public function __construct() {
-        if (defined('WP_CONTENT_GENERATOR_VERSION')) {
-            $this->version = WP_CONTENT_GENERATOR_VERSION;
+    public function __construct()
+    {
+        if (defined('foss_engine')) {
+            $this->version = foss_engine;
         } else {
             $this->version = '1.0.0';
         }
@@ -93,7 +96,8 @@ class WP_Content_Generator {
      * @since    1.0.0
      * @access   private
      */
-    private function load_dependencies() {
+    private function load_dependencies()
+    {
 
         /**
          * The class responsible for orchestrating the actions and filters of the
@@ -134,7 +138,8 @@ class WP_Content_Generator {
      * @since    1.0.0
      * @access   private
      */
-    private function set_locale() {
+    private function set_locale()
+    {
         $plugin_i18n = new WP_Content_Generator_i18n();
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
@@ -146,15 +151,16 @@ class WP_Content_Generator {
      * @since    1.0.0
      * @access   private
      */
-    private function define_admin_hooks() {
+    private function define_admin_hooks()
+    {
         $plugin_admin = new WP_Content_Generator_Admin($this->get_plugin_name(), $this->get_version());
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-        
+
         // Add menu item
         $this->loader->add_action('admin_menu', $plugin_admin, 'add_plugin_admin_menu');
-        
+
         // Add Settings link to the plugin
         $plugin_basename = plugin_basename(plugin_dir_path(__DIR__) . $this->plugin_name . '.php');
         $this->loader->add_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links');
@@ -178,7 +184,8 @@ class WP_Content_Generator {
      *
      * @since    1.0.0
      */
-    public function run() {
+    public function run()
+    {
         $this->loader->run();
     }
 
@@ -189,7 +196,8 @@ class WP_Content_Generator {
      * @since     1.0.0
      * @return    string    The name of the plugin.
      */
-    public function get_plugin_name() {
+    public function get_plugin_name()
+    {
         return $this->plugin_name;
     }
 
@@ -199,7 +207,8 @@ class WP_Content_Generator {
      * @since     1.0.0
      * @return    WP_Content_Generator_Loader    Orchestrates the hooks of the plugin.
      */
-    public function get_loader() {
+    public function get_loader()
+    {
         return $this->loader;
     }
 
@@ -209,7 +218,8 @@ class WP_Content_Generator {
      * @since     1.0.0
      * @return    string    The version number of the plugin.
      */
-    public function get_version() {
+    public function get_version()
+    {
         return $this->version;
     }
 }

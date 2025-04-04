@@ -3,20 +3,20 @@
 /**
  * The plugin bootstrap file
  *
- * @link              https://kunalkr.in
+ * @link              https://designomate.com/
  * @since             1.0.0
- * @package           WP_Content_Generator
+ * @package           Foss Engine
  *
  * @wordpress-plugin
- * Plugin Name:       WordPress Content Generator
+ * Plugin Name:       Foss Engine
  * Plugin URI:        https://kunalkr.in/wp-content-generator-uri/
- * Description:       A WordPress plugin that generates content using OpenAI based on topics from a CSV file, with editing and publishing capabilities.
+ * Description:       A WordPress plugin that generates content using AI models based on topics from a CSV file, with editing and publishing capabilities.
  * Version:           1.0.0
  * Author:            Kunal Kumar
  * Author URI:        https://kunalkr.in
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       wp-content-generator-security-enhanced
+ * Text Domain:       foss_engine
  * Domain Path:       /languages
  */
 
@@ -28,7 +28,7 @@ if (!defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('WP_CONTENT_GENERATOR_VERSION', '1.0.0');
+define('foss_engine', '1.0.0');
 
 /**
  * The code that runs during plugin activation.
