@@ -64,28 +64,19 @@ class WP_Content_Generator_CSV
         $max_topics = apply_filters('wp_content_generator_max_csv_topics', 100);
 
         try {
-            // Open with proper error handling
-            global $wp_filesystem;
-            if (empty($wp_filesystem)) {
-                require_once(ABSPATH . '/wp-admin/includes/file.php');
-                WP_Filesystem();
+            // Open the file for reading
+            $handle = fopen($file_path, 'r');
+            if (!$handle) {
+                return new WP_Error('file_open_error', __('Could not open the CSV file.', 'wp-content-generator-security-enhanced'));
             }
-
-            // Read the file
-            $file_contents = $wp_filesystem->get_contents($file_path);
-            if (false === $file_contents) {
-                throw new Exception(esc_html__('Could not open the CSV file.', 'wp-content-generator-security-enhanced'));
-            }
-
-            // Process the CSV data
-            $lines = explode("\n", $file_contents);
 
             // Try to determine if there's a header row
             $first_row = fgetcsv($handle, 1000);
             $line_count++;
 
             if ($first_row === false) {
-                throw new Exception(__('Could not read the CSV file.', 'wp-content-generator-security-enhanced'));
+                fclose($handle);
+                return new WP_Error('csv_read_error', __('Could not read the CSV file.', 'wp-content-generator-security-enhanced'));
             }
 
             // If there's only one column and it contains "topic" (case insensitive), assume it's a header

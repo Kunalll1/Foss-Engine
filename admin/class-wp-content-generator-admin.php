@@ -292,6 +292,7 @@ class WP_Content_Generator_Admin
             : esc_html__('Unknown upload error.', 'wp-content-generator-security-enhanced');
     }
 
+
     /**
      * Handle CSV file upload for importing topics
      */
@@ -309,53 +310,40 @@ class WP_Content_Generator_Admin
             $this->send_error_response($this->get_upload_error_message($error));
         }
 
-        // Validate file type
-        $file_name = isset($_FILES['csv_file']['name']) ? sanitize_file_name(wp_unslash($_FILES['csv_file']['name'])) : '';
-        $file_info = wp_check_filetype(basename($file_name));
-        if ($file_info['ext'] !== 'csv') {
-            $this->send_error_response(esc_html__('Please upload a valid CSV file.', 'wp-content-generator-security-enhanced'));
+        // Use WordPress upload handling which is more reliable across different server environments
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+
+        $upload_overrides = array(
+            'test_form' => false,
+            'test_type' => true,
+            'mimes' => array('csv' => 'text/csv')
+        );
+
+        // This handles the file upload with WordPress functions
+        $uploaded_file = wp_handle_upload($_FILES['csv_file'], $upload_overrides);
+
+        if (isset($uploaded_file['error'])) {
+            $this->send_error_response($uploaded_file['error']);
+            return;
         }
 
-        // Setup temporary directory
-        $upload_dir = wp_upload_dir();
-        $temp_dir = $upload_dir['basedir'] . '/wp-content-generator-temp';
-        if (!file_exists($temp_dir)) {
-            wp_mkdir_p($temp_dir);
-        }
-
-        // Create .htaccess file for security
-        if (!file_exists($temp_dir . '/.htaccess')) {
-            $file_result = file_put_contents($temp_dir . '/.htaccess', 'deny from all');
-            if (false === $file_result) {
-                $this->send_error_response(esc_html__('Could not create security file.', 'wp-content-generator-security-enhanced'));
-            }
-        }
-
-        // Create temp file
-        $temp_file = tempnam($temp_dir, 'wcg_');
-        if (!$temp_file) {
-            $this->send_error_response(esc_html__('Could not create temporary file.', 'wp-content-generator-security-enhanced'));
-        }
-
-        // Move uploaded file to temp directory
-        $tmp_name = isset($_FILES['csv_file']['tmp_name']) ? wp_unslash($_FILES['csv_file']['tmp_name']) : '';
-        if (empty($tmp_name) || !copy($tmp_name, $temp_file)) {
-            $this->send_error_response(esc_html__('Failed to move uploaded file.', 'wp-content-generator-security-enhanced'));
+        if (!isset($uploaded_file['file']) || !file_exists($uploaded_file['file'])) {
+            $this->send_error_response(esc_html__('Upload failed. Could not process the file.', 'wp-content-generator-security-enhanced'));
+            return;
         }
 
         // Process the CSV file
         $csv_processor = new WP_Content_Generator_CSV();
-        $topics = $csv_processor->process_csv($temp_file);
+        $topics = $csv_processor->process_csv($uploaded_file['file']);
 
-        // Delete the temporary file
-        wp_delete_file($temp_file);
+        // Delete the file after processing
+        @unlink($uploaded_file['file']);
 
         if (is_wp_error($topics)) {
             $this->send_error_response($topics);
         }
 
-        // Save topics to the database - use WordPress APIs when possible
-        // instead of direct database queries
+        // Save topics to the database
         $result = $csv_processor->save_topics($topics);
         if (is_wp_error($result)) {
             $this->send_error_response($result);
@@ -370,7 +358,6 @@ class WP_Content_Generator_Admin
             'topics_count' => $result
         ));
     }
-
     /**
      * Helper to get topic by ID with caching
      * 
