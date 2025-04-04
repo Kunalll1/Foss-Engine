@@ -4,13 +4,13 @@ WordPress Content Generator is a powerful tool that automates your content creat
 
 ### Features
 
-* **OpenAI Integration**: Connect to OpenAI's API to generate high-quality content
-* **CSV Import**: Easily upload a CSV file with your desired topics
-* **Batch Processing**: Generate content for multiple topics in one go
-* **Content Editing**: Edit and refine AI-generated content before publishing
-* **Flexible Publishing**: Publish content as either posts or pages
-* **Content Regeneration**: Regenerate content that doesn't meet your standards
-* **Progress Tracking**: Keep track of which topics have been processed and published
+- **OpenAI Integration**: Connect to OpenAI's API to generate high-quality content
+- **CSV Import**: Easily upload a CSV file with your desired topics
+- **Batch Processing**: Generate content for multiple topics in one go
+- **Content Editing**: Edit and refine AI-generated content before publishing
+- **Flexible Publishing**: Publish content as either posts or pages
+- **Content Regeneration**: Regenerate content that doesn't meet your standards
+- **Progress Tracking**: Keep track of which topics have been processed and published
 
 ### How It Works
 
@@ -22,10 +22,10 @@ WordPress Content Generator is a powerful tool that automates your content creat
 
 ### Use Cases
 
-* Content marketers who need to produce blog posts at scale
-* SEO professionals who want to create content for multiple keywords
-* Publishers who need to quickly generate drafts for their writers
-* Small business owners who want to maintain an active blog but lack time to write
+- Content marketers who need to produce blog posts at scale
+- SEO professionals who want to create content for multiple keywords
+- Publishers who need to quickly generate drafts for their writers
+- Small business owners who want to maintain an active blog but lack time to write
 
 ## Installation
 
@@ -64,17 +64,17 @@ The plugin does not collect any personal data from your visitors. However, you s
 
 Yes, you can regenerate content for any topic that has not been published yet.
 
-
 ## Changelog
 
 ### 1.0.0
-* Initial release
+
+- Initial release
 
 ## Upgrade Notice
 
 ### 1.0.0
-Initial release
 
+Initial release
 
 # WordPress Content Generator
 
@@ -86,6 +86,6 @@ Initial release
 **Stable tag:** 1.0.0  
 **Requires PHP:** 7.2  
 **License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 A WordPress plugin that generates content using OpenAI based on topics from a CSV file, with editing and publishing capabilities.
