@@ -1,3 +1,17 @@
+# Foss Engine
+
+**Contributors:** kunal kumar  
+**Donate link:** https://designomate.com/  
+**Tags:** content generation, openai, artificial intelligence, content writing, csv upload  
+**Requires at least:** 5.0  
+**Tested up to:** 6.7  
+**Stable tag:** 1.0.0  
+**Requires PHP:** 7.2  
+**License:** GPLv2 or later  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+
+A WordPress plugin that generates content using OpenAI based on topics from a CSV file, with editing and publishing capabilities.
+
 ## Description
 
 Foss Engine is a powerful tool that automates your content creation process by leveraging OpenAI's API. This plugin allows you to upload a CSV file containing topics, generate content for each topic using OpenAI, edit the generated content, and publish it as WordPress posts or pages.
@@ -30,14 +44,10 @@ Foss Engine is a powerful tool that automates your content creation process by l
 ## Installation
 
 1. Click the `CODE` button on the GitHub page and choose `Download ZIP` to download the plugin.
-
-2. Upload the wp-content-generator.zip file via the `Plugins > Add New section` in your WordPress dashboard.
-
+2. Upload the foss-engine.zip file via the `Plugins > Add New section` in your WordPress dashboard.
 3. Activate the plugin from the Plugins menu in WordPress.
-
-4. Go to Content Generator > Settings and enter your OpenAI API key.
-
-5. Navigate to Content Generator > Topics to begin generating content.
+4. Go to Foss Engine > Settings and enter your OpenAI API key.
+5. Navigate to Foss Engine > Topics to begin generating content.
 
 ## Frequently Asked Questions
 
@@ -80,17 +90,3 @@ Yes, you can regenerate content for any topic that has not been published yet.
 ### 1.0.0
 
 Initial release
-
-# WordPress Content Generator
-
-**Contributors:** kunal kumar  
-**Donate link:** https://designomate.com/
-**Tags:** content generation, openai, artificial intelligence, content writing, csv upload  
-**Requires at least:** 5.0  
-**Tested up to:** 6.7  
-**Stable tag:** 1.0.0  
-**Requires PHP:** 7.2  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
-
-A WordPress plugin that generates content using OpenAI based on topics from a CSV file, with editing and publishing capabilities.
