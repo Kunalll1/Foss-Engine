@@ -262,6 +262,34 @@ class WP_Content_Generator_Admin
                 'default' => 'gpt-3.5-turbo'
             )
         );
+
+        // New settings for Deepseek integration
+        register_setting(
+            $this->plugin_name,
+            'wp_content_generator_provider',
+            array(
+                'sanitize_callback' => array($this, 'sanitize_provider'),
+                'default' => 'openai'
+            )
+        );
+
+        register_setting(
+            $this->plugin_name,
+            'wp_content_generator_deepseek_key',
+            array(
+                'sanitize_callback' => array($this, 'sanitize_api_key'),
+                'default' => '',
+            )
+        );
+
+        register_setting(
+            $this->plugin_name,
+            'wp_content_generator_deepseek_model',
+            array(
+                'sanitize_callback' => 'sanitize_text_field',
+                'default' => 'deepseek-chat'
+            )
+        );
     }
 
     /**
@@ -270,6 +298,21 @@ class WP_Content_Generator_Admin
     public function sanitize_api_key($input)
     {
         return sanitize_text_field($input);
+    }
+
+    /**
+     * Sanitize provider setting
+     */
+    public function sanitize_provider($input)
+    {
+        $input = sanitize_text_field($input);
+
+        // Ensure value is either 'openai' or 'deepseek'
+        if (!in_array($input, array('openai', 'deepseek'))) {
+            $input = 'openai'; // Default to OpenAI if invalid
+        }
+
+        return $input;
     }
 
     /**
@@ -414,12 +457,17 @@ class WP_Content_Generator_Admin
         }
 
         // Check if the OpenAI API key is set
+        $ai_provider = get_option('wp_content_generator_provider', 'openai');
         $openai_key = get_option('wp_content_generator_openai_key');
-        if (empty($openai_key)) {
+        $deepseek_key = get_option('wp_content_generator_deepseek_key');
+
+        if ($ai_provider === 'openai' && empty($openai_key)) {
             $this->send_error_response(esc_html__('OpenAI API key is not set. Please configure it in the settings.', 'foss_engine'));
+        } elseif ($ai_provider === 'deepseek' && empty($deepseek_key)) {
+            $this->send_error_response(esc_html__('Deepseek API key is not set. Please configure it in the settings.', 'foss_engine'));
         }
 
-        // Generate content using OpenAI
+        // Generate content using the selected AI provider
         try {
             $openai = new WP_Content_Generator_OpenAI();
             $result = $openai->generate_content($topic->topic);

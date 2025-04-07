@@ -21,9 +21,14 @@ if (!defined('WPINC')) {
 $openai_key = get_option('wp_content_generator_openai_key', '');
 $prompt_template = get_option('wp_content_generator_prompt_template', 'Write a comprehensive SEO-friendly blog post about [TOPIC]. Format the content with proper HTML structure including h2, h3, and h4 tags for sections and subsections. Start with a compelling title (wrapped in a heading tag). Include an engaging introduction, multiple well-structured sections with appropriate headings, and a strong conclusion. Use semantic HTML like p, ul, ol, strong, and em tags. Make the content scannable with short paragraphs and bullet points where relevant. Optimize for SEO by including the main keyword in headings and within the first paragraph.');
 
-// Test connection if API key is set
+// Get AI provider settings (default to OpenAI)
+$ai_provider = get_option('wp_content_generator_provider', 'openai');
+$deepseek_key = get_option('wp_content_generator_deepseek_key', '');
+$deepseek_model = get_option('wp_content_generator_deepseek_model', 'deepseek-chat');
+
+// Test connection if API key is set for the active provider
 $connection_status = '';
-if (!empty($openai_key)) {
+if ($ai_provider === 'openai' && !empty($openai_key)) {
     $openai = new WP_Content_Generator_OpenAI($openai_key);
     $test_result = $openai->test_connection();
 
@@ -45,6 +50,34 @@ if (!empty($openai_key)) {
         ?>
 
         <div class="wp-content-generator-settings-section">
+            <h2><?php esc_html_e('AI Provider Settings', 'foss_engine'); ?></h2>
+
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row">
+                        <label><?php esc_html_e('Select AI Provider', 'foss_engine'); ?></label>
+                    </th>
+                    <td>
+                        <fieldset>
+                            <label>
+                                <input type="radio" name="wp_content_generator_provider" value="openai" <?php checked($ai_provider, 'openai'); ?>>
+                                <?php esc_html_e('OpenAI', 'foss_engine'); ?>
+                            </label>
+                            <br>
+                            <label>
+                                <input type="radio" name="wp_content_generator_provider" value="deepseek" <?php checked($ai_provider, 'deepseek'); ?>>
+                                <?php esc_html_e('Deepseek', 'foss_engine'); ?>
+                            </label>
+                            <p class="description">
+                                <?php esc_html_e('Choose which AI provider to use for content generation.', 'foss_engine'); ?>
+                            </p>
+                        </fieldset>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="openai-settings" class="wp-content-generator-settings-section" <?php echo $ai_provider === 'deepseek' ? 'style="display:none;"' : ''; ?>>
             <h2><?php esc_html_e('OpenAI API Settings', 'foss_engine'); ?></h2>
 
             <table class="form-table">
@@ -67,7 +100,7 @@ if (!empty($openai_key)) {
                                 ),
                             )); ?>
                         </p>
-                        <?php if (!empty($connection_status)): ?>
+                        <?php if ($ai_provider === 'openai' && !empty($connection_status)): ?>
                             <p class="api-connection-status"><?php echo wp_kses_post($connection_status); ?></p>
                         <?php endif; ?>
                     </td>
@@ -94,6 +127,48 @@ if (!empty($openai_key)) {
                             <?php echo wp_kses(__('If you encounter errors when generating content, your API key might not have access to all models. Try using <code>gpt-3.5-turbo</code>, which is available to most API keys.', 'foss_engine'), array(
                                 'code' => array(),
                             )); ?>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="deepseek-settings" class="wp-content-generator-settings-section" <?php echo $ai_provider === 'openai' ? 'style="display:none;"' : ''; ?>>
+            <h2><?php esc_html_e('Deepseek API Settings', 'foss_engine'); ?></h2>
+
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="wp_content_generator_deepseek_key"><?php esc_html_e('Deepseek API Key', 'foss_engine'); ?></label>
+                    </th>
+                    <td>
+                        <input type="password"
+                            id="wp_content_generator_deepseek_key"
+                            name="wp_content_generator_deepseek_key"
+                            value="<?php echo esc_attr($deepseek_key); ?>"
+                            class="regular-text" />
+                        <button type="button" id="toggle-deepseek-key" class="button button-secondary"><?php esc_html_e('Show', 'foss_engine'); ?></button>
+                        <p class="description">
+                            <?php echo wp_kses(__('Enter your Deepseek API key. You can get one from <a href="https://platform.deepseek.com/" target="_blank">Deepseek dashboard</a>.', 'foss_engine'), array(
+                                'a' => array(
+                                    'href' => array(),
+                                    'target' => array(),
+                                ),
+                            )); ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="wp_content_generator_deepseek_model"><?php esc_html_e('Deepseek Model', 'foss_engine'); ?></label>
+                    </th>
+                    <td>
+                        <select id="wp_content_generator_deepseek_model" name="wp_content_generator_deepseek_model">
+                            <option value="deepseek-chat" <?php selected($deepseek_model, 'deepseek-chat'); ?>><?php esc_html_e('Deepseek Chat', 'foss_engine'); ?></option>
+                            <option value="deepseek-coder" <?php selected($deepseek_model, 'deepseek-coder'); ?>><?php esc_html_e('Deepseek Coder', 'foss_engine'); ?></option>
+                        </select>
+                        <p class="description">
+                            <?php esc_html_e('Select which Deepseek model to use for content generation.', 'foss_engine'); ?>
                         </p>
                     </td>
                 </tr>
@@ -137,6 +212,31 @@ if (!empty($openai_key)) {
                 } else {
                     $apiKey.attr('type', 'password');
                     $button.text('<?php echo esc_js(__('Show', 'foss_engine')); ?>');
+                }
+            });
+
+            // Toggle Deepseek API key visibility
+            $('#toggle-deepseek-key').on('click', function() {
+                var $apiKey = $('#wp_content_generator_deepseek_key');
+                var $button = $(this);
+
+                if ($apiKey.attr('type') === 'password') {
+                    $apiKey.attr('type', 'text');
+                    $button.text('<?php echo esc_js(__('Hide', 'foss_engine')); ?>');
+                } else {
+                    $apiKey.attr('type', 'password');
+                    $button.text('<?php echo esc_js(__('Show', 'foss_engine')); ?>');
+                }
+            });
+
+            // Toggle between OpenAI and Deepseek settings
+            $('input[name="wp_content_generator_provider"]').on('change', function() {
+                if ($(this).val() === 'openai') {
+                    $('#openai-settings').show();
+                    $('#deepseek-settings').hide();
+                } else {
+                    $('#openai-settings').hide();
+                    $('#deepseek-settings').show();
                 }
             });
         });

@@ -90,3 +90,7 @@ Yes, you can regenerate content for any topic that has not been published yet.
 ### 1.0.0
 
 Initial release
+
+### 1.0.1
+
+Exciting news! Our product now features DeepSeek integration, allowing you to effortlessly generate content using your DeepSeek API key.

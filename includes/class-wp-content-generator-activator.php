@@ -18,7 +18,6 @@
  * @since      1.0.0
  * @package     Foss Engine
  * @subpackage WP_Content_Generator/includes
- * @author     Your Name <email@example.com>
  */
 class WP_Content_Generator_Activator
 {
@@ -52,5 +51,11 @@ class WP_Content_Generator_Activator
         // Set default options
         add_option('wp_content_generator_openai_key', '');
         add_option('wp_content_generator_prompt_template', 'Write a comprehensive blog post about [TOPIC]. Include an introduction, several key points, and a conclusion. The content should be informative and engaging.');
+        add_option('wp_content_generator_model', 'gpt-3.5-turbo');
+
+        // Add new default options for Deepseek integration
+        add_option('wp_content_generator_provider', 'openai');
+        add_option('wp_content_generator_deepseek_key', '');
+        add_option('wp_content_generator_deepseek_model', 'deepseek-chat');
     }
 }

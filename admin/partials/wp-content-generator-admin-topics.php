@@ -15,9 +15,22 @@ if (!defined('WPINC')) {
     die;
 }
 
-// Check if OpenAI API key is set
-$openai_key = get_option('wp_content_generator_openai_key', '');
-$api_key_set = !empty($openai_key);
+// Check which provider is selected
+$ai_provider = get_option('wp_content_generator_provider', 'openai');
+
+// Check if the appropriate API key is set based on selected provider
+$api_key_set = false;
+$api_key_message = '';
+
+if ($ai_provider === 'openai') {
+    $openai_key = get_option('wp_content_generator_openai_key', '');
+    $api_key_set = !empty($openai_key);
+    $api_key_message = 'OpenAI API key is not set. Please configure it in the';
+} else {
+    $deepseek_key = get_option('wp_content_generator_deepseek_key', '');
+    $api_key_set = !empty($deepseek_key);
+    $api_key_message = 'Deepseek API key is not set. Please configure it in the';
+}
 
 // Get topics from database
 global $wpdb;
@@ -30,7 +43,7 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
 
     <?php if (!$api_key_set): ?>
         <div class="notice notice-warning">
-            <p><?php echo wp_kses(__('OpenAI API key is not set. Please configure it in the <a href="admin.php?page=wp-content-generator-settings">Settings</a> page.', 'foss_engine'), array(
+            <p><?php echo wp_kses(__($api_key_message . ' <a href="admin.php?page=wp-content-generator-settings">Settings</a> page.', 'foss_engine'), array(
                     'a' => array(
                         'href' => array(),
                     ),

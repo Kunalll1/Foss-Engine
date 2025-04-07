@@ -18,7 +18,6 @@
  * @since      1.0.0
  * @package     Foss Engine
  * @subpackage WP_Content_Generator/includes
- * @author     Your Name <email@example.com>
  */
 class WP_Content_Generator_OpenAI
 {
@@ -33,13 +32,40 @@ class WP_Content_Generator_OpenAI
     private $api_key;
 
     /**
+     * The Deepseek API key.
+     *
+     * @since    1.0.0
+     * @access   private
+     * @var      string    $deepseek_key    The Deepseek API key.
+     */
+    private $deepseek_key;
+
+    /**
+     * The selected AI provider.
+     *
+     * @since    1.0.0
+     * @access   private
+     * @var      string    $provider    The selected AI provider (openai or deepseek).
+     */
+    private $provider;
+
+    /**
      * The OpenAI API endpoint.
      *
      * @since    1.0.0
      * @access   private
-     * @var      string    $api_endpoint    The OpenAI API endpoint.
+     * @var      string    $openai_endpoint    The OpenAI API endpoint.
      */
-    private $api_endpoint = 'https://api.openai.com/v1/chat/completions';
+    private $openai_endpoint = 'https://api.openai.com/v1/chat/completions';
+
+    /**
+     * The Deepseek API endpoint.
+     *
+     * @since    1.0.0
+     * @access   private
+     * @var      string    $deepseek_endpoint    The Deepseek API endpoint.
+     */
+    private $deepseek_endpoint = 'https://api.deepseek.com/v1/chat/completions';
 
     /**
      * Initialize the class and set its properties.
@@ -49,7 +75,31 @@ class WP_Content_Generator_OpenAI
      */
     public function __construct($api_key = null)
     {
+        // Get selected provider, default to OpenAI
+        $this->provider = get_option('wp_content_generator_provider', 'openai');
+
+        // Set OpenAI API key
         $this->api_key = $api_key ?: get_option('wp_content_generator_openai_key');
+
+        // Set Deepseek API key
+        $this->deepseek_key = get_option('wp_content_generator_deepseek_key');
+    }
+
+    /**
+     * Generate content using selected AI API.
+     *
+     * @since    1.0.0
+     * @param    string    $topic    The topic to generate content for.
+     * @return   array|WP_Error    Generated content or error.
+     */
+    public function generate_content($topic)
+    {
+        // Check which provider to use
+        if ($this->provider === 'deepseek') {
+            return $this->generate_content_deepseek($topic);
+        } else {
+            return $this->generate_content_openai($topic);
+        }
     }
 
     /**
@@ -59,7 +109,7 @@ class WP_Content_Generator_OpenAI
      * @param    string    $topic    The topic to generate content for.
      * @return   array|WP_Error    Generated content or error.
      */
-    public function generate_content($topic)
+    private function generate_content_openai($topic)
     {
         if (empty($this->api_key)) {
             return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'foss_engine'));
@@ -140,7 +190,7 @@ class WP_Content_Generator_OpenAI
 
         // Log the request for debugging in a secure way (avoid logging sensitive data)
         // error_log('WP Content Generator - OpenAI API Request: ' . wp_json_encode([
-        //     'endpoint' => $this->api_endpoint,
+        //     'endpoint' => $this->openai_endpoint,
         //     'model' => $preferred_model,
         //     'prompt_length' => strlen($prompt)
         //     // Omitting request_body which may contain sensitive data
@@ -159,7 +209,7 @@ class WP_Content_Generator_OpenAI
         }
 
         // Make the API call
-        $response = wp_remote_post($this->api_endpoint, $args);
+        $response = wp_remote_post($this->openai_endpoint, $args);
 
         // Detailed error logging for WordPress errors
         if (is_wp_error($response)) {
@@ -224,12 +274,161 @@ class WP_Content_Generator_OpenAI
     }
 
     /**
-     * Test the OpenAI API connection.
+     * Generate content using Deepseek API.
+     *
+     * @since    1.0.0
+     * @param    string    $topic    The topic to generate content for.
+     * @return   array|WP_Error    Generated content or error.
+     */
+    private function generate_content_deepseek($topic)
+    {
+        if (empty($this->deepseek_key)) {
+            return new WP_Error('missing_api_key', __('Deepseek API key is not set.', 'foss_engine'));
+        }
+
+        // Get and sanitize prompt template
+        $default_prompt = 'Write a comprehensive blog post about [TOPIC]. Include an introduction, several key points, and a conclusion. The content should be informative and engaging.';
+        $prompt_template = get_option('wp_content_generator_prompt_template', $default_prompt);
+
+        // Validate prompt template
+        if (empty($prompt_template) || !is_string($prompt_template)) {
+            $prompt_template = $default_prompt;
+        }
+
+        // Sanitize topic before using it in the prompt
+        $sanitized_topic = sanitize_text_field($topic);
+
+        // Replace placeholder with sanitized topic
+        $prompt = str_replace('[TOPIC]', $sanitized_topic, $prompt_template);
+
+        // Get preferred model, default to deepseek-chat if not set
+        $preferred_model = get_option('wp_content_generator_deepseek_model', 'deepseek-chat');
+
+        // Ensure we have a valid model, fallback to deepseek-chat if there's an issue
+        if (empty($preferred_model)) {
+            $preferred_model = 'deepseek-chat';
+        }
+
+        // Truncate prompt if it's too long
+        $max_prompt_length = 4000; // Safe limit
+        if (strlen($prompt) > $max_prompt_length) {
+            $prompt = substr($prompt, 0, $max_prompt_length);
+        }
+
+        $body = array(
+            'model' => $preferred_model,
+            'messages' => array(
+                array(
+                    'role' => 'system',
+                    'content' => sanitize_text_field('You are a professional content writer who creates high-quality, SEO-friendly blog posts. Format your content with proper HTML structure using h2, h3, and h4 tags for headings and subheadings. Include relevant semantic HTML like p, ul, ol, strong, and em tags. DO NOT add a title at the beginning - the title will be added separately. Start directly with an engaging introduction paragraph. Organize content with a clear hierarchy: introduction, multiple sections with appropriate headings, and a conclusion. Ensure proper keyword placement in headings and first paragraphs. Use descriptive anchor text for any links. Make content scannable with short paragraphs and bullet points where appropriate.')
+                ),
+                array(
+                    'role' => 'user',
+                    'content' => $prompt
+                )
+            ),
+            'temperature' => 0.7,
+            'max_tokens' => 3000,
+        );
+
+        // Sanitize API request parameters
+        $sanitized_body = array(
+            'model' => sanitize_text_field($body['model']),
+            'messages' => $body['messages'], // Messages are already sanitized above
+            'temperature' => is_numeric($body['temperature']) ? floatval($body['temperature']) : 0.7,
+            'max_tokens' => is_numeric($body['max_tokens']) ? intval($body['max_tokens']) : 3000,
+        );
+
+        $args = array(
+            'headers' => array(
+                'Authorization' => 'Bearer ' . $this->deepseek_key,
+                'Content-Type' => 'application/json',
+            ),
+            'body' => wp_json_encode($sanitized_body),
+            'method' => 'POST',
+            'timeout' => 60,
+            'redirection' => 5,
+            'httpversion' => '1.1',
+            'blocking' => true,
+            'data_format' => 'body',
+            'sslverify' => true,
+        );
+
+        // Ensure the API key is valid
+        if (empty($this->deepseek_key) || strlen($this->deepseek_key) < 20) {
+            return new WP_Error('invalid_api_key', __('The Deepseek API key appears to be invalid. It should be a long token.', 'foss_engine'));
+        }
+
+        // Make the API call
+        $response = wp_remote_post($this->deepseek_endpoint, $args);
+
+        // Handle WordPress errors
+        if (is_wp_error($response)) {
+            $error_message = $response->get_error_message();
+            $error_code = $response->get_error_code();
+            return new WP_Error($error_code, __('API Connection Error: ', 'foss_engine') . $error_message);
+        }
+
+        // Check HTTP response code
+        $response_code = wp_remote_retrieve_response_code($response);
+        if ($response_code !== 200) {
+            $error_message = 'HTTP Error: ' . $response_code . ' - ' . wp_remote_retrieve_response_message($response);
+            $response_body = wp_remote_retrieve_body($response);
+
+            // Try to extract more specific error message from response body
+            $response_data = json_decode($response_body, true);
+            if (isset($response_data['error']['message'])) {
+                $error_message = $response_data['error']['message'];
+            }
+
+            return new WP_Error('http_error', $error_message);
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+
+        if (isset($data['error'])) {
+            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with Deepseek API.', 'foss_engine');
+            return new WP_Error('deepseek_api_error', $error_message);
+        }
+
+        // Deepseek response structure is similar to OpenAI, but let's handle potential differences
+        if (!isset($data['choices'][0]['message']['content'])) {
+            return new WP_Error('invalid_response', __('Invalid response from Deepseek API.', 'foss_engine'));
+        }
+
+        // Return in the same format as OpenAI for compatibility
+        return array(
+            'content' => $data['choices'][0]['message']['content'],
+            'completion_tokens' => isset($data['usage']['completion_tokens']) ? $data['usage']['completion_tokens'] : 0,
+            'prompt_tokens' => isset($data['usage']['prompt_tokens']) ? $data['usage']['prompt_tokens'] : 0,
+            'total_tokens' => isset($data['usage']['total_tokens']) ? $data['usage']['total_tokens'] : 0,
+        );
+    }
+
+    /**
+     * Test the AI API connection.
      *
      * @since    1.0.0
      * @return   boolean|WP_Error    True if successful, WP_Error otherwise.
      */
     public function test_connection()
+    {
+        // Check which provider to use
+        if ($this->provider === 'deepseek') {
+            return $this->test_connection_deepseek();
+        } else {
+            return $this->test_connection_openai();
+        }
+    }
+
+    /**
+     * Test the OpenAI API connection.
+     *
+     * @since    1.0.0
+     * @return   boolean|WP_Error    True if successful, WP_Error otherwise.
+     */
+    private function test_connection_openai()
     {
         if (empty($this->api_key)) {
             return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'foss_engine'));
@@ -278,7 +477,7 @@ class WP_Content_Generator_OpenAI
             'sslverify' => true, // Enforce SSL verification
         );
 
-        $response = wp_remote_post($this->api_endpoint, $args);
+        $response = wp_remote_post($this->openai_endpoint, $args);
 
         if (is_wp_error($response)) {
             // Log the WordPress error
@@ -305,6 +504,84 @@ class WP_Content_Generator_OpenAI
             $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'foss_engine');
             // error_log('WP Content Generator - OpenAI API Connection Test Error: ' . $error_message);
             return new WP_Error('openai_api_error', $error_message);
+        }
+
+        return true;
+    }
+
+    /**
+     * Test the Deepseek API connection.
+     *
+     * @since    1.0.0
+     * @return   boolean|WP_Error    True if successful, WP_Error otherwise.
+     */
+    private function test_connection_deepseek()
+    {
+        if (empty($this->deepseek_key)) {
+            return new WP_Error('missing_api_key', __('Deepseek API key is not set.', 'foss_engine'));
+        }
+
+        // Get preferred model, default to deepseek-chat if not set
+        $preferred_model = get_option('wp_content_generator_deepseek_model', 'deepseek-chat');
+
+        $body = array(
+            'model' => $preferred_model,
+            'messages' => array(
+                array(
+                    'role' => 'user',
+                    'content' => 'Hello, this is a test message. Please respond with "Connection successful".'
+                )
+            ),
+            'temperature' => 0.7,
+            'max_tokens' => 20,
+        );
+
+        // Sanitize test connection parameters
+        $sanitized_test_body = array(
+            'model' => sanitize_text_field($body['model']),
+            'messages' => array(
+                array(
+                    'role' => 'user',
+                    'content' => sanitize_text_field($body['messages'][0]['content'])
+                )
+            ),
+            'temperature' => is_numeric($body['temperature']) ? floatval($body['temperature']) : 0.7,
+            'max_tokens' => is_numeric($body['max_tokens']) ? intval($body['max_tokens']) : 20,
+        );
+
+        $args = array(
+            'headers' => array(
+                'Authorization' => 'Bearer ' . $this->deepseek_key,
+                'Content-Type' => 'application/json',
+            ),
+            'body' => wp_json_encode($sanitized_test_body),
+            'method' => 'POST',
+            'timeout' => 15,
+            'redirection' => 5,
+            'httpversion' => '1.1',
+            'blocking' => true,
+            'data_format' => 'body',
+            'sslverify' => true,
+        );
+
+        $response = wp_remote_post($this->deepseek_endpoint, $args);
+
+        if (is_wp_error($response)) {
+            return $response;
+        }
+
+        $response_code = wp_remote_retrieve_response_code($response);
+        if ($response_code !== 200) {
+            $error_message = 'HTTP Error: ' . $response_code . ' - ' . wp_remote_retrieve_response_message($response);
+            return new WP_Error('http_error', $error_message);
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+
+        if (isset($data['error'])) {
+            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with Deepseek API.', 'foss_engine');
+            return new WP_Error('deepseek_api_error', $error_message);
         }
 
         return true;

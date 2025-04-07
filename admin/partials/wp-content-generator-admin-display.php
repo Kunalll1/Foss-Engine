@@ -16,14 +16,41 @@
 if (!defined('WPINC')) {
     die;
 }
+
+// Check which provider is selected
+$ai_provider = get_option('wp_content_generator_provider', 'openai');
+
+// Check if the appropriate API key is set based on selected provider
+$api_key_set = false;
+$api_key_message = '';
+
+if ($ai_provider === 'openai') {
+    $openai_key = get_option('wp_content_generator_openai_key', '');
+    $api_key_set = !empty($openai_key);
+    $api_key_message = 'OpenAI API key is not set. Please configure it in the';
+} else {
+    $deepseek_key = get_option('wp_content_generator_deepseek_key', '');
+    $api_key_set = !empty($deepseek_key);
+    $api_key_message = 'Deepseek API key is not set. Please configure it in the';
+}
 ?>
 
 <div class="wrap wp-content-generator-admin">
     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
-    <div class="notice notice-info">
-        <p><?php esc_html_e('Welcome to the WordPress Content Generator. This plugin helps you generate content using OpenAI based on topics from a CSV file.', 'foss_engine'); ?></p>
-    </div>
+    <?php if (!$api_key_set): ?>
+        <div class="notice notice-info">
+            <p><?php echo wp_kses(__($api_key_message . ' <a href="' . esc_url(admin_url('admin.php?page=wp-content-generator-settings')) . '">Settings</a> page.', 'foss_engine'), array(
+                    'a' => array(
+                        'href' => array(),
+                    ),
+                )); ?></p>
+        </div>
+    <?php else: ?>
+        <div class="notice notice-info">
+            <p><?php esc_html_e('Welcome to the WordPress Content Generator. This plugin helps you generate content using AI based on topics from a CSV file.', 'foss_engine'); ?></p>
+        </div>
+    <?php endif; ?>
 
     <div class="wp-content-generator-container">
         <div class="wp-content-generator-section">
@@ -32,7 +59,7 @@ if (!defined('WPINC')) {
                 <li><?php
                     printf(
                         /* translators: %s: URL to settings page */
-                        esc_html__('First, go to the %s page and enter your OpenAI API key.', 'foss_engine'),
+                        esc_html__('First, go to the %s page and enter your API key.', 'foss_engine'),
                         '<a href="' . esc_url(admin_url('admin.php?page=wp-content-generator-settings')) . '">' . esc_html__('Settings', 'foss_engine') . '</a>'
                     );
                     ?></li>
@@ -52,7 +79,7 @@ if (!defined('WPINC')) {
             <h2><?php esc_html_e('Features', 'foss_engine'); ?></h2>
             <ul>
                 <li><?php esc_html_e('Import topics from a CSV file', 'foss_engine'); ?></li>
-                <li><?php esc_html_e('Generate content using OpenAI for each topic', 'foss_engine'); ?></li>
+                <li><?php esc_html_e('Generate content using AI for each topic', 'foss_engine'); ?></li>
                 <li><?php esc_html_e('Edit generated content before publishing', 'foss_engine'); ?></li>
                 <li><?php esc_html_e('Publish content as WordPress posts or pages', 'foss_engine'); ?></li>
                 <li><?php esc_html_e('Regenerate content if needed', 'foss_engine'); ?></li>

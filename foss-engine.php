@@ -11,7 +11,7 @@
  * Plugin Name:       Foss Engine
  * Plugin URI:        https://kunalkr.in/wp-content-generator-uri/
  * Description:       A WordPress plugin that generates content using AI models based on topics from a CSV file, with editing and publishing capabilities.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Kunal Kumar
  * Author URI:        https://kunalkr.in
  * License:           GPL-2.0+
