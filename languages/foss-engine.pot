@@ -332,15 +332,15 @@ msgstr ""
 msgid "Back to Editor"
 msgstr ""
 
-#: includes/class-wp-content-generator-csv.php:61
+#: includes/class-foss-engine-csv.php:61
 msgid "Could not read the CSV file."
 msgstr ""
 
-#: includes/class-wp-content-generator-csv.php:98
+#: includes/class-foss-engine-csv.php:98
 msgid "No topics were found in the CSV file."
 msgstr ""
 
-#: includes/class-wp-content-generator-csv.php:130
+#: includes/class-foss-engine-csv.php:130
 msgid "Failed to insert topic: %s"
 msgstr ""
 

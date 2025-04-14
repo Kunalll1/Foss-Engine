@@ -35,7 +35,7 @@ define('FOSS_ENGINE_VERSION', '1.0.0');
  */
 function activate_wp_content_generator()
 {
-    require_once plugin_dir_path(__FILE__) . 'includes/class-wp-content-generator-activator.php';
+    require_once plugin_dir_path(__FILE__) . 'includes/class-foss-engine-activator.php';
     WP_Content_Generator_Activator::activate();
 }
 
