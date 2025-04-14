@@ -29,7 +29,8 @@ class WP_Content_Generator_Admin
     {
         wp_enqueue_style(
             $this->plugin_name,
-            plugin_dir_url(__FILE__) . 'css/wp-content-generator-admin.css',
+            plugin_dir_url(__FILE__) . 'css/foss-engine-admin.css
+            ',
             array(),
             $this->version,
             'all'
