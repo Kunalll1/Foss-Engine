@@ -16,7 +16,7 @@
  * Author URI:        https://kunalkr.in
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       foss_engine
+ * Text Domain:       foss-engine
  * Domain Path:       /languages
  */
 
@@ -28,7 +28,7 @@ if (!defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('foss_engine', '1.0.0');
+define('FOSS_ENGINE_VERSION', '1.0.0');
 
 /**
  * The code that runs during plugin activation.

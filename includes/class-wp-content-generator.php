@@ -69,8 +69,8 @@ class WP_Content_Generator
      */
     public function __construct()
     {
-        if (defined('foss_engine')) {
-            $this->version = foss_engine;
+        if (defined('FOSS_ENGINE_VERSION')) {
+            $this->version = FOSS_ENGINE_VERSION;
         } else {
             $this->version = '1.0.0';
         }

@@ -56,22 +56,22 @@ class WP_Content_Generator_Admin
             'plugin_version' => $this->version,
             'debug_mode' => defined('WP_DEBUG') && WP_DEBUG,
             'i18n' => array(
-                'error' => esc_html__('Error', 'foss_engine'),
-                'success' => esc_html__('Success', 'foss_engine'),
-                'confirm_regenerate' => esc_html__('Are you sure you want to regenerate this content? The current content will be lost.', 'foss_engine'),
-                'generating' => esc_html__('Generating content...', 'foss_engine'),
-                'saving' => esc_html__('Saving...', 'foss_engine'),
-                'publishing' => esc_html__('Publishing...', 'foss_engine'),
-                'loading' => esc_html__('Loading...', 'foss_engine'),
-                'confirm_publish' => esc_html__('Are you sure you want to publish this content?', 'foss_engine'),
-                'troubleshooting' => esc_html__('If you continue to experience issues, try selecting the GPT-3.5 Turbo model in settings and ensure your API key has the correct permissions.', 'foss_engine'),
+                'error' => esc_html__('Error', 'foss-engine'),
+                'success' => esc_html__('Success', 'foss-engine'),
+                'confirm_regenerate' => esc_html__('Are you sure you want to regenerate this content? The current content will be lost.', 'foss-engine'),
+                'generating' => esc_html__('Generating content...', 'foss-engine'),
+                'saving' => esc_html__('Saving...', 'foss-engine'),
+                'publishing' => esc_html__('Publishing...', 'foss-engine'),
+                'loading' => esc_html__('Loading...', 'foss-engine'),
+                'confirm_publish' => esc_html__('Are you sure you want to publish this content?', 'foss-engine'),
+                'troubleshooting' => esc_html__('If you continue to experience issues, try selecting the GPT-3.5 Turbo model in settings and ensure your API key has the correct permissions.', 'foss-engine'),
             )
         ));
     }
 
     /**
      * Common AJAX security check helper
-     * 
+     *
      * @param string $nonce_action The nonce action to verify
      * @return bool|WP_Error Returns true if checks pass or WP_Error
      */
@@ -79,12 +79,12 @@ class WP_Content_Generator_Admin
     {
         // Check nonce
         if (!check_ajax_referer($nonce_action, 'nonce', false)) {
-            return new WP_Error('invalid_nonce', esc_html__('Security check failed.', 'foss_engine'));
+            return new WP_Error('invalid_nonce', esc_html__('Security check failed.', 'foss-engine'));
         }
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            return new WP_Error('insufficient_permissions', esc_html__('You do not have permission to perform this action.', 'foss_engine'));
+            return new WP_Error('insufficient_permissions', esc_html__('You do not have permission to perform this action.', 'foss-engine'));
         }
 
         return true;
@@ -120,12 +120,7 @@ class WP_Content_Generator_Admin
         $model = isset($_POST['model']) ? sanitize_text_field(wp_unslash($_POST['model'])) : 'gpt-3.5-turbo';
 
         if (empty($api_key)) {
-            $this->send_error_response(esc_html__('API key is required.', 'foss_engine'));
-        }
-
-        // Force debug mode for this test
-        if (!defined('WP_DEBUG')) {
-            define('WP_DEBUG', true);
+            $this->send_error_response(esc_html__('API key is required.', 'foss-engine'));
         }
 
         // Set the model for testing
@@ -139,7 +134,7 @@ class WP_Content_Generator_Admin
             $this->send_error_response($result);
         } else {
             wp_send_json_success(array(
-                'message' => esc_html__('Connection successful!', 'foss_engine')
+                'message' => esc_html__('Connection successful!', 'foss-engine')
             ));
         }
     }
@@ -151,8 +146,8 @@ class WP_Content_Generator_Admin
     {
         // Main menu
         add_menu_page(
-            esc_html__('Content Generator', 'foss_engine'),
-            esc_html__('Content Generator', 'foss_engine'),
+            esc_html__('Content Generator', 'foss-engine'),
+            esc_html__('Content Generator', 'foss-engine'),
             'manage_options',
             $this->plugin_name,
             array($this, 'display_plugin_setup_page'),
@@ -163,8 +158,8 @@ class WP_Content_Generator_Admin
         // Settings submenu
         add_submenu_page(
             $this->plugin_name,
-            esc_html__('Content Generator Settings', 'foss_engine'),
-            esc_html__('Settings', 'foss_engine'),
+            esc_html__('Content Generator Settings', 'foss-engine'),
+            esc_html__('Settings', 'foss-engine'),
             'manage_options',
             $this->plugin_name . '-settings',
             array($this, 'display_plugin_settings_page')
@@ -173,8 +168,8 @@ class WP_Content_Generator_Admin
         // Topic management submenu
         add_submenu_page(
             $this->plugin_name,
-            esc_html__('Topics Management', 'foss_engine'),
-            esc_html__('Topics', 'foss_engine'),
+            esc_html__('Topics Management', 'foss-engine'),
+            esc_html__('Topics', 'foss-engine'),
             'manage_options',
             $this->plugin_name . '-topics',
             array($this, 'display_plugin_topics_page')
@@ -188,12 +183,12 @@ class WP_Content_Generator_Admin
     {
         // Verify nonce when processing admin actions
         if (isset($_GET['_wpnonce']) && !wp_verify_nonce(sanitize_key($_GET['_wpnonce']), 'plugin_action')) {
-            wp_die(esc_html__('Security check failed.', 'foss_engine'));
+            wp_die(esc_html__('Security check failed.', 'foss-engine'));
         }
 
         $settings_link = array(
             '<a href="' . admin_url('admin.php?page=' . $this->plugin_name . '-settings') . '">' .
-                esc_html__('Settings', 'foss_engine') . '</a>',
+                esc_html__('Settings', 'foss-engine') . '</a>',
         );
         return array_merge($settings_link, $links);
     }
@@ -205,7 +200,7 @@ class WP_Content_Generator_Admin
     {
         // Verify user has permission to access this page
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'foss_engine'));
+            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'foss-engine'));
         }
 
         include_once('partials/wp-content-generator-admin-display.php');
@@ -215,7 +210,7 @@ class WP_Content_Generator_Admin
     {
         // Verify user has permission to access this page
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'foss_engine'));
+            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'foss-engine'));
         }
 
         include_once('partials/wp-content-generator-admin-settings.php');
@@ -225,7 +220,7 @@ class WP_Content_Generator_Admin
     {
         // Verify user has permission to access this page
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'foss_engine'));
+            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'foss-engine'));
         }
 
         include_once('partials/wp-content-generator-admin-topics.php');
@@ -321,18 +316,18 @@ class WP_Content_Generator_Admin
     private function get_upload_error_message($error_code)
     {
         $error_messages = array(
-            UPLOAD_ERR_INI_SIZE => esc_html__('The uploaded file exceeds the upload_max_filesize directive in php.ini.', 'foss_engine'),
-            UPLOAD_ERR_FORM_SIZE => esc_html__('The uploaded file exceeds the MAX_FILE_SIZE directive specified in the HTML form.', 'foss_engine'),
-            UPLOAD_ERR_PARTIAL => esc_html__('The uploaded file was only partially uploaded.', 'foss_engine'),
-            UPLOAD_ERR_NO_FILE => esc_html__('No file was uploaded.', 'foss_engine'),
-            UPLOAD_ERR_NO_TMP_DIR => esc_html__('Missing a temporary folder.', 'foss_engine'),
-            UPLOAD_ERR_CANT_WRITE => esc_html__('Failed to write file to disk.', 'foss_engine'),
-            UPLOAD_ERR_EXTENSION => esc_html__('A PHP extension stopped the file upload.', 'foss_engine')
+            UPLOAD_ERR_INI_SIZE => esc_html__('The uploaded file exceeds the upload_max_filesize directive in php.ini.', 'foss-engine'),
+            UPLOAD_ERR_FORM_SIZE => esc_html__('The uploaded file exceeds the MAX_FILE_SIZE directive specified in the HTML form.', 'foss-engine'),
+            UPLOAD_ERR_PARTIAL => esc_html__('The uploaded file was only partially uploaded.', 'foss-engine'),
+            UPLOAD_ERR_NO_FILE => esc_html__('No file was uploaded.', 'foss-engine'),
+            UPLOAD_ERR_NO_TMP_DIR => esc_html__('Missing a temporary folder.', 'foss-engine'),
+            UPLOAD_ERR_CANT_WRITE => esc_html__('Failed to write file to disk.', 'foss-engine'),
+            UPLOAD_ERR_EXTENSION => esc_html__('A PHP extension stopped the file upload.', 'foss-engine')
         );
 
         return isset($error_messages[$error_code])
             ? $error_messages[$error_code]
-            : esc_html__('Unknown upload error.', 'foss_engine');
+            : esc_html__('Unknown upload error.', 'foss-engine');
     }
 
 
@@ -371,7 +366,7 @@ class WP_Content_Generator_Admin
         }
 
         if (!isset($uploaded_file['file']) || !file_exists($uploaded_file['file'])) {
-            $this->send_error_response(esc_html__('Upload failed. Could not process the file.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Upload failed. Could not process the file.', 'foss-engine'));
             return;
         }
 
@@ -395,7 +390,7 @@ class WP_Content_Generator_Admin
         wp_send_json_success(array(
             'message' => sprintf(
                 /* translators: %d: Number of topics imported */
-                esc_html__('%d topics imported successfully.', 'foss_engine'),
+                esc_html__('%d topics imported successfully.', 'foss-engine'),
                 $result
             ),
             'topics_count' => $result
@@ -403,7 +398,7 @@ class WP_Content_Generator_Admin
     }
     /**
      * Helper to get topic by ID with caching
-     * 
+     *
      * @param int $topic_id The topic ID to retrieve
      * @return object|null Topic object or null if not found
      */
@@ -447,13 +442,13 @@ class WP_Content_Generator_Admin
         // Get topic ID
         $topic_id = isset($_POST['topic_id']) ? intval($_POST['topic_id']) : 0;
         if ($topic_id <= 0) {
-            $this->send_error_response(esc_html__('Invalid topic ID.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Invalid topic ID.', 'foss-engine'));
         }
 
         // Get the topic
         $topic = $this->get_topic_by_id($topic_id);
         if (!$topic) {
-            $this->send_error_response(esc_html__('Topic not found.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Topic not found.', 'foss-engine'));
         }
 
         // Check if the OpenAI API key is set
@@ -462,9 +457,9 @@ class WP_Content_Generator_Admin
         $deepseek_key = get_option('wp_content_generator_deepseek_key');
 
         if ($ai_provider === 'openai' && empty($openai_key)) {
-            $this->send_error_response(esc_html__('OpenAI API key is not set. Please configure it in the settings.', 'foss_engine'));
+            $this->send_error_response(esc_html__('OpenAI API key is not set. Please configure it in the settings.', 'foss-engine'));
         } elseif ($ai_provider === 'deepseek' && empty($deepseek_key)) {
-            $this->send_error_response(esc_html__('Deepseek API key is not set. Please configure it in the settings.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Deepseek API key is not set. Please configure it in the settings.', 'foss-engine'));
         }
 
         // Generate content using the selected AI provider
@@ -476,7 +471,7 @@ class WP_Content_Generator_Admin
                 $this->send_error_response($result);
             }
         } catch (Exception $e) {
-            $this->send_error_response(esc_html__('An unexpected error occurred during content generation: ', 'foss_engine') . $e->getMessage());
+            $this->send_error_response(esc_html__('An unexpected error occurred during content generation: ', 'foss-engine') . $e->getMessage());
         }
 
         // Update the topic in the database
@@ -500,11 +495,11 @@ class WP_Content_Generator_Admin
         );
 
         if ($update_result === false) {
-            $this->send_error_response(esc_html__('Failed to update content in the database.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Failed to update content in the database.', 'foss-engine'));
         }
 
         wp_send_json_success(array(
-            'message' => esc_html__('Content generated successfully.', 'foss_engine'),
+            'message' => esc_html__('Content generated successfully.', 'foss-engine'),
             'content' => $result['content'],
             'tokens' => $result['total_tokens']
         ));
@@ -526,11 +521,11 @@ class WP_Content_Generator_Admin
         $content = isset($_POST['content']) ? wp_kses_post(wp_unslash($_POST['content'])) : '';
 
         if ($topic_id <= 0) {
-            $this->send_error_response(esc_html__('Invalid topic ID.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Invalid topic ID.', 'foss-engine'));
         }
 
         if (empty($content)) {
-            $this->send_error_response(esc_html__('Content cannot be empty.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Content cannot be empty.', 'foss-engine'));
         }
 
         global $wpdb;
@@ -552,11 +547,11 @@ class WP_Content_Generator_Admin
         );
 
         if ($update_result === false) {
-            $this->send_error_response(esc_html__('Failed to save content.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Failed to save content.', 'foss-engine'));
         }
 
         wp_send_json_success(array(
-            'message' => esc_html__('Content saved successfully.', 'foss_engine')
+            'message' => esc_html__('Content saved successfully.', 'foss-engine')
         ));
     }
 
@@ -576,21 +571,21 @@ class WP_Content_Generator_Admin
         $publish_type = isset($_POST['publish_type']) ? sanitize_text_field(wp_unslash($_POST['publish_type'])) : 'post';
 
         if ($topic_id <= 0) {
-            $this->send_error_response(esc_html__('Invalid topic ID.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Invalid topic ID.', 'foss-engine'));
         }
 
         if (!in_array($publish_type, array('post', 'page'))) {
-            $this->send_error_response(esc_html__('Invalid publish type.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Invalid publish type.', 'foss-engine'));
         }
 
         // Get the topic
         $topic = $this->get_topic_by_id($topic_id);
         if (!$topic) {
-            $this->send_error_response(esc_html__('Topic not found.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Topic not found.', 'foss-engine'));
         }
 
         if (empty($topic->content)) {
-            $this->send_error_response(esc_html__('Cannot publish empty content.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Cannot publish empty content.', 'foss-engine'));
         }
 
         // Create post/page - this is a WordPress API, not a direct DB query
@@ -628,13 +623,13 @@ class WP_Content_Generator_Admin
         );
 
         if ($update_result === false) {
-            $this->send_error_response(esc_html__('Published content but failed to update topic status.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Published content but failed to update topic status.', 'foss-engine'));
         }
 
         wp_send_json_success(array(
             'message' => sprintf(
                 /* translators: 1: Content type (post/page), 2: Edit URL, 3: Content type again */
-                esc_html__('Content published as a %1$s (draft). <a href="%2$s" target="_blank">Edit %3$s</a>', 'foss_engine'),
+                esc_html__('Content published as a %1$s (draft). <a href="%2$s" target="_blank">Edit %3$s</a>', 'foss-engine'),
                 $publish_type,
                 esc_url(get_edit_post_link($post_id)),
                 $publish_type
@@ -666,17 +661,17 @@ class WP_Content_Generator_Admin
         // Get topic ID
         $topic_id = isset($_POST['topic_id']) ? intval($_POST['topic_id']) : 0;
         if ($topic_id <= 0) {
-            $this->send_error_response(esc_html__('Invalid topic ID.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Invalid topic ID.', 'foss-engine'));
         }
 
         // Get the topic
         $topic = $this->get_topic_by_id($topic_id);
         if (!$topic) {
-            $this->send_error_response(esc_html__('Topic not found.', 'foss_engine'));
+            $this->send_error_response(esc_html__('Topic not found.', 'foss-engine'));
         }
 
         if (empty($topic->content)) {
-            $this->send_error_response(esc_html__('No content found for this topic. Please generate content first.', 'foss_engine'));
+            $this->send_error_response(esc_html__('No content found for this topic. Please generate content first.', 'foss-engine'));
         }
 
         wp_send_json_success(array(

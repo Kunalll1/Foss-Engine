@@ -35,7 +35,7 @@ class WP_Content_Generator_i18n
     public function load_plugin_textdomain()
     {
         load_plugin_textdomain(
-            'wp-content-generator',
+            'foss-engine',
             false,
             dirname(dirname(plugin_basename(__FILE__))) . '/languages/'
         );
