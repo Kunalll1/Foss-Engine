@@ -55,7 +55,7 @@ register_deactivation_hook(__FILE__, 'deactivate_wp_content_generator');
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path(__FILE__) . 'includes/class-wp-content-generator.php';
+require plugin_dir_path(__FILE__) . 'includes/class-foss-engion.php';
 
 /**
  * Begins execution of the plugin.
