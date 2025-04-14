@@ -204,7 +204,7 @@ class WP_Content_Generator_Admin
             wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'foss-engine'));
         }
 
-        include_once('partials/wp-content-generator-admin-display.php');
+        include_once('partials/foss-engine-admin-display.php');
     }
 
     public function display_plugin_settings_page()

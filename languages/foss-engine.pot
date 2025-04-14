@@ -96,79 +96,79 @@ msgstr ""
 msgid "Content published as a %s (draft). <a href=\"%s\" target=\"_blank\">Edit %s</a>"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:25
+#: admin/partials/foss-engine-admin-display.php:25
 msgid "Welcome to the WordPress Content Generator. This plugin helps you generate content using OpenAI based on topics from a CSV file."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:30
+#: admin/partials/foss-engine-admin-display.php:30
 msgid "Getting Started"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:32
+#: admin/partials/foss-engine-admin-display.php:32
 msgid "First, go to the <a href=\"admin.php?page=wp-content-generator-settings\">Settings</a> page and enter your OpenAI API key."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:33
+#: admin/partials/foss-engine-admin-display.php:33
 msgid "Prepare a CSV file with a list of topics. Each topic should be on a new line."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:34
+#: admin/partials/foss-engine-admin-display.php:34
 msgid "Upload your CSV file in the <a href=\"admin.php?page=wp-content-generator-topics\">Topics</a> section."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:35
+#: admin/partials/foss-engine-admin-display.php:35
 msgid "Generate content for each topic, review, edit, and publish as needed."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:40
+#: admin/partials/foss-engine-admin-display.php:40
 msgid "Features"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:42
+#: admin/partials/foss-engine-admin-display.php:42
 msgid "Import topics from a CSV file"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:43
+#: admin/partials/foss-engine-admin-display.php:43
 msgid "Generate content using OpenAI for each topic"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:44
+#: admin/partials/foss-engine-admin-display.php:44
 msgid "Edit generated content before publishing"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:45
+#: admin/partials/foss-engine-admin-display.php:45
 msgid "Publish content as WordPress posts or pages"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:46
+#: admin/partials/foss-engine-admin-display.php:46
 msgid "Regenerate content if needed"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:47
+#: admin/partials/foss-engine-admin-display.php:47
 msgid "Track the status of each topic"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:52
+#: admin/partials/foss-engine-admin-display.php:52
 msgid "CSV Format"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:53
+#: admin/partials/foss-engine-admin-display.php:53
 msgid "Your CSV file should have one topic per line. The first column will be used as the topic."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:54
+#: admin/partials/foss-engine-admin-display.php:54
 msgid "Example:"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:60
+#: admin/partials/foss-engine-admin-display.php:60
 msgid "You can also include a header row if you prefer:"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:69
+#: admin/partials/foss-engine-admin-display.php:69
 msgid "Quick Access"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-display.php:71
+#: admin/partials/foss-engine-admin-display.php:71
 msgid "Manage Topics"
 msgstr ""
 
