@@ -172,163 +172,163 @@ msgstr ""
 msgid "Manage Topics"
 msgstr ""
 
-#: admin/partials/fross-engine-admin-settings.php:68
+#: admin/partials/foss-engine-admin-settings.php:68
 msgid "OpenAI API Settings"
 msgstr ""
 
-#: admin/partials/fross-engine-admin-settings.php:73
+#: admin/partials/foss-engine-admin-settings.php:73
 msgid "OpenAI API Key"
 msgstr ""
 
-#: admin/partials/fross-engine-admin-settings.php:81
+#: admin/partials/foss-engine-admin-settings.php:81
 msgid "Show"
 msgstr ""
 
-#: admin/partials/fross-engine-admin-settings.php:83
+#: admin/partials/foss-engine-admin-settings.php:83
 msgid "Enter your OpenAI API key. You can get one from <a href=\"https://platform.openai.com/account/api-keys\" target=\"_blank\">OpenAI dashboard</a>."
 msgstr ""
 
-#: admin/partials/fross-engine-admin-settings.php:93
+#: admin/partials/foss-engine-admin-settings.php:93
 msgid "Content Generation Settings"
 msgstr ""
 
-#: admin/partials/fross-engine-admin-settings.php:98
+#: admin/partials/foss-engine-admin-settings.php:98
 msgid "Prompt Template"
 msgstr ""
 
-#: admin/partials/fross-engine-admin-settings.php:106
+#: admin/partials/foss-engine-admin-settings.php:106
 msgid "Enter the prompt template for content generation. Use [TOPIC] as a placeholder for the actual topic."
 msgstr ""
 
-#: admin/partials/fross-engine-admin-settings.php:113
+#: admin/partials/foss-engine-admin-settings.php:113
 msgid "Save Settings"
 msgstr ""
 
-#: admin/partials/fross-engine-admin-settings.php:129
+#: admin/partials/foss-engine-admin-settings.php:129
 msgid "Hide"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:25
+#: admin/partials/foss-engine-admin-topics.php:25
 msgid "OpenAI API key is not set. Please configure it in the <a href=\"admin.php?page=wp-content-generator-settings\">Settings</a> page."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:31
+#: admin/partials/foss-engine-admin-topics.php:31
 msgid "Upload CSV File"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:34
+#: admin/partials/foss-engine-admin-topics.php:34
 msgid "Upload and Import"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:37
+#: admin/partials/foss-engine-admin-topics.php:37
 msgid "Uploading..."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:44
+#: admin/partials/foss-engine-admin-topics.php:44
 msgid "Manage Topics"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:50
+#: admin/partials/foss-engine-admin-topics.php:50
 msgid "Generate Content for All Pending Topics"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:62
+#: admin/partials/foss-engine-admin-topics.php:62
 msgid "Topic"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:63
+#: admin/partials/foss-engine-admin-topics.php:63
 msgid "Status"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:64
+#: admin/partials/foss-engine-admin-topics.php:64
 msgid "Date Added"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:65
+#: admin/partials/foss-engine-admin-topics.php:65
 msgid "Actions"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:70
+#: admin/partials/foss-engine-admin-topics.php:70
 msgid "No topics found. Upload a CSV file to get started."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:78
+#: admin/partials/foss-engine-admin-topics.php:78
 msgid "Pending"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:81
+#: admin/partials/foss-engine-admin-topics.php:81
 msgid "Generated"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:84
+#: admin/partials/foss-engine-admin-topics.php:84
 msgid "Published"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:98
+#: admin/partials/foss-engine-admin-topics.php:98
 msgid "Generate"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:101
+#: admin/partials/foss-engine-admin-topics.php:101
 msgid "Edit"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:104
+#: admin/partials/foss-engine-admin-topics.php:104
 msgid "Regenerate"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:107
+#: admin/partials/foss-engine-admin-topics.php:107
 msgid "Content Published"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:127
+#: admin/partials/foss-engine-admin-topics.php:127
 msgid "Edit Content"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:139
+#: admin/partials/foss-engine-admin-topics.php:139
 msgid "Save Content"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:140
+#: admin/partials/foss-engine-admin-topics.php:140
 msgid "Publish Content"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:141
+#: admin/partials/foss-engine-admin-topics.php:141
 msgid "Cancel"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:149
+#: admin/partials/foss-engine-admin-topics.php:149
 msgid "Publish Options"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:156
+#: admin/partials/foss-engine-admin-topics.php:156
 msgid "Publish Type"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:159
+#: admin/partials/foss-engine-admin-topics.php:159
 msgid "Post"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:160
+#: admin/partials/foss-engine-admin-topics.php:160
 msgid "Page"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:166
+#: admin/partials/foss-engine-admin-topics.php:166
 msgid "Publish Status"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:169
+#: admin/partials/foss-engine-admin-topics.php:169
 msgid "Draft"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:170
+#: admin/partials/foss-engine-admin-topics.php:170
 msgid "Publish Immediately"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:176
+#: admin/partials/foss-engine-admin-topics.php:176
 msgid "Publish"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-topics.php:177
+#: admin/partials/foss-engine-admin-topics.php:177
 msgid "Back to Editor"
 msgstr ""
 
