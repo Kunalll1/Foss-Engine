@@ -45,7 +45,7 @@ class WP_Content_Generator_Admin
         // Enqueue the admin script with stable version
         wp_enqueue_script(
             $this->plugin_name,
-            plugin_dir_url(__FILE__) . 'js/wp-content-generator-admin.js',
+            plugin_dir_url(__FILE__) . 'js/foss-engine-admin.js',
             array('jquery'),
             $this->version,
             false
