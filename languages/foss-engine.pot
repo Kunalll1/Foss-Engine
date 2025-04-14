@@ -33,66 +33,66 @@ msgstr ""
 #. Author URI of the plugin
 msgid "https://kunalkr.in/"
 msgstr ""
-#: admin/class-wp-content-generator-admin.php:98
-#: admin/class-wp-content-generator-admin.php:99
+#: admin/class-foss-engine-admin.php:98
+#: admin/class-foss-engine-admin.php:99
 msgid "Content Generator"
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:110
-#: admin/class-wp-content-generator-admin.php:111
-#: admin/class-wp-content-generator-admin.php:174
+#: admin/class-foss-engine-admin.php:110
+#: admin/class-foss-engine-admin.php:111
+#: admin/class-foss-engine-admin.php:174
 msgid "Settings"
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:121
+#: admin/class-foss-engine-admin.php:121
 msgid "Topics Management"
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:122
+#: admin/class-foss-engine-admin.php:122
 msgid "Topics"
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:348
+#: admin/class-foss-engine-admin.php:348
 msgid "Invalid topic ID."
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:365
+#: admin/class-foss-engine-admin.php:365
 msgid "Topic not found."
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:390
+#: admin/class-foss-engine-admin.php:390
 msgid "Failed to update content in the database."
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:395
+#: admin/class-foss-engine-admin.php:395
 msgid "Content generated successfully."
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:417
+#: admin/class-foss-engine-admin.php:417
 msgid "Content cannot be empty."
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:436
+#: admin/class-foss-engine-admin.php:436
 msgid "Failed to save content."
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:441
+#: admin/class-foss-engine-admin.php:441
 msgid "Content saved successfully."
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:463
+#: admin/class-foss-engine-admin.php:463
 msgid "Invalid publish type."
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:482
+#: admin/class-foss-engine-admin.php:482
 msgid "Cannot publish empty content."
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:508
+#: admin/class-foss-engine-admin.php:508
 msgid "Published content but failed to update topic status."
 msgstr ""
 
-#: admin/class-wp-content-generator-admin.php:514
+#: admin/class-foss-engine-admin.php:514
 msgid "Content published as a %s (draft). <a href=\"%s\" target=\"_blank\">Edit %s</a>"
 msgstr ""
 

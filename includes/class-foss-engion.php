@@ -124,7 +124,7 @@ class WP_Content_Generator
         /**
          * The class responsible for defining all actions that occur in the admin area.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-wp-content-generator-admin.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-foss-engine-admin.php';
 
         $this->loader = new WP_Content_Generator_Loader();
     }
