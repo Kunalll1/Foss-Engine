@@ -114,7 +114,7 @@ class WP_Content_Generator
         /**
          * The class responsible for OpenAI API interactions.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-wp-content-generator-openai.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine-openai.php';
 
         /**
          * The class responsible for CSV file handling.

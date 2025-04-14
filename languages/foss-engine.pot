@@ -344,14 +344,14 @@ msgstr ""
 msgid "Failed to insert topic: %s"
 msgstr ""
 
-#: includes/class-wp-content-generator-openai.php:57
+#: includes/class-foss-engine-openai.php:57
 msgid "OpenAI API key is not set."
 msgstr ""
 
-#: includes/class-wp-content-generator-openai.php:107
+#: includes/class-foss-engine-openai.php:107
 msgid "Unknown error occurred while communicating with OpenAI API."
 msgstr ""
 
-#: includes/class-wp-content-generator-openai.php:112
+#: includes/class-foss-engine-openai.php:112
 msgid "Invalid response from OpenAI API."
 msgstr ""
