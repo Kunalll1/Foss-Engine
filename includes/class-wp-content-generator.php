@@ -109,7 +109,7 @@ class WP_Content_Generator
          * The class responsible for defining internationalization functionality
          * of the plugin.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-wp-content-generator-i18n.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine-i18n.php';
 
         /**
          * The class responsible for OpenAI API interactions.
