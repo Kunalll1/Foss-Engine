@@ -44,7 +44,7 @@ function activate_wp_content_generator()
  */
 function deactivate_wp_content_generator()
 {
-    require_once plugin_dir_path(__FILE__) . 'includes/class-wp-content-generator-deactivator.php';
+    require_once plugin_dir_path(__FILE__) . 'includes/class-foss-engine-deactivator.php';
     WP_Content_Generator_Deactivator::deactivate();
 }
 
