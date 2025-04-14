@@ -103,7 +103,7 @@ class WP_Content_Generator
          * The class responsible for orchestrating the actions and filters of the
          * core plugin.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-wp-content-generator-loader.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine-loader.php';
 
         /**
          * The class responsible for defining internationalization functionality
