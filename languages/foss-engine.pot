@@ -172,39 +172,39 @@ msgstr ""
 msgid "Manage Topics"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-settings.php:68
+#: admin/partials/fross-engine-admin-settings.php:68
 msgid "OpenAI API Settings"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-settings.php:73
+#: admin/partials/fross-engine-admin-settings.php:73
 msgid "OpenAI API Key"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-settings.php:81
+#: admin/partials/fross-engine-admin-settings.php:81
 msgid "Show"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-settings.php:83
+#: admin/partials/fross-engine-admin-settings.php:83
 msgid "Enter your OpenAI API key. You can get one from <a href=\"https://platform.openai.com/account/api-keys\" target=\"_blank\">OpenAI dashboard</a>."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-settings.php:93
+#: admin/partials/fross-engine-admin-settings.php:93
 msgid "Content Generation Settings"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-settings.php:98
+#: admin/partials/fross-engine-admin-settings.php:98
 msgid "Prompt Template"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-settings.php:106
+#: admin/partials/fross-engine-admin-settings.php:106
 msgid "Enter the prompt template for content generation. Use [TOPIC] as a placeholder for the actual topic."
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-settings.php:113
+#: admin/partials/fross-engine-admin-settings.php:113
 msgid "Save Settings"
 msgstr ""
 
-#: admin/partials/wp-content-generator-admin-settings.php:129
+#: admin/partials/fross-engine-admin-settings.php:129
 msgid "Hide"
 msgstr ""
 
