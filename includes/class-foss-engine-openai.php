@@ -1,23 +1,24 @@
 <?php
 
 /**
- * OpenAI API Integration Class
+ * Class for handling OpenAI API interactions.
  *
- * @link       https://designomate.com/
- * @since      1.0.0
+ * @link       https://fossengine.com/
+ * @since      1.0.1
  *
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
  */
 
 /**
- * OpenAI API Integration Class
+ * Class for handling OpenAI API interactions.
  *
- * This class handles all interactions with the OpenAI API.
+ * Handles all API communication with OpenAI for content generation.
  *
- * @since      1.0.0
+ * @since      1.0.1
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
+ * @author     Kunal Kumar help@fossengine.com
  */
 class Foss_Engine_OpenAI
 {
@@ -25,7 +26,7 @@ class Foss_Engine_OpenAI
     /**
      * The OpenAI API key.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   private
      * @var      string    $api_key    The OpenAI API key.
      */
@@ -34,7 +35,7 @@ class Foss_Engine_OpenAI
     /**
      * The Deepseek API key.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   private
      * @var      string    $deepseek_key    The Deepseek API key.
      */
@@ -43,7 +44,7 @@ class Foss_Engine_OpenAI
     /**
      * The selected AI provider.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   private
      * @var      string    $provider    The selected AI provider (openai or deepseek).
      */
@@ -52,7 +53,7 @@ class Foss_Engine_OpenAI
     /**
      * The OpenAI API endpoint.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   private
      * @var      string    $openai_endpoint    The OpenAI API endpoint.
      */
@@ -61,7 +62,7 @@ class Foss_Engine_OpenAI
     /**
      * The Deepseek API endpoint.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   private
      * @var      string    $deepseek_endpoint    The Deepseek API endpoint.
      */
@@ -70,7 +71,7 @@ class Foss_Engine_OpenAI
     /**
      * Initialize the class and set its properties.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @param    string    $api_key    The OpenAI API key.
      */
     public function __construct($api_key = null)
@@ -88,7 +89,7 @@ class Foss_Engine_OpenAI
     /**
      * Generate content using selected AI API.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @param    string    $topic    The topic to generate content for.
      * @return   array|WP_Error    Generated content or error.
      */
@@ -105,7 +106,7 @@ class Foss_Engine_OpenAI
     /**
      * Generate content using OpenAI API.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @param    string    $topic    The topic to generate content for.
      * @return   array|WP_Error    Generated content or error.
      */
@@ -276,7 +277,7 @@ class Foss_Engine_OpenAI
     /**
      * Generate content using Deepseek API.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @param    string    $topic    The topic to generate content for.
      * @return   array|WP_Error    Generated content or error.
      */
@@ -409,7 +410,7 @@ class Foss_Engine_OpenAI
     /**
      * Test the AI API connection.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @return   boolean|WP_Error    True if successful, WP_Error otherwise.
      */
     public function test_connection()
@@ -425,7 +426,7 @@ class Foss_Engine_OpenAI
     /**
      * Test the OpenAI API connection.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @return   boolean|WP_Error    True if successful, WP_Error otherwise.
      */
     private function test_connection_openai()
@@ -512,7 +513,7 @@ class Foss_Engine_OpenAI
     /**
      * Test the Deepseek API connection.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @return   boolean|WP_Error    True if successful, WP_Error otherwise.
      */
     private function test_connection_deepseek()

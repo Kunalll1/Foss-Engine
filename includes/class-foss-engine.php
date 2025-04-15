@@ -6,8 +6,8 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://designomate.com/
- * @since      1.0.0
+ * @link       https://fossengine.com/
+ * @since      1.0.1
  *
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
@@ -22,10 +22,10 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      1.0.1
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
- * @author     Your Name <email@example.com>
+ * @author     Kunal Kumar help@fossengine.com
  */
 class Foss_Engine
 {
@@ -34,7 +34,7 @@ class Foss_Engine
      * The loader that's responsible for maintaining and registering all hooks that power
      * the plugin.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   protected
      * @var      Foss_Engine_Loader    $loader    Maintains and registers all hooks for the plugin.
      */
@@ -43,7 +43,7 @@ class Foss_Engine
     /**
      * The unique identifier of this plugin.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   protected
      * @var      string    $plugin_name    The string used to uniquely identify this plugin.
      */
@@ -52,7 +52,7 @@ class Foss_Engine
     /**
      * The current version of the plugin.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   protected
      * @var      string    $version    The current version of the plugin.
      */
@@ -65,14 +65,14 @@ class Foss_Engine
      * Load the dependencies, define the locale, and set the hooks for the admin area and
      * the public-facing side of the site.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      */
     public function __construct()
     {
         if (defined('FOSS_ENGINE_VERSION')) {
             $this->version = FOSS_ENGINE_VERSION;
         } else {
-            $this->version = '1.0.0';
+            $this->version = '1.0.1';
         }
         $this->plugin_name = 'foss-engine';
 
@@ -93,7 +93,7 @@ class Foss_Engine
      * Create an instance of the loader which will be used to register the hooks
      * with WordPress.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   private
      */
     private function load_dependencies()
@@ -135,7 +135,7 @@ class Foss_Engine
      * Uses the Foss_Engine_i18n class in order to set the domain and to register the hook
      * with WordPress.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   private
      */
     private function set_locale()
@@ -148,7 +148,7 @@ class Foss_Engine
      * Register all of the hooks related to the admin area functionality
      * of the plugin.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      * @access   private
      */
     private function define_admin_hooks()
@@ -182,7 +182,7 @@ class Foss_Engine
     /**
      * Run the loader to execute all of the hooks with WordPress.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      */
     public function run()
     {
@@ -193,7 +193,7 @@ class Foss_Engine
      * The name of the plugin used to uniquely identify it within the context of
      * WordPress and to define internationalization functionality.
      *
-     * @since     1.0.0
+     * @since     1.0.1
      * @return    string    The name of the plugin.
      */
     public function get_plugin_name()
@@ -204,7 +204,7 @@ class Foss_Engine
     /**
      * The reference to the class that orchestrates the hooks with the plugin.
      *
-     * @since     1.0.0
+     * @since     1.0.1
      * @return    Foss_Engine_Loader    Orchestrates the hooks of the plugin.
      */
     public function get_loader()
@@ -215,7 +215,7 @@ class Foss_Engine
     /**
      * Retrieve the version number of the plugin.
      *
-     * @since     1.0.0
+     * @since     1.0.1
      * @return    string    The version number of the plugin.
      */
     public function get_version()

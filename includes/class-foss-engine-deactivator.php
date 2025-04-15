@@ -3,8 +3,8 @@
 /**
  * Fired during plugin deactivation
  *
- * @link       https://designomate.com/
- * @since      1.0.0
+ * @link       https://fossengine.com/
+ * @since      1.0.1
  *
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
@@ -15,10 +15,10 @@
  *
  * This class defines all code necessary to run during the plugin's deactivation.
  *
- * @since      1.0.0
+ * @since      1.0.1
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
- * @author     Your Name <email@example.com>
+ * @author     Kunal Kumar help@fossengine.com
  */
 class Foss_Engine_Deactivator
 {
@@ -28,7 +28,7 @@ class Foss_Engine_Deactivator
      *
      * Long Description.
      *
-     * @since    1.0.0
+     * @since    1.0.1
      */
     public static function deactivate()
     {
