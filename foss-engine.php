@@ -54,19 +54,20 @@ register_deactivation_hook(__FILE__, 'deactivate_foss_engine');
 /**
  * Run migrations for existing installations when plugin is updated
  */
-function foss_engine_check_for_updates() {
+function foss_engine_check_for_updates()
+{
     $stored_version = get_option('foss_engine_version', '1.0.0');
-    
+
     // If the stored version is older than current version, run migrations
     if (version_compare($stored_version, FOSS_ENGINE_VERSION, '<')) {
         // Include the activator class if not already included
         if (!class_exists('Foss_Engine_Activator')) {
             require_once plugin_dir_path(__FILE__) . 'includes/class-foss-engine-activator.php';
         }
-        
+
         // Run the legacy options migration
         Foss_Engine_Activator::migrate_legacy_options();
-        
+
         // Update the stored version
         update_option('foss_engine_version', FOSS_ENGINE_VERSION);
     }
