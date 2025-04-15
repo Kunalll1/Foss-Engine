@@ -6,8 +6,8 @@
  * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/admin/partials
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/admin/partials
  */
 
 // If this file is called directly, abort.
@@ -16,34 +16,34 @@ if (!defined('WPINC')) {
 }
 
 // Check which provider is selected
-$ai_provider = get_option('wp_content_generator_provider', 'openai');
+$ai_provider = get_option('foss_engine_provider', 'openai');
 
 // Check if the appropriate API key is set based on selected provider
 $api_key_set = false;
 $api_key_message = '';
 
 if ($ai_provider === 'openai') {
-    $openai_key = get_option('wp_content_generator_openai_key', '');
+    $openai_key = get_option('foss_engine_openai_key', '');
     $api_key_set = !empty($openai_key);
     $api_key_message = 'OpenAI API key is not set. Please configure it in the';
 } else {
-    $deepseek_key = get_option('wp_content_generator_deepseek_key', '');
+    $deepseek_key = get_option('foss_engine_deepseek_key', '');
     $api_key_set = !empty($deepseek_key);
     $api_key_message = 'Deepseek API key is not set. Please configure it in the';
 }
 
 // Get topics from database
 global $wpdb;
-$table_name = $wpdb->prefix . 'content_generator_topics';
+$table_name = $wpdb->prefix . 'foss_engine_topics';
 $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC");
 ?>
 
-<div class="wrap wp-content-generator-admin">
+<div class="wrap foss-engine-admin">
     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
     <?php if (!$api_key_set): ?>
         <div class="notice notice-warning">
-            <p><?php echo wp_kses(__($api_key_message . ' <a href="admin.php?page=wp-content-generator-settings">Settings</a> page.', 'foss-engine'), array(
+            <p><?php echo wp_kses(__($api_key_message . ' <a href="admin.php?page=foss-engine-settings">Settings</a> page.', 'foss-engine'), array(
                     'a' => array(
                         'href' => array(),
                     ),
@@ -51,8 +51,8 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
         </div>
     <?php endif; ?>
 
-    <div class="wp-content-generator-container">
-        <div class="wp-content-generator-section">
+    <div class="foss-engine-container">
+        <div class="foss-engine-section">
             <h2><?php esc_html_e('Upload CSV File', 'foss-engine'); ?></h2>
             <form id="csv-upload-form" enctype="multipart/form-data">
                 <input type="file" name="csv_file" id="csv_file" accept=".csv" required />
@@ -65,7 +65,7 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
             </form>
         </div>
 
-        <div class="wp-content-generator-section">
+        <div class="foss-engine-section">
             <h2><?php esc_html_e('Manage Topics', 'foss-engine'); ?></h2>
 
             <div id="topics-table-wrapper">
