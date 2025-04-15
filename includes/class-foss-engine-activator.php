@@ -57,5 +57,37 @@ class Foss_Engine_Activator
         add_option('foss_engine_provider', 'openai');
         add_option('foss_engine_deepseek_key', '');
         add_option('foss_engine_deepseek_model', 'deepseek-chat');
+
+        // Migrate any legacy options
+        self::migrate_legacy_options();
+    }
+
+    /**
+     * Migrate options from old wp_content_generator_ prefix to foss_engine_ prefix
+     *
+     * @since    1.1.0
+     */
+    public static function migrate_legacy_options()
+    {
+        // Migrate OpenAI key
+        $old_key = get_option('wp_content_generator_openai_key');
+        if ($old_key !== false) {
+            update_option('foss_engine_openai_key', $old_key);
+            delete_option('wp_content_generator_openai_key');
+        }
+
+        // Migrate prompt template
+        $old_template = get_option('wp_content_generator_prompt_template');
+        if ($old_template !== false) {
+            update_option('foss_engine_prompt_template', $old_template);
+            delete_option('wp_content_generator_prompt_template');
+        }
+
+        // Migrate pending topics transient
+        $old_topics = get_transient('wp_content_generator_pending_topics');
+        if ($old_topics !== false) {
+            set_transient('foss_engine_pending_topics', $old_topics);
+            delete_transient('wp_content_generator_pending_topics');
+        }
     }
 }

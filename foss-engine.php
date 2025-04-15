@@ -28,7 +28,7 @@ if (!defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('FOSS_ENGINE_VERSION', '1.0.0');
+define('FOSS_ENGINE_VERSION', '1.0.1');
 
 /**
  * The code that runs during plugin activation.
@@ -50,6 +50,28 @@ function deactivate_foss_engine()
 
 register_activation_hook(__FILE__, 'activate_foss_engine');
 register_deactivation_hook(__FILE__, 'deactivate_foss_engine');
+
+/**
+ * Run migrations for existing installations when plugin is updated
+ */
+function foss_engine_check_for_updates() {
+    $stored_version = get_option('foss_engine_version', '1.0.0');
+    
+    // If the stored version is older than current version, run migrations
+    if (version_compare($stored_version, FOSS_ENGINE_VERSION, '<')) {
+        // Include the activator class if not already included
+        if (!class_exists('Foss_Engine_Activator')) {
+            require_once plugin_dir_path(__FILE__) . 'includes/class-foss-engine-activator.php';
+        }
+        
+        // Run the legacy options migration
+        Foss_Engine_Activator::migrate_legacy_options();
+        
+        // Update the stored version
+        update_option('foss_engine_version', FOSS_ENGINE_VERSION);
+    }
+}
+add_action('plugins_loaded', 'foss_engine_check_for_updates');
 
 /**
  * The core plugin class that is used to define internationalization,
