@@ -238,6 +238,7 @@ class Foss_Engine_Admin
      */
     public function options_update()
     {
+        // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingDynamic -- sanitize_callback is always set and safe.
         register_setting(
             $this->plugin_name,
             'foss_engine_openai_key',
@@ -247,6 +248,7 @@ class Foss_Engine_Admin
             )
         );
 
+        // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingDynamic -- sanitize_callback is always set and safe.
         register_setting(
             $this->plugin_name,
             'foss_engine_prompt_template',
@@ -256,6 +258,7 @@ class Foss_Engine_Admin
             )
         );
 
+        // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingDynamic -- sanitize_callback is always set and safe.
         register_setting(
             $this->plugin_name,
             'foss_engine_model',
@@ -265,7 +268,7 @@ class Foss_Engine_Admin
             )
         );
 
-        // New settings for Deepseek integration
+        // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingDynamic -- sanitize_callback is always set and safe.
         register_setting(
             $this->plugin_name,
             'foss_engine_provider',
@@ -275,6 +278,7 @@ class Foss_Engine_Admin
             )
         );
 
+        // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingDynamic -- sanitize_callback is always set and safe.
         register_setting(
             $this->plugin_name,
             'foss_engine_deepseek_key',
@@ -284,6 +288,7 @@ class Foss_Engine_Admin
             )
         );
 
+        // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingDynamic -- sanitize_callback is always set and safe.
         register_setting(
             $this->plugin_name,
             'foss_engine_deepseek_model',
@@ -357,7 +362,7 @@ class Foss_Engine_Admin
 
         // Check if a file was uploaded
         if (!isset($_FILES['csv_file']) || !isset($_FILES['csv_file']['error']) || $_FILES['csv_file']['error'] !== UPLOAD_ERR_OK) {
-            $error = isset($_FILES['csv_file']['error']) ? $_FILES['csv_file']['error'] : UPLOAD_ERR_NO_FILE;
+            $error = isset($_FILES['csv_file']['error']) ? (int) $_FILES['csv_file']['error'] : UPLOAD_ERR_NO_FILE;
             $this->send_error_response($this->get_upload_error_message($error));
         }
 
@@ -388,7 +393,7 @@ class Foss_Engine_Admin
         $topics = $csv_processor->process_csv($uploaded_file['file']);
 
         // Delete the file after processing
-        @unlink($uploaded_file['file']);
+        wp_delete_file($uploaded_file['file']);
 
         if (is_wp_error($topics)) {
             $this->send_error_response($topics);
@@ -430,7 +435,7 @@ class Foss_Engine_Admin
             }
 
             if (!foss_engine_table_exists('foss_engine_topics')) {
-                error_log('FOSS Engine: Topics table does not exist');
+                $this->send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
                 return null;
             }
 

@@ -63,63 +63,60 @@ class Foss_Engine_CSV
         $line_count = 0;
         $max_topics = apply_filters('foss_engine_max_csv_topics', 100);
 
+        // Use WP_Filesystem
+        global $wp_filesystem;
+        if (empty($wp_filesystem)) {
+            require_once ABSPATH . '/wp-admin/includes/file.php';
+            WP_Filesystem();
+        }
+
         try {
-            // Open the file for reading
-            $handle = fopen($file_path, 'r');
-            if (!$handle) {
+            $file_contents = $wp_filesystem->get_contents($file_path);
+            if ($file_contents === false) {
                 return new WP_Error('file_open_error', __('Could not open the CSV file.', 'foss-engine'));
             }
 
-            // Try to determine if there's a header row
-            $first_row = fgetcsv($handle, 1000);
-            $line_count++;
+            // Convert file contents into lines
+            $lines = preg_split('/\r\n|\r|\n/', $file_contents);
 
-            if ($first_row === false) {
-                fclose($handle);
+            if (empty($lines) || !is_array($lines)) {
                 return new WP_Error('csv_read_error', __('Could not read the CSV file.', 'foss-engine'));
             }
+
+            // Parse CSV lines
+            $first_row = str_getcsv($lines[0]);
+            $line_count++;
 
             // If there's only one column and it contains "topic" (case insensitive), assume it's a header
             $has_header = (count($first_row) === 1 && strtolower(trim($first_row[0])) === 'topic');
 
             // If it's not a header, add it to topics
             if (!$has_header && count($topics) < $max_topics) {
-                // If only one column, take that as the topic
                 if (count($first_row) === 1 && !empty(trim($first_row[0]))) {
                     $topics[] = $this->sanitize_topic(trim($first_row[0]));
-                }
-                // If multiple columns, take the first one as the topic
-                else if (count($first_row) > 1 && !empty(trim($first_row[0]))) {
+                } elseif (count($first_row) > 1 && !empty(trim($first_row[0]))) {
                     $topics[] = $this->sanitize_topic(trim($first_row[0]));
                 }
             }
 
-            // Process the rest of the rows with proper error handling
-            while (($row = fgetcsv($handle, 1000)) !== false && count($topics) < $max_topics) {
+            // Process the rest of the rows
+            for ($i = 1; $i < count($lines) && count($topics) < $max_topics; $i++) {
+                $row = str_getcsv($lines[$i]);
                 $line_count++;
 
                 if (!empty($row)) {
-                    // If only one column, take that as the topic
                     if (count($row) === 1 && !empty(trim($row[0]))) {
                         $topics[] = $this->sanitize_topic(trim($row[0]));
-                    }
-                    // If multiple columns, take the first one as the topic
-                    else if (count($row) > 1 && !empty(trim($row[0]))) {
+                    } elseif (count($row) > 1 && !empty(trim($row[0]))) {
                         $topics[] = $this->sanitize_topic(trim($row[0]));
                     }
                 }
 
-                // Security measure: avoid processing extremely large files
                 if ($line_count > 1000) {
                     break;
                 }
             }
-
-            fclose($handle);
         } catch (Exception $e) {
-            if (isset($handle) && is_resource($handle)) {
-                fclose($handle);
-            }
             return new WP_Error('csv_processing_error', $e->getMessage());
         }
 
@@ -175,7 +172,6 @@ class Foss_Engine_CSV
             return new WP_Error('invalid_input', __('Invalid topics data provided.', 'foss-engine'));
         }
 
-        // Get the correct table name with prefix
         $table_name = $wpdb->prefix . 'foss_engine_topics';
 
         // Check if table exists first
@@ -195,15 +191,28 @@ class Foss_Engine_CSV
 
         try {
             foreach ($topics as $topic) {
+                // Check for duplicate topic (case-insensitive)
+                $existing = $wpdb->get_var(
+                    $wpdb->prepare(
+                        "SELECT COUNT(*) FROM $table_name WHERE LOWER(topic) = LOWER(%s)",
+                        $topic
+                    )
+                );
+
+                if ($existing > 0) {
+                    // Skip duplicate
+                    continue;
+                }
+
                 $result = $wpdb->insert(
                     $table_name,
                     array(
-                        'topic' => $topic,
-                        'status' => 'pending',
+                        'topic'      => $topic,
+                        'status'     => 'pending',
                         'created_at' => $current_date,
                         'updated_at' => $current_date
                     ),
-                    array('%s', '%s', '%s', '%s') // Format specifiers for each value
+                    array('%s', '%s', '%s', '%s')
                 );
 
                 if ($result) {
