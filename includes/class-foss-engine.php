@@ -223,3 +223,25 @@ class Foss_Engine
         return $this->version;
     }
 }
+
+/**
+ * Check if a specific FOSS Engine table exists
+ *
+ * @param string $table_name The table name without prefix
+ * @return boolean True if table exists, false otherwise
+ */
+function foss_engine_table_exists($table_name)
+{
+    global $wpdb;
+    $full_table_name = $wpdb->prefix . $table_name;
+
+    // Check if table exists
+    $table_exists = $wpdb->get_var(
+        $wpdb->prepare(
+            "SHOW TABLES LIKE %s",
+            $full_table_name
+        )
+    );
+
+    return !empty($table_exists);
+}

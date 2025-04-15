@@ -47,10 +47,22 @@ function foss_engine_get_topic_content()
         global $wpdb;
         $table_name = $wpdb->prefix . 'foss_engine_topics';
 
+        // Check if table exists first
+        if (!function_exists('foss_engine_table_exists')) {
+            require_once plugin_dir_path(dirname(dirname(__FILE__))) . 'includes/class-foss-engine.php';
+        }
+
+        if (!foss_engine_table_exists('foss_engine_topics')) {
+            wp_send_json_error(array(
+                'message' => __('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine')
+            ));
+            exit;
+        }
+
         // Get the topic and content
         $topic = $wpdb->get_row(
             $wpdb->prepare(
-                "SELECT * FROM $table_name WHERE id = %d",
+                "SELECT * FROM {$table_name} WHERE id = %d",
                 $topic_id
             )
         );

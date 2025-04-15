@@ -161,11 +161,10 @@ class Foss_Engine_CSV
     }
 
     /**
-     * Save topics to the database.
-     *
-     * @since    1.0.1
-     * @param    array    $topics    Array of topics to save.
-     * @return   boolean|WP_Error    True on success, WP_Error on failure.
+     * Save topics to the database
+     * 
+     * @param array $topics Array of topic strings to save
+     * @return int|WP_Error Number of topics saved or error
      */
     public function save_topics($topics)
     {
@@ -179,79 +178,53 @@ class Foss_Engine_CSV
         // Get the correct table name with prefix
         $table_name = $wpdb->prefix . 'foss_engine_topics';
 
-        // Enforce limits for security
-        $max_topics = apply_filters('foss_engine_max_topics_to_save', 100);
-        if (count($topics) > $max_topics) {
-            $topics = array_slice($topics, 0, $max_topics);
-            // error_log('Foss Engine - Topics truncated to ' . $max_topics . ' during save operation');
+        // Check if table exists first
+        if (!function_exists('foss_engine_table_exists')) {
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine.php';
         }
 
-        $inserted = 0;
-        $errors = array();
+        if (!foss_engine_table_exists('foss_engine_topics')) {
+            return new WP_Error('table_not_found', __('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
+        }
 
-        // Start a transaction for data integrity
+        $count = 0;
+        $current_date = current_time('mysql');
+
+        // Start transaction for multiple inserts
         $wpdb->query('START TRANSACTION');
 
         try {
             foreach ($topics as $topic) {
-                // Validate and sanitize each topic again as an extra security measure
-                if (!is_string($topic) || empty(trim($topic))) {
-                    continue;
-                }
-
-                $sanitized_topic = $this->sanitize_topic($topic);
-
-                // Check if the topic already exists using prepared statement
-                $existing = $wpdb->get_var(
-                    $wpdb->prepare(
-                        "SELECT id FROM $table_name WHERE topic = %s",
-                        $sanitized_topic
-                    )
+                $result = $wpdb->insert(
+                    $table_name,
+                    array(
+                        'topic' => $topic,
+                        'status' => 'pending',
+                        'created_at' => $current_date,
+                        'updated_at' => $current_date
+                    ),
+                    array('%s', '%s', '%s', '%s') // Format specifiers for each value
                 );
 
-                if (!$existing) {
-                    // Use prepared statement and proper data types for secure insertion
-                    $result = $wpdb->insert(
-                        $table_name,
-                        array(
-                            'topic' => $sanitized_topic,
-                            'status' => 'pending',
-                            'created_at' => current_time('mysql'),
-                            'updated_at' => current_time('mysql')
-                        ),
-                        array('%s', '%s', '%s', '%s')
-                    );
-
-                    if ($result) {
-                        $inserted++;
-                    } else {
-                        // Log the error with safe error message (no sensitive details)
-                        $errors[] = __('Failed to insert topic into database.', 'foss-engine');
-                        // error_log('Foss Engine - DB insert error: ' . $wpdb->last_error);
-                    }
-                }
-
-                // Security: limit number of inserts in one operation
-                if ($inserted >= $max_topics) {
-                    break;
+                if ($result) {
+                    $count++;
+                } else {
+                    // Log the error
+                    error_log("FOSS Engine: Failed to insert topic: " . $wpdb->last_error);
                 }
             }
 
-            // If there were errors, rollback the transaction
-            if (!empty($errors)) {
-                $wpdb->query('ROLLBACK');
-                return new WP_Error('db_insert_error', implode('<br>', $errors));
-            }
-
-            // Otherwise commit the transaction
+            // If all went well, commit the transaction
             $wpdb->query('COMMIT');
         } catch (Exception $e) {
-            // Rollback on any exceptions
+            // If there was an error, rollback the transaction
             $wpdb->query('ROLLBACK');
-            // error_log('Foss Engine - Exception during topic save: ' . $e->getMessage());
-            return new WP_Error('db_error', __('A database error occurred while saving topics.', 'foss-engine'));
+            return new WP_Error('database_error', $e->getMessage());
         }
 
-        return $inserted;
+        // Clear any cached topics
+        wp_cache_delete('pending_topics', 'foss_engine');
+
+        return $count;
     }
 }

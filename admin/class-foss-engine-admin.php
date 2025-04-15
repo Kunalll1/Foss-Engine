@@ -412,6 +412,16 @@ class Foss_Engine_Admin
         if (!$topic) {
             $table_name = $wpdb->prefix . 'foss_engine_topics';
 
+            // Check if table exists first
+            if (!function_exists('foss_engine_table_exists')) {
+                require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine.php';
+            }
+
+            if (!foss_engine_table_exists('foss_engine_topics')) {
+                error_log('FOSS Engine: Topics table does not exist');
+                return null;
+            }
+
             // Use get_post() where possible in WordPress, but for custom tables
             // we need to use $wpdb with proper preparation
             $topic = $wpdb->get_row(
@@ -532,6 +542,15 @@ class Foss_Engine_Admin
         global $wpdb;
         $table_name = $wpdb->prefix . 'foss_engine_topics';
 
+        // Check if table exists first
+        if (!function_exists('foss_engine_table_exists')) {
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine.php';
+        }
+
+        if (!foss_engine_table_exists('foss_engine_topics')) {
+            $this->send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
+        }
+
         // Clear all related caches
         wp_cache_delete('topic_' . $topic_id, 'foss_engine');
         wp_cache_delete('pending_topics', 'foss_engine');
@@ -543,8 +562,8 @@ class Foss_Engine_Admin
                 'updated_at' => current_time('mysql')
             ),
             array('id' => $topic_id),
-            array('%s', '%s'),
-            array('%d')
+            array('%s', '%s'),  // Format for data (all strings)
+            array('%d')         // Format for where clause (integer)
         );
 
         if ($update_result === false) {
@@ -608,6 +627,15 @@ class Foss_Engine_Admin
         global $wpdb;
         $table_name = $wpdb->prefix . 'foss_engine_topics';
 
+        // Check if table exists first
+        if (!function_exists('foss_engine_table_exists')) {
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine.php';
+        }
+
+        if (!foss_engine_table_exists('foss_engine_topics')) {
+            $this->send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
+        }
+
         // Clear all related caches
         wp_cache_delete('topic_' . $topic_id, 'foss_engine');
         wp_cache_delete('pending_topics', 'foss_engine');
@@ -619,8 +647,8 @@ class Foss_Engine_Admin
                 'updated_at' => current_time('mysql')
             ),
             array('id' => $topic_id),
-            array('%s', '%s'),
-            array('%d')
+            array('%s', '%s'),  // Format for data (all strings)
+            array('%d')         // Format for where clause (integer)
         );
 
         if ($update_result === false) {
@@ -695,6 +723,15 @@ class Foss_Engine_Admin
 
         global $wpdb;
         $table_name = $wpdb->prefix . 'foss_engine_topics';
+
+        // Check if table exists first
+        if (!function_exists('foss_engine_table_exists')) {
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine.php';
+        }
+
+        if (!foss_engine_table_exists('foss_engine_topics')) {
+            $this->send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
+        }
 
         // Get pending and generated topics with caching
         $cache_key = 'pending_topics';
