@@ -36,7 +36,7 @@ msgstr ""
 
 #: admin/class-foss-engine-admin.php:98
 #: admin/class-foss-engine-admin.php:99
-msgid "Content Generator"
+msgid "Foss Engine"
 msgstr ""
 
 #: admin/class-foss-engine-admin.php:110

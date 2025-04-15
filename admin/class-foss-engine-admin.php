@@ -147,19 +147,19 @@ class Foss_Engine_Admin
     {
         // Main menu
         add_menu_page(
-            esc_html__('Content Generator', 'foss-engine'),
-            esc_html__('Content Generator', 'foss-engine'),
+            esc_html__('Foss Engine', 'foss-engine'),
+            esc_html__('Foss Engine', 'foss-engine'),
             'manage_options',
             $this->plugin_name,
             array($this, 'display_plugin_setup_page'),
-            'dashicons-edit',
+            plugin_dir_url(__DIR__) . 'icon.png',
             30
         );
 
         // Settings submenu
         add_submenu_page(
             $this->plugin_name,
-            esc_html__('Content Generator Settings', 'foss-engine'),
+            esc_html__('Foss Engine Settings', 'foss-engine'),
             esc_html__('Settings', 'foss-engine'),
             'manage_options',
             $this->plugin_name . '-settings',
