@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Admin functionality of the WP Content Generator plugin.
+ * Admin functionality of the Foss Engine plugin.
  *
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/admin
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/admin
  */
 
-class WP_Content_Generator_Admin
+class Foss_Engine_Admin
 {
     // Plugin identifier and version
     private $plugin_name;
@@ -51,9 +51,9 @@ class WP_Content_Generator_Admin
             false
         );
 
-        wp_localize_script($this->plugin_name, 'wp_content_generator_ajax', array(
+        wp_localize_script($this->plugin_name, 'foss_engine_ajax', array(
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('wp_content_generator_nonce'),
+            'nonce' => wp_create_nonce('foss_engine_nonce'),
             'plugin_version' => $this->version,
             'debug_mode' => defined('WP_DEBUG') && WP_DEBUG,
             'i18n' => array(
@@ -76,7 +76,7 @@ class WP_Content_Generator_Admin
      * @param string $nonce_action The nonce action to verify
      * @return bool|WP_Error Returns true if checks pass or WP_Error
      */
-    private function verify_ajax_request($nonce_action = 'wp_content_generator_nonce')
+    private function verify_ajax_request($nonce_action = 'foss_engine_nonce')
     {
         // Check nonce
         if (!check_ajax_referer($nonce_action, 'nonce', false)) {
@@ -111,7 +111,7 @@ class WP_Content_Generator_Admin
     public function test_openai_connection()
     {
         // Verify nonce and permissions
-        $security_check = $this->verify_ajax_request('wp_content_generator_test_connection');
+        $security_check = $this->verify_ajax_request('foss_engine_test_connection');
         if (is_wp_error($security_check)) {
             $this->send_error_response($security_check);
         }
@@ -125,10 +125,10 @@ class WP_Content_Generator_Admin
         }
 
         // Set the model for testing
-        update_option('wp_content_generator_model', $model);
+        update_option('foss_engine_model', $model);
 
         // Test the connection
-        $openai = new WP_Content_Generator_OpenAI($api_key);
+        $openai = new Foss_Engine_OpenAI($api_key);
         $result = $openai->test_connection();
 
         if (is_wp_error($result)) {
@@ -234,7 +234,7 @@ class WP_Content_Generator_Admin
     {
         register_setting(
             $this->plugin_name,
-            'wp_content_generator_openai_key',
+            'foss_engine_openai_key',
             array(
                 'sanitize_callback' => array($this, 'sanitize_api_key'),
                 'default' => '',
@@ -243,7 +243,7 @@ class WP_Content_Generator_Admin
 
         register_setting(
             $this->plugin_name,
-            'wp_content_generator_prompt_template',
+            'foss_engine_prompt_template',
             array(
                 'sanitize_callback' => 'sanitize_textarea_field',
                 'default' => 'Write a comprehensive blog post about [TOPIC]. Include an introduction, several key points, and a conclusion. The content should be informative and engaging.'
@@ -252,7 +252,7 @@ class WP_Content_Generator_Admin
 
         register_setting(
             $this->plugin_name,
-            'wp_content_generator_model',
+            'foss_engine_model',
             array(
                 'sanitize_callback' => 'sanitize_text_field',
                 'default' => 'gpt-3.5-turbo'
@@ -262,7 +262,7 @@ class WP_Content_Generator_Admin
         // New settings for Deepseek integration
         register_setting(
             $this->plugin_name,
-            'wp_content_generator_provider',
+            'foss_engine_provider',
             array(
                 'sanitize_callback' => array($this, 'sanitize_provider'),
                 'default' => 'openai'
@@ -271,7 +271,7 @@ class WP_Content_Generator_Admin
 
         register_setting(
             $this->plugin_name,
-            'wp_content_generator_deepseek_key',
+            'foss_engine_deepseek_key',
             array(
                 'sanitize_callback' => array($this, 'sanitize_api_key'),
                 'default' => '',
@@ -280,7 +280,7 @@ class WP_Content_Generator_Admin
 
         register_setting(
             $this->plugin_name,
-            'wp_content_generator_deepseek_model',
+            'foss_engine_deepseek_model',
             array(
                 'sanitize_callback' => 'sanitize_text_field',
                 'default' => 'deepseek-chat'
@@ -372,7 +372,7 @@ class WP_Content_Generator_Admin
         }
 
         // Process the CSV file
-        $csv_processor = new WP_Content_Generator_CSV();
+        $csv_processor = new Foss_Engine_CSV();
         $topics = $csv_processor->process_csv($uploaded_file['file']);
 
         // Delete the file after processing
@@ -407,10 +407,10 @@ class WP_Content_Generator_Admin
     {
         global $wpdb;
         $cache_key = 'topic_' . $topic_id;
-        $topic = wp_cache_get($cache_key, 'wp_content_generator');
+        $topic = wp_cache_get($cache_key, 'foss_engine');
 
         if (!$topic) {
-            $table_name = $wpdb->prefix . 'content_generator_topics';
+            $table_name = $wpdb->prefix . 'foss_engine_topics';
 
             // Use get_post() where possible in WordPress, but for custom tables
             // we need to use $wpdb with proper preparation
@@ -422,7 +422,7 @@ class WP_Content_Generator_Admin
             );
 
             if ($topic) {
-                wp_cache_set($cache_key, $topic, 'wp_content_generator', 3600); // Cache for 1 hour
+                wp_cache_set($cache_key, $topic, 'foss_engine', 3600); // Cache for 1 hour
             }
         }
 
@@ -453,9 +453,9 @@ class WP_Content_Generator_Admin
         }
 
         // Check if the OpenAI API key is set
-        $ai_provider = get_option('wp_content_generator_provider', 'openai');
-        $openai_key = get_option('wp_content_generator_openai_key');
-        $deepseek_key = get_option('wp_content_generator_deepseek_key');
+        $ai_provider = get_option('foss_engine_provider', 'openai');
+        $openai_key = get_option('foss_engine_openai_key');
+        $deepseek_key = get_option('foss_engine_deepseek_key');
 
         if ($ai_provider === 'openai' && empty($openai_key)) {
             $this->send_error_response(esc_html__('OpenAI API key is not set. Please configure it in the settings.', 'foss-engine'));
@@ -465,7 +465,7 @@ class WP_Content_Generator_Admin
 
         // Generate content using the selected AI provider
         try {
-            $openai = new WP_Content_Generator_OpenAI();
+            $openai = new Foss_Engine_OpenAI();
             $result = $openai->generate_content($topic->topic);
 
             if (is_wp_error($result)) {
@@ -477,11 +477,11 @@ class WP_Content_Generator_Admin
 
         // Update the topic in the database
         global $wpdb;
-        $table_name = $wpdb->prefix . 'content_generator_topics';
+        $table_name = $wpdb->prefix . 'foss_engine_topics';
 
         // Clear cache first
-        wp_cache_delete('topic_' . $topic_id, 'wp_content_generator');
-        wp_cache_delete('pending_topics', 'wp_content_generator');
+        wp_cache_delete('topic_' . $topic_id, 'foss_engine');
+        wp_cache_delete('pending_topics', 'foss_engine');
 
         $update_result = $wpdb->update(
             $table_name,
@@ -530,11 +530,11 @@ class WP_Content_Generator_Admin
         }
 
         global $wpdb;
-        $table_name = $wpdb->prefix . 'content_generator_topics';
+        $table_name = $wpdb->prefix . 'foss_engine_topics';
 
         // Clear all related caches
-        wp_cache_delete('topic_' . $topic_id, 'wp_content_generator');
-        wp_cache_delete('pending_topics', 'wp_content_generator');
+        wp_cache_delete('topic_' . $topic_id, 'foss_engine');
+        wp_cache_delete('pending_topics', 'foss_engine');
 
         $update_result = $wpdb->update(
             $table_name,
@@ -606,11 +606,11 @@ class WP_Content_Generator_Admin
 
         // Update the topic status
         global $wpdb;
-        $table_name = $wpdb->prefix . 'content_generator_topics';
+        $table_name = $wpdb->prefix . 'foss_engine_topics';
 
         // Clear all related caches
-        wp_cache_delete('topic_' . $topic_id, 'wp_content_generator');
-        wp_cache_delete('pending_topics', 'wp_content_generator');
+        wp_cache_delete('topic_' . $topic_id, 'foss_engine');
+        wp_cache_delete('pending_topics', 'foss_engine');
 
         $update_result = $wpdb->update(
             $table_name,
@@ -694,11 +694,11 @@ class WP_Content_Generator_Admin
         }
 
         global $wpdb;
-        $table_name = $wpdb->prefix . 'content_generator_topics';
+        $table_name = $wpdb->prefix . 'foss_engine_topics';
 
         // Get pending and generated topics with caching
         $cache_key = 'pending_topics';
-        $topics = wp_cache_get($cache_key, 'wp_content_generator');
+        $topics = wp_cache_get($cache_key, 'foss_engine');
 
         if (!$topics) {
             // This is a custom table so we need to use $wpdb - properly prepared
@@ -711,7 +711,7 @@ class WP_Content_Generator_Admin
             );
 
             if ($topics) {
-                wp_cache_set($cache_key, $topics, 'wp_content_generator', 60); // Cache for 1 minute
+                wp_cache_set($cache_key, $topics, 'foss_engine', 60); // Cache for 1 minute
             }
         }
 

@@ -9,8 +9,8 @@
  * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  * @author     Your Name <email@example.com>
  */
-class WP_Content_Generator_i18n
+class Foss_Engine_i18n
 {
 
     /**

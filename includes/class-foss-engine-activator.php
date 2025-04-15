@@ -6,8 +6,8 @@
  * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  */
 
 /**
@@ -16,10 +16,10 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  */
-class WP_Content_Generator_Activator
+class Foss_Engine_Activator
 {
 
     /**
@@ -32,7 +32,7 @@ class WP_Content_Generator_Activator
         global $wpdb;
 
         $charset_collate = $wpdb->get_charset_collate();
-        $table_name = $wpdb->prefix . 'content_generator_topics';
+        $table_name = $wpdb->prefix . 'foss_engine_topics';
 
         // Create the topics table
         $sql = "CREATE TABLE $table_name (
@@ -49,13 +49,13 @@ class WP_Content_Generator_Activator
         dbDelta($sql);
 
         // Set default options
-        add_option('wp_content_generator_openai_key', '');
-        add_option('wp_content_generator_prompt_template', 'Write a comprehensive blog post about [TOPIC]. Include an introduction, several key points, and a conclusion. The content should be informative and engaging.');
-        add_option('wp_content_generator_model', 'gpt-3.5-turbo');
+        add_option('foss_engine_openai_key', '');
+        add_option('foss_engine_prompt_template', 'Write a comprehensive blog post about [TOPIC]. Include an introduction, several key points, and a conclusion. The content should be informative and engaging.');
+        add_option('foss_engine_model', 'gpt-3.5-turbo');
 
         // Add new default options for Deepseek integration
-        add_option('wp_content_generator_provider', 'openai');
-        add_option('wp_content_generator_deepseek_key', '');
-        add_option('wp_content_generator_deepseek_model', 'deepseek-chat');
+        add_option('foss_engine_provider', 'openai');
+        add_option('foss_engine_deepseek_key', '');
+        add_option('foss_engine_deepseek_model', 'deepseek-chat');
     }
 }

@@ -4,7 +4,7 @@
  * Handle AJAX request to get topic content
  *
  * @package     Foss Engine
- * @subpackage WP_Content_Generator/admin
+ * @subpackage  Foss_Engine/admin
  */
 
 // If this file is called directly, abort.
@@ -15,15 +15,15 @@ if (!defined('WPINC')) {
 /**
  * Add the AJAX action to get topic content
  */
-add_action('wp_ajax_get_topic_content', 'wp_content_generator_get_topic_content');
+add_action('wp_ajax_get_topic_content', 'foss_engine_get_topic_content');
 
 /**
  * Handle the AJAX request to get topic content
  */
-function wp_content_generator_get_topic_content()
+function foss_engine_get_topic_content()
 {
     // Verify the nonce
-    check_ajax_referer('wp_content_generator_nonce', 'nonce');
+    check_ajax_referer('foss_engine_nonce', 'nonce');
 
     // Check permissions
     if (!current_user_can('manage_options')) {
@@ -45,7 +45,7 @@ function wp_content_generator_get_topic_content()
 
     try {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'content_generator_topics';
+        $table_name = $wpdb->prefix . 'foss_engine_topics';
 
         // Get the topic and content
         $topic = $wpdb->get_row(
@@ -63,7 +63,7 @@ function wp_content_generator_get_topic_content()
 
         // Check for database errors
         if ($wpdb->last_error) {
-            // error_log('WP Content Generator - Database Error: ' . $wpdb->last_error);
+            // error_log('Foss Engine - Database Error: ' . $wpdb->last_error);
             wp_send_json_error(array(
                 'message' => __('Database error: ', 'foss-engine') . $wpdb->last_error
             ));
@@ -71,7 +71,7 @@ function wp_content_generator_get_topic_content()
 
         // Log success for debugging
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            // error_log('WP Content Generator - Topic content retrieved successfully for ID: ' . $topic_id);
+            // error_log('Foss Engine - Topic content retrieved successfully for ID: ' . $topic_id);
         }
 
         // Sanitize and escape the content before sending it back
@@ -81,7 +81,7 @@ function wp_content_generator_get_topic_content()
             'status' => esc_attr($topic->status)        // Escape status attribute
         ));
     } catch (Exception $e) {
-        // error_log('WP Content Generator - Exception in get_topic_content: ' . $e->getMessage());
+        // error_log('Foss Engine - Exception in get_topic_content: ' . $e->getMessage());
         wp_send_json_error(array(
             'message' => __('An unexpected error occurred: ', 'foss-engine') . $e->getMessage()
         ));
@@ -91,8 +91,8 @@ function wp_content_generator_get_topic_content()
 /**
  * Register the AJAX handler
  */
-function wp_content_generator_register_ajax_handlers()
+function foss_engine_register_ajax_handlers()
 {
     // No need to register the handler here as we're using the wp_ajax_ hook directly
 }
-add_action('init', 'wp_content_generator_register_ajax_handlers');
+add_action('init', 'foss_engine_register_ajax_handlers');

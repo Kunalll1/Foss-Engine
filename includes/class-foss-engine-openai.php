@@ -6,8 +6,8 @@
  * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  */
 
 /**
@@ -16,10 +16,10 @@
  * This class handles all interactions with the OpenAI API.
  *
  * @since      1.0.0
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  */
-class WP_Content_Generator_OpenAI
+class Foss_Engine_OpenAI
 {
 
     /**
@@ -76,13 +76,13 @@ class WP_Content_Generator_OpenAI
     public function __construct($api_key = null)
     {
         // Get selected provider, default to OpenAI
-        $this->provider = get_option('wp_content_generator_provider', 'openai');
+        $this->provider = get_option('foss_engine_provider', 'openai');
 
         // Set OpenAI API key
-        $this->api_key = $api_key ?: get_option('wp_content_generator_openai_key');
+        $this->api_key = $api_key ?: get_option('foss_engine_openai_key');
 
         // Set Deepseek API key
-        $this->deepseek_key = get_option('wp_content_generator_deepseek_key');
+        $this->deepseek_key = get_option('foss_engine_deepseek_key');
     }
 
     /**
@@ -117,7 +117,7 @@ class WP_Content_Generator_OpenAI
 
         // Get and sanitize prompt template
         $default_prompt = 'Write a comprehensive blog post about [TOPIC]. Include an introduction, several key points, and a conclusion. The content should be informative and engaging.';
-        $prompt_template = get_option('wp_content_generator_prompt_template', $default_prompt);
+        $prompt_template = get_option('foss_engine_prompt_template', $default_prompt);
 
         // Validate prompt template
         if (empty($prompt_template) || !is_string($prompt_template)) {
@@ -131,22 +131,22 @@ class WP_Content_Generator_OpenAI
         $prompt = str_replace('[TOPIC]', $sanitized_topic, $prompt_template);
 
         // Get preferred model, default to GPT-3.5-Turbo if not set
-        $preferred_model = get_option('wp_content_generator_model', 'gpt-3.5-turbo');
+        $preferred_model = get_option('foss_engine_model', 'gpt-3.5-turbo');
 
         // Ensure we have a valid model, fallback to GPT-3.5 if there's an issue
         if (empty($preferred_model)) {
             $preferred_model = 'gpt-3.5-turbo';
-            // error_log('WP Content Generator - No model specified, falling back to gpt-3.5-turbo');
+            // error_log('Foss Engine - No model specified, falling back to gpt-3.5-turbo');
         }
 
         // Log selected model
-        // error_log('WP Content Generator - Using model: ' . $preferred_model . ' for topic: ' . $topic);
+        // error_log('Foss Engine - Using model: ' . $preferred_model . ' for topic: ' . $topic);
 
         // Truncate prompt if it's too long (OpenAI has token limitations)
         $max_prompt_length = 4000; // Safe limit
         if (strlen($prompt) > $max_prompt_length) {
             $prompt = substr($prompt, 0, $max_prompt_length);
-            // error_log('WP Content Generator - Prompt truncated due to length');
+            // error_log('Foss Engine - Prompt truncated due to length');
         }
 
         $body = array(
@@ -189,7 +189,7 @@ class WP_Content_Generator_OpenAI
         );
 
         // Log the request for debugging in a secure way (avoid logging sensitive data)
-        // error_log('WP Content Generator - OpenAI API Request: ' . wp_json_encode([
+        // error_log('Foss Engine - OpenAI API Request: ' . wp_json_encode([
         //     'endpoint' => $this->openai_endpoint,
         //     'model' => $preferred_model,
         //     'prompt_length' => strlen($prompt)
@@ -197,14 +197,14 @@ class WP_Content_Generator_OpenAI
         // ]));
 
         // Debug the exact request with sanitized values
-        // error_log('WP Content Generator - API Request Info:');
+        // error_log('Foss Engine - API Request Info:');
         // error_log('Method: ' . $args['method']);
         // error_log('Timeout: ' . $args['timeout']);
         // Do not log the full body or headers, as they may contain sensitive info
 
         // Ensure the API key is valid
         if (empty($this->api_key) || strlen($this->api_key) < 20) {
-            // error_log('WP Content Generator - API Key appears to be invalid or too short: ' . substr($this->api_key, 0, 5) . '...');
+            // error_log('Foss Engine - API Key appears to be invalid or too short: ' . substr($this->api_key, 0, 5) . '...');
             return new WP_Error('invalid_api_key', __('The OpenAI API key appears to be invalid. It should be a long token starting with "sk-".', 'foss-engine'));
         }
 
@@ -215,26 +215,26 @@ class WP_Content_Generator_OpenAI
         if (is_wp_error($response)) {
             $error_message = $response->get_error_message();
             $error_code = $response->get_error_code();
-            // error_log('WP Content Generator - OpenAI API WordPress Error: ' . $error_code . ' - ' . $error_message);
+            // error_log('Foss Engine - OpenAI API WordPress Error: ' . $error_code . ' - ' . $error_message);
 
             // Add more context about the error
             if ($error_code === 'http_request_failed') {
-                // error_log('WP Content Generator - This is likely a connection error. Check server connectivity to api.openai.com.');
+                // error_log('Foss Engine - This is likely a connection error. Check server connectivity to api.openai.com.');
             }
 
             return new WP_Error($error_code, __('API Connection Error: ', 'foss-engine') . $error_message);
         }
 
         // Log response status for debugging, but filter out sensitive data
-        // error_log('WP Content Generator - OpenAI API Response received with status code: ' . wp_remote_retrieve_response_code($response));
+        // error_log('Foss Engine - OpenAI API Response received with status code: ' . wp_remote_retrieve_response_code($response));
 
         // Check HTTP response code
         $response_code = wp_remote_retrieve_response_code($response);
         if ($response_code !== 200) {
             $error_message = 'HTTP Error: ' . $response_code . ' - ' . wp_remote_retrieve_response_message($response);
             $response_body = wp_remote_retrieve_body($response);
-            // error_log('WP Content Generator - OpenAI API HTTP Error: ' . $error_message);
-            // error_log('WP Content Generator - Response Body: ' . $response_body);
+            // error_log('Foss Engine - OpenAI API HTTP Error: ' . $error_message);
+            // error_log('Foss Engine - Response Body: ' . $response_body);
 
             // Try to extract more specific error message from response body
             $response_data = json_decode($response_body, true);
@@ -251,17 +251,17 @@ class WP_Content_Generator_OpenAI
         // Log minimal response info for debugging (usage stats only, no content)
         if (defined('WP_DEBUG') && WP_DEBUG) {
             $usage_info = isset($data['usage']) ? $data['usage'] : array('info' => 'usage data not available');
-            // error_log('WP Content Generator - OpenAI API Response usage info: ' . wp_json_encode($usage_info));
+            // error_log('Foss Engine - OpenAI API Response usage info: ' . wp_json_encode($usage_info));
         }
 
         if (isset($data['error'])) {
             $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'foss-engine');
-            // error_log('WP Content Generator - OpenAI API Error: ' . $error_message);
+            // error_log('Foss Engine - OpenAI API Error: ' . $error_message);
             return new WP_Error('openai_api_error', $error_message);
         }
 
         if (!isset($data['choices'][0]['message']['content'])) {
-            // error_log('WP Content Generator - OpenAI API Invalid Response structure received');
+            // error_log('Foss Engine - OpenAI API Invalid Response structure received');
             return new WP_Error('invalid_response', __('Invalid response from OpenAI API.', 'foss-engine'));
         }
 
@@ -288,7 +288,7 @@ class WP_Content_Generator_OpenAI
 
         // Get and sanitize prompt template
         $default_prompt = 'Write a comprehensive blog post about [TOPIC]. Include an introduction, several key points, and a conclusion. The content should be informative and engaging.';
-        $prompt_template = get_option('wp_content_generator_prompt_template', $default_prompt);
+        $prompt_template = get_option('foss_engine_prompt_template', $default_prompt);
 
         // Validate prompt template
         if (empty($prompt_template) || !is_string($prompt_template)) {
@@ -302,7 +302,7 @@ class WP_Content_Generator_OpenAI
         $prompt = str_replace('[TOPIC]', $sanitized_topic, $prompt_template);
 
         // Get preferred model, default to deepseek-chat if not set
-        $preferred_model = get_option('wp_content_generator_deepseek_model', 'deepseek-chat');
+        $preferred_model = get_option('foss_engine_deepseek_model', 'deepseek-chat');
 
         // Ensure we have a valid model, fallback to deepseek-chat if there's an issue
         if (empty($preferred_model)) {
@@ -435,7 +435,7 @@ class WP_Content_Generator_OpenAI
         }
 
         // Get preferred model, default to GPT-3.5-Turbo if not set
-        $preferred_model = get_option('wp_content_generator_model', 'gpt-3.5-turbo');
+        $preferred_model = get_option('foss_engine_model', 'gpt-3.5-turbo');
 
         $body = array(
             'model' => $preferred_model,
@@ -481,14 +481,14 @@ class WP_Content_Generator_OpenAI
 
         if (is_wp_error($response)) {
             // Log the WordPress error
-            // error_log('WP Content Generator - OpenAI API Connection Test Error: ' . $response->get_error_message());
+            // error_log('Foss Engine - OpenAI API Connection Test Error: ' . $response->get_error_message());
             return $response;
         }
 
         $response_code = wp_remote_retrieve_response_code($response);
         if ($response_code !== 200) {
             $error_message = 'HTTP Error: ' . $response_code . ' - ' . wp_remote_retrieve_response_message($response);
-            // error_log('WP Content Generator - OpenAI API Connection Test HTTP Error: ' . $error_message);
+            // error_log('Foss Engine - OpenAI API Connection Test HTTP Error: ' . $error_message);
             return new WP_Error('http_error', $error_message);
         }
 
@@ -497,12 +497,12 @@ class WP_Content_Generator_OpenAI
 
         // Log only a status message for the test connection response, no data
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            // error_log('WP Content Generator - OpenAI API Connection Test completed with status: success');
+            // error_log('Foss Engine - OpenAI API Connection Test completed with status: success');
         }
 
         if (isset($data['error'])) {
             $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'foss-engine');
-            // error_log('WP Content Generator - OpenAI API Connection Test Error: ' . $error_message);
+            // error_log('Foss Engine - OpenAI API Connection Test Error: ' . $error_message);
             return new WP_Error('openai_api_error', $error_message);
         }
 
@@ -522,7 +522,7 @@ class WP_Content_Generator_OpenAI
         }
 
         // Get preferred model, default to deepseek-chat if not set
-        $preferred_model = get_option('wp_content_generator_deepseek_model', 'deepseek-chat');
+        $preferred_model = get_option('foss_engine_deepseek_model', 'deepseek-chat');
 
         $body = array(
             'model' => $preferred_model,

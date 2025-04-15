@@ -6,8 +6,8 @@
  * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class handles CSV file processing.
  *
  * @since      1.0.0
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  * @author     Your Name <email@example.com>
  */
-class WP_Content_Generator_CSV
+class Foss_Engine_CSV
 {
 
     /**
@@ -45,7 +45,7 @@ class WP_Content_Generator_CSV
 
         // Size validation
         $filesize = filesize($file_path);
-        $max_size = apply_filters('wp_content_generator_max_csv_size', 1048576); // 1MB default
+        $max_size = apply_filters('foss_engine_max_csv_size', 1048576); // 1MB default
 
         if ($filesize <= 0) {
             return new WP_Error('empty_file', __('The uploaded CSV file is empty.', 'foss-engine'));
@@ -61,7 +61,7 @@ class WP_Content_Generator_CSV
 
         $topics = array();
         $line_count = 0;
-        $max_topics = apply_filters('wp_content_generator_max_csv_topics', 100);
+        $max_topics = apply_filters('foss_engine_max_csv_topics', 100);
 
         try {
             // Open the file for reading
@@ -152,7 +152,7 @@ class WP_Content_Generator_CSV
         $topic = wp_strip_all_tags($topic);
 
         // Enforce length limits
-        $max_length = apply_filters('wp_content_generator_max_topic_length', 255);
+        $max_length = apply_filters('foss_engine_max_topic_length', 255);
         if (strlen($topic) > $max_length) {
             $topic = substr($topic, 0, $max_length - 3) . '...';
         }
@@ -177,13 +177,13 @@ class WP_Content_Generator_CSV
         }
 
         // Get the correct table name with prefix
-        $table_name = $wpdb->prefix . 'content_generator_topics';
+        $table_name = $wpdb->prefix . 'foss_engine_topics';
 
         // Enforce limits for security
-        $max_topics = apply_filters('wp_content_generator_max_topics_to_save', 100);
+        $max_topics = apply_filters('foss_engine_max_topics_to_save', 100);
         if (count($topics) > $max_topics) {
             $topics = array_slice($topics, 0, $max_topics);
-            // error_log('WP Content Generator - Topics truncated to ' . $max_topics . ' during save operation');
+            // error_log('Foss Engine - Topics truncated to ' . $max_topics . ' during save operation');
         }
 
         $inserted = 0;
@@ -227,7 +227,7 @@ class WP_Content_Generator_CSV
                     } else {
                         // Log the error with safe error message (no sensitive details)
                         $errors[] = __('Failed to insert topic into database.', 'foss-engine');
-                        // error_log('WP Content Generator - DB insert error: ' . $wpdb->last_error);
+                        // error_log('Foss Engine - DB insert error: ' . $wpdb->last_error);
                     }
                 }
 
@@ -248,7 +248,7 @@ class WP_Content_Generator_CSV
         } catch (Exception $e) {
             // Rollback on any exceptions
             $wpdb->query('ROLLBACK');
-            // error_log('WP Content Generator - Exception during topic save: ' . $e->getMessage());
+            // error_log('Foss Engine - Exception during topic save: ' . $e->getMessage());
             return new WP_Error('db_error', __('A database error occurred while saving topics.', 'foss-engine'));
         }
 

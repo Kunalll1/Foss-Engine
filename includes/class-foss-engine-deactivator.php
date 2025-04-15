@@ -6,8 +6,8 @@
  * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  * @author     Your Name <email@example.com>
  */
-class WP_Content_Generator_Deactivator
+class Foss_Engine_Deactivator
 {
 
     /**

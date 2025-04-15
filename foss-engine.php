@@ -33,23 +33,23 @@ define('FOSS_ENGINE_VERSION', '1.0.0');
 /**
  * The code that runs during plugin activation.
  */
-function activate_wp_content_generator()
+function activate_foss_engine()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/class-foss-engine-activator.php';
-    WP_Content_Generator_Activator::activate();
+    Foss_Engine_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  */
-function deactivate_wp_content_generator()
+function deactivate_foss_engine()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/class-foss-engine-deactivator.php';
-    WP_Content_Generator_Deactivator::deactivate();
+    Foss_Engine_Deactivator::deactivate();
 }
 
-register_activation_hook(__FILE__, 'activate_wp_content_generator');
-register_deactivation_hook(__FILE__, 'deactivate_wp_content_generator');
+register_activation_hook(__FILE__, 'activate_foss_engine');
+register_deactivation_hook(__FILE__, 'deactivate_foss_engine');
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -66,10 +66,10 @@ require plugin_dir_path(__FILE__) . 'includes/class-foss-engine.php';
  *
  * @since    1.0.0
  */
-function run_wp_content_generator()
+function run_foss_engine()
 {
-    $plugin = new WP_Content_Generator();
+    $plugin = new Foss_Engine();
     $plugin->run();
 }
 
-run_wp_content_generator();
+run_foss_engine();

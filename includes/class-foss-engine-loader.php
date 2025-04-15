@@ -21,7 +21,7 @@
  * @subpackage WP_Content_Generator/includes
  * @author     Your Name <email@example.com>
  */
-class WP_Content_Generator_Loader
+class Foss_Engine_Loader
 {
 
     /**

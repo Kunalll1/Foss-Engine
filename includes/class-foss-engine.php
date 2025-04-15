@@ -9,8 +9,8 @@
  * @link       https://designomate.com/
  * @since      1.0.0
  *
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package     Foss Engine
- * @subpackage WP_Content_Generator/includes
+ * @package    Foss Engine
+ * @subpackage Foss_Engine/includes
  * @author     Your Name <email@example.com>
  */
-class WP_Content_Generator
+class Foss_Engine
 {
 
     /**
@@ -36,7 +36,7 @@ class WP_Content_Generator
      *
      * @since    1.0.0
      * @access   protected
-     * @var      WP_Content_Generator_Loader    $loader    Maintains and registers all hooks for the plugin.
+     * @var      Foss_Engine_Loader    $loader    Maintains and registers all hooks for the plugin.
      */
     protected $loader;
 
@@ -86,9 +86,9 @@ class WP_Content_Generator
      *
      * Include the following files that make up the plugin:
      *
-     * - WP_Content_Generator_Loader. Orchestrates the hooks of the plugin.
-     * - WP_Content_Generator_i18n. Defines internationalization functionality.
-     * - WP_Content_Generator_Admin. Defines all hooks for the admin area.
+     * - Foss_Engine_Loader. Orchestrates the hooks of the plugin.
+     * - Foss_Engine_i18n. Defines internationalization functionality.
+     * - Foss_Engine_Admin. Defines all hooks for the admin area.
      *
      * Create an instance of the loader which will be used to register the hooks
      * with WordPress.
@@ -126,13 +126,13 @@ class WP_Content_Generator
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-foss-engine-admin.php';
 
-        $this->loader = new WP_Content_Generator_Loader();
+        $this->loader = new Foss_Engine_Loader();
     }
 
     /**
      * Define the locale for this plugin for internationalization.
      *
-     * Uses the WP_Content_Generator_i18n class in order to set the domain and to register the hook
+     * Uses the Foss_Engine_i18n class in order to set the domain and to register the hook
      * with WordPress.
      *
      * @since    1.0.0
@@ -140,7 +140,7 @@ class WP_Content_Generator
      */
     private function set_locale()
     {
-        $plugin_i18n = new WP_Content_Generator_i18n();
+        $plugin_i18n = new Foss_Engine_i18n();
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
 
@@ -153,7 +153,7 @@ class WP_Content_Generator
      */
     private function define_admin_hooks()
     {
-        $plugin_admin = new WP_Content_Generator_Admin($this->get_plugin_name(), $this->get_version());
+        $plugin_admin = new Foss_Engine_Admin($this->get_plugin_name(), $this->get_version());
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
@@ -205,7 +205,7 @@ class WP_Content_Generator
      * The reference to the class that orchestrates the hooks with the plugin.
      *
      * @since     1.0.0
-     * @return    WP_Content_Generator_Loader    Orchestrates the hooks of the plugin.
+     * @return    Foss_Engine_Loader    Orchestrates the hooks of the plugin.
      */
     public function get_loader()
     {
