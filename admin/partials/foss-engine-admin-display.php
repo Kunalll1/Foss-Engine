@@ -3,8 +3,6 @@
 /**
  * Provide a admin area view for the plugin
  *
- * This file is used to markup the admin-facing aspects of the plugin.
- *
  * @link       https://fossengine.com/
  * @since      1.0.1
  *
@@ -13,115 +11,135 @@
  */
 
 // If this file is called directly, abort.
-if (!defined('WPINC')) {
+if (! defined('WPINC')) {
     die;
-}
-
-// Check which provider is selected
-$ai_provider = get_option('foss_engine_provider', 'openai');
-
-// Check if the appropriate API key is set based on selected provider
-$api_key_set = false;
-$api_key_message = '';
-
-if ($ai_provider === 'openai') {
-    $openai_key = get_option('foss_engine_openai_key', '');
-    $api_key_set = !empty($openai_key);
-    $api_key_message = 'OpenAI API key is not set. Please configure it in the';
-} else {
-    $deepseek_key = get_option('foss_engine_deepseek_key', '');
-    $api_key_set = !empty($deepseek_key);
-    $api_key_message = 'Deepseek API key is not set. Please configure it in the';
 }
 ?>
 
 <div class="wrap foss-engine-admin">
     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-
-    <?php if (!$api_key_set): ?>
-        <div class="notice notice-info">
-            <p>
-                <?php
-                // Create a single literal string and use placeholders
-                $message_text = sprintf(
-                    /* translators: %1$s is dynamic text like "OpenAI API key is not set...", %2$s is the Settings page URL */
-                    __('%1$s <a href="%2$s">Settings</a> page.', 'foss-engine'),
-                    esc_html($api_key_message),
-                    esc_url(admin_url('admin.php?page=foss-engine-settings'))
-                );
-
-                // Safely output the string
-                echo wp_kses(
-                    $message_text,
-                    array(
-                        'a' => array('href' => array()),
-                    )
-                );
-                ?>
-            </p>
-        </div>
-    <?php else: ?>
-        <div class="notice notice-info">
-            <p><?php esc_html_e('Welcome to the Foss Engine. This plugin helps you generate content using AI based on topics from a CSV file.', 'foss-engine'); ?></p>
-        </div>
-    <?php endif; ?>
-
+    <div class="notice notice-info">
+        <p>
+            <?php esc_html_e('🚀 Getting Started with FossEngine', 'foss-engine'); ?>
+        </p>
+    </div>
     <div class="foss-engine-container">
+
         <div class="foss-engine-section">
-            <h2><?php esc_html_e('Getting Started', 'foss-engine'); ?></h2>
-            <ol>
-                <li><?php
-                    printf(
-                        /* translators: %s: URL to settings page */
-                        esc_html__('First, go to the %s page and enter your API key.', 'foss-engine'),
-                        '<a href="' . esc_url(admin_url('admin.php?page=foss-engine-settings')) . '">' . esc_html__('Settings', 'foss-engine') . '</a>'
-                    );
-                    ?></li>
-                <li><?php esc_html_e('Prepare a CSV file with a list of topics. Each topic should be on a new line.', 'foss-engine'); ?></li>
-                <li><?php
-                    printf(
-                        /* translators: %s: URL to topics page */
-                        esc_html__('Upload your CSV file in the %s section.', 'foss-engine'),
-                        '<a href="' . esc_url(admin_url('admin.php?page=foss-engine-topics')) . '">' . esc_html__('Topics', 'foss-engine') . '</a>'
-                    );
-                    ?></li>
-                <li><?php esc_html_e('Generate content for each topic, review, edit, and publish as needed.', 'foss-engine'); ?></li>
-            </ol>
+            <h2><?php esc_html_e('🔐 Step 1: Add Your API Key', 'foss-engine'); ?></h2>
+            <div>
+                <ul>
+                    <li>
+                        <?php esc_html_e('Go to', 'foss-engine'); ?>
+                        <a href="<?php echo esc_url(admin_url('admin.php?page=foss-engine-settings')); ?>">
+                            <?php esc_html_e('FossEngine → Settings', 'foss-engine'); ?>
+                        </a>
+                    </li>
+                    <li><?php esc_html_e('Under the API Configuration section:', 'foss-engine'); ?></li>
+                    <ul>
+                        <li><?php esc_html_e('Choose your preferred AI provider: OpenAI or DeepSeek.', 'foss-engine'); ?></li>
+                        <li><?php esc_html_e('Paste your API Key into the corresponding field.', 'foss-engine'); ?></li>
+                        <li><?php esc_html_e('Click Save Settings.', 'foss-engine'); ?></li>
+                    </ul>
+                    <li><?php esc_html_e('Enter the custom prompt for generating content. The AI model will follow the prompt instructions to generate the content.', 'foss-engine'); ?></li>
+                    <li><strong><?php esc_html_e('❗ Make sure your API key has enough quota for generating multiple pieces of content.', 'foss-engine'); ?></strong></li>
+                </ul>
+            </div>
         </div>
 
         <div class="foss-engine-section">
-            <h2><?php esc_html_e('Features', 'foss-engine'); ?></h2>
-            <ul>
-                <li><?php esc_html_e('Import topics from a CSV file', 'foss-engine'); ?></li>
-                <li><?php esc_html_e('Generate content using AI for each topic', 'foss-engine'); ?></li>
-                <li><?php esc_html_e('Edit generated content before publishing', 'foss-engine'); ?></li>
-                <li><?php esc_html_e('Publish content as WordPress posts or pages', 'foss-engine'); ?></li>
-                <li><?php esc_html_e('Regenerate content if needed', 'foss-engine'); ?></li>
-                <li><?php esc_html_e('Track the status of each topic', 'foss-engine'); ?></li>
-            </ul>
+            <h2><?php esc_html_e('📄 Step 2: Prepare Your CSV File', 'foss-engine'); ?></h2>
+            <div>
+                <ul>
+                    <li><?php esc_html_e('Create a CSV file with the list of topics you want content for.', 'foss-engine'); ?></li>
+                    <li><?php esc_html_e('CSV Guidelines:', 'foss-engine'); ?></li>
+                    <ul>
+                        <li><?php esc_html_e('Each topic should be on a separate line.', 'foss-engine'); ?></li>
+                        <li><?php esc_html_e('Use only one column.', 'foss-engine'); ?></li>
+                        <li><?php esc_html_e('No header row is required.', 'foss-engine'); ?></li>
+                    </ul>
+                    <li><?php esc_html_e('Example:', 'foss-engine'); ?></li>
+                    <pre>
+How to grow indoor plants
+Benefits of solar energy for homes
+Best Shopify apps for conversions
+                    </pre>
+                </ul>
+            </div>
         </div>
 
         <div class="foss-engine-section">
-            <h2><?php esc_html_e('CSV Format', 'foss-engine'); ?></h2>
-            <p><?php esc_html_e('Your CSV file should have one topic per line. The first column will be used as the topic.', 'foss-engine'); ?></p>
-            <p><?php esc_html_e('Example:', 'foss-engine'); ?></p>
-            <pre>Best practices for WordPress security
-How to improve website loading speed
-Benefits of using a CDN for your website
-Top WordPress plugins for SEO</pre>
-            <p><?php esc_html_e('You can also include a header row if you prefer:', 'foss-engine'); ?></p>
-            <pre>topic
-Best practices for WordPress security
-How to improve website loading speed
-Benefits of using a CDN for your website
-Top WordPress plugins for SEO</pre>
+            <h2><?php esc_html_e('⬆️ Step 3: Upload Topics CSV', 'foss-engine'); ?></h2>
+            <div>
+                <ul>
+                    <li>
+                        <?php esc_html_e('Go to', 'foss-engine'); ?>
+                        <a href="<?php echo esc_url(admin_url('admin.php?page=foss-engine-topics')); ?>">
+                            <?php esc_html_e('FossEngine → Topics', 'foss-engine'); ?>
+                        </a>
+                    </li>
+                    <li><?php esc_html_e('Click Upload CSV and select your file.', 'foss-engine'); ?></li>
+                    <li><?php esc_html_e('The plugin will display a list of imported topics.', 'foss-engine'); ?></li>
+                    <li><?php esc_html_e('Review the topics to ensure everything looks correct.', 'foss-engine'); ?></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="foss-engine-section">
+            <h2><?php esc_html_e('🤖 Step 4: Generate Content', 'foss-engine'); ?></h2>
+            <div>
+                <ul>
+                    <li><?php esc_html_e('After uploading, select one or more topics from the list.', 'foss-engine'); ?></li>
+                    <li><?php esc_html_e('Click Generate Content.', 'foss-engine'); ?></li>
+                    <li><?php esc_html_e('FossEngine will use your chosen AI provider to generate SEO-friendly articles.', 'foss-engine'); ?></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="foss-engine-section">
+            <h2><?php esc_html_e('✏️ Step 5: Review and Edit Content', 'foss-engine'); ?></h2>
+            <div>
+                <ul>
+                    <li><?php esc_html_e('Once content is generated:', 'foss-engine'); ?></li>
+                    <ul>
+                        <li><?php esc_html_e('Click Edit next to a topic.', 'foss-engine'); ?></li>
+                        <li><?php esc_html_e('Make any changes using the built-in editor (includes formatting, links, etc.).', 'foss-engine'); ?></li>
+                        <li><?php esc_html_e('You can Regenerate the content if you’re not satisfied.', 'foss-engine'); ?></li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+
+        <div class="foss-engine-section">
+            <h2><?php esc_html_e('✅ Step 6: Publish Your Posts', 'foss-engine'); ?></h2>
+            <div>
+                <ul>
+                    <li><?php esc_html_e('After editing:', 'foss-engine'); ?></li>
+                    <ul>
+                        <li><?php esc_html_e('Click Publish to post it directly to your site.', 'foss-engine'); ?></li>
+                        <li><?php esc_html_e('Choose whether to publish it as a Post or a Page.', 'foss-engine'); ?></li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+
+        <div class="foss-engine-section">
+            <h2><?php esc_html_e('🔁 Additional Features', 'foss-engine'); ?></h2>
+            <div>
+                <ul>
+                    <li><?php esc_html_e('Regenerate content for a topic with a single click.', 'foss-engine'); ?></li>
+                    <li><?php esc_html_e('Bulk actions to generate, edit, or publish multiple topics at once.', 'foss-engine'); ?></li>
+                    <li><?php esc_html_e('Track status of each topic (Generated/Pending).', 'foss-engine'); ?></li>
+                    <li><?php esc_html_e('Date of adding the topics.', 'foss-engine'); ?></li>
+                </ul>
+            </div>
         </div>
 
         <div class="foss-engine-section">
             <h2><?php esc_html_e('Quick Access', 'foss-engine'); ?></h2>
             <div class="foss-engine-quick-access">
                 <a href="<?php echo esc_url(admin_url('admin.php?page=foss-engine-settings')); ?>" class="button button-primary"><?php esc_html_e('Settings', 'foss-engine'); ?></a>
-                <a href="<?php echo esc_url(admin_url('admin.php?page=foss-engine-topics')); ?>" class="button button-primary"><?php esc_html_e('Manage Topics', 'foss-engine'); ?></a>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=foss-engine-topics')); ?>" class="button button-primary"><?php esc_html_e('Content Manager', 'foss-engine'); ?></a>
             </div>
         </div>
     </div>
