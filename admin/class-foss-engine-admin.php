@@ -110,6 +110,12 @@ class Foss_Engine_Admin
      */
     public function test_openai_connection()
     {
+        // Direct nonce verification for coding standards compliance
+        if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_test_connection', 'nonce', false)) {
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
+            return;
+        }
+
         // Verify nonce and permissions
         $security_check = $this->verify_ajax_request('foss_engine_test_connection');
         if (is_wp_error($security_check)) {
@@ -337,6 +343,12 @@ class Foss_Engine_Admin
      */
     public function handle_csv_upload()
     {
+        // Direct nonce verification for coding standards compliance
+        if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
+            return;
+        }
+
         // Verify AJAX request has proper nonce and permissions
         $security_check = $this->verify_ajax_request();
         if (is_wp_error($security_check)) {
@@ -444,6 +456,12 @@ class Foss_Engine_Admin
      */
     public function generate_content()
     {
+        // Direct nonce verification for coding standards compliance
+        if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
+            return;
+        }
+
         // Verify AJAX request has proper nonce and permissions
         $security_check = $this->verify_ajax_request();
         if (is_wp_error($security_check)) {
@@ -521,6 +539,12 @@ class Foss_Engine_Admin
      */
     public function save_content()
     {
+        // Direct nonce verification for coding standards compliance
+        if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
+            return;
+        }
+
         // Verify AJAX request has proper nonce and permissions
         $security_check = $this->verify_ajax_request();
         if (is_wp_error($security_check)) {
@@ -580,6 +604,12 @@ class Foss_Engine_Admin
      */
     public function publish_content()
     {
+        // Direct nonce verification for coding standards compliance
+        if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
+            return;
+        }
+
         // Verify AJAX request has proper nonce and permissions
         $security_check = $this->verify_ajax_request();
         if (is_wp_error($security_check)) {
@@ -681,6 +711,12 @@ class Foss_Engine_Admin
      */
     public function get_topic_content()
     {
+        // Direct nonce verification for coding standards compliance
+        if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
+            return;
+        }
+
         // Verify AJAX request has proper nonce and permissions
         $security_check = $this->verify_ajax_request();
         if (is_wp_error($security_check)) {
@@ -715,6 +751,12 @@ class Foss_Engine_Admin
      */
     public function get_pending_topics()
     {
+        // Direct nonce verification for coding standards compliance
+        if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
+            return;
+        }
+
         // Verify AJAX request has proper nonce and permissions
         $security_check = $this->verify_ajax_request();
         if (is_wp_error($security_check)) {
