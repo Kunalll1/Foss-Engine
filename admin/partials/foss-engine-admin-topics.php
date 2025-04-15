@@ -43,11 +43,25 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
 
     <?php if (!$api_key_set): ?>
         <div class="notice notice-warning">
-            <p><?php echo wp_kses(__($api_key_message . ' <a href="admin.php?page=foss-engine-settings">Settings</a> page.', 'foss-engine'), array(
-                    'a' => array(
-                        'href' => array(),
-                    ),
-                )); ?></p>
+            <p>
+                <?php
+                // Create a single literal string with placeholders
+                $message_text = sprintf(
+                    /* translators: %1$s is dynamic text like "OpenAI API key is not set...", %2$s is the Settings page URL */
+                    __('%1$s <a href="%2$s">Settings</a> page.', 'foss-engine'),
+                    esc_html($api_key_message),
+                    esc_url(admin_url('admin.php?page=foss-engine-settings'))
+                );
+
+                // Safely output the string
+                echo wp_kses(
+                    $message_text,
+                    array(
+                        'a' => array('href' => array()),
+                    )
+                );
+                ?>
+            </p>
         </div>
     <?php endif; ?>
 
