@@ -74,7 +74,7 @@ class WP_Content_Generator
         } else {
             $this->version = '1.0.0';
         }
-        $this->plugin_name = 'wp-content-generator';
+        $this->plugin_name = 'foss-engine';
 
         $this->load_dependencies();
         $this->set_locale();
