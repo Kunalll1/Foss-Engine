@@ -198,47 +198,4 @@ if ($ai_provider === 'openai' && !empty($openai_key)) {
 
         <?php submit_button(esc_html__('Save Settings', 'foss-engine'), 'primary', 'submit', true); ?>
     </form>
-
-    <script>
-        jQuery(document).ready(function($) {
-            // Toggle API key visibility
-            $('#toggle-api-key').on('click', function() {
-                var $apiKey = $('#foss_engine_openai_key');
-                var $button = $(this);
-
-                if ($apiKey.attr('type') === 'password') {
-                    $apiKey.attr('type', 'text');
-                    $button.text('<?php echo esc_js(__('Hide', 'foss-engine')); ?>');
-                } else {
-                    $apiKey.attr('type', 'password');
-                    $button.text('<?php echo esc_js(__('Show', 'foss-engine')); ?>');
-                }
-            });
-
-            // Toggle Deepseek API key visibility
-            $('#toggle-deepseek-key').on('click', function() {
-                var $apiKey = $('#foss_engine_deepseek_key');
-                var $button = $(this);
-
-                if ($apiKey.attr('type') === 'password') {
-                    $apiKey.attr('type', 'text');
-                    $button.text('<?php echo esc_js(__('Hide', 'foss-engine')); ?>');
-                } else {
-                    $apiKey.attr('type', 'password');
-                    $button.text('<?php echo esc_js(__('Show', 'foss-engine')); ?>');
-                }
-            });
-
-            // Toggle between OpenAI and Deepseek settings
-            $('input[name="foss_engine_provider"]').on('change', function() {
-                if ($(this).val() === 'openai') {
-                    $('#openai-settings').show();
-                    $('#deepseek-settings').hide();
-                } else {
-                    $('#openai-settings').hide();
-                    $('#deepseek-settings').show();
-                }
-            });
-        });
-    </script>
 </div>

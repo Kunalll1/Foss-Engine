@@ -68,6 +68,34 @@ class Foss_Engine_Admin
                 'troubleshooting' => esc_html__('If you continue to experience issues, try selecting the GPT-3.5 Turbo model in settings and ensure your API key has the correct permissions.', 'foss-engine'),
             )
         ));
+
+        // Get current screen
+        $screen = get_current_screen();
+
+        // Register and enqueue the settings page script only on the plugin settings page
+        if ($screen && $screen->id === $this->plugin_name . '_page_' . $this->plugin_name . '-settings') {
+            // Register the settings script
+            wp_register_script(
+                $this->plugin_name . '-settings',
+                plugin_dir_url(__FILE__) . 'js/foss-engine-admin-settings.js',
+                array('jquery'),
+                $this->version,
+                true  // Load in footer
+            );
+
+            // Localize the settings script with translations
+            wp_localize_script(
+                $this->plugin_name . '-settings',
+                'fossEngineAdmin',
+                array(
+                    'showText' => esc_html__('Show', 'foss-engine'),
+                    'hideText' => esc_html__('Hide', 'foss-engine')
+                )
+            );
+
+            // Enqueue the settings script
+            wp_enqueue_script($this->plugin_name . '-settings');
+        }
     }
 
     /**
