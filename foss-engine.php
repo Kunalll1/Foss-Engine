@@ -4,14 +4,14 @@
  * The plugin bootstrap file
  *
  * @link              https://fossengine.com/
- * @since             1.0.1
+ * @since             1.0.2
  * @package           Foss Engine
  *
  * @wordpress-plugin
  * Plugin Name:       Foss Engine
  * Plugin URI:        https://fossengine.com/
  * Description:       A WordPress plugin that generates content using AI models based on topics from a CSV file, with editing and publishing capabilities.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Designomate
  * Author URI:        https://designomate.com/
  * License:           GPL-2.0+
@@ -30,7 +30,7 @@ if (!defined('WPINC')) {
 /**
  * Currently plugin version.
  */
-define('FOSS_ENGINE_VERSION', '1.0.1');
+define('FOSS_ENGINE_VERSION', '1.0.2');
 
 /**
  * The code that runs during plugin activation.
@@ -58,7 +58,7 @@ register_deactivation_hook(__FILE__, 'deactivate_foss_engine');
  */
 function foss_engine_check_for_updates()
 {
-    $stored_version = get_option('foss_engine_version', '1.0.1');
+    $stored_version = get_option('foss_engine_version', '1.0.2');
 
     // If the stored version is older than current version, run migrations
     if (version_compare($stored_version, FOSS_ENGINE_VERSION, '<')) {
@@ -89,7 +89,7 @@ require plugin_dir_path(__FILE__) . 'includes/class-foss-engine.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.1
+ * @since    1.0.2
  */
 function run_foss_engine()
 {

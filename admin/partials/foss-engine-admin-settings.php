@@ -6,7 +6,7 @@
  * This file is used to markup the admin-facing settings aspects of the plugin.
  *
  * @link       https://fossengine.com/
- * @since      1.0.1
+ * @since      1.0.2
  *
  * @package    Foss Engine
  * @subpackage Foss_Engine/admin/partials

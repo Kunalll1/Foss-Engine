@@ -5,7 +5,7 @@
  *
  * @package    Foss Engine
  * @subpackage Foss_Engine/admin/js
- * @since      1.0.1
+ * @since      1.0.2
  */
 
 jQuery(document).ready(function ($) {

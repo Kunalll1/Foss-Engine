@@ -4,7 +4,7 @@
  * CSV processing Class
  *
  * @link       https://fossengine.com/
- * @since      1.0.1
+ * @since      1.0.2
  *
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
@@ -15,7 +15,7 @@
  *
  * This class handles CSV file processing.
  *
- * @since      1.0.1
+ * @since      1.0.2
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
  * @author     Kunal Kumar help@fossengine.com
@@ -26,7 +26,7 @@ class Foss_Engine_CSV
     /**
      * Process uploaded CSV file and extract topics.
      *
-     * @since    1.0.1
+     * @since    1.0.2
      * @param    string    $file_path    Path to the uploaded CSV file.
      * @return   array|WP_Error          Array of topics or WP_Error on failure.
      */
@@ -136,7 +136,7 @@ class Foss_Engine_CSV
     /**
      * Sanitize a topic string for security
      *
-     * @since    1.0.1
+     * @since    1.0.2
      * @param    string    $topic    The topic to sanitize
      * @return   string              Sanitized topic
      */

@@ -4,7 +4,7 @@
  * Fired during plugin deactivation
  *
  * @link       https://fossengine.com/
- * @since      1.0.1
+ * @since      1.0.2
  *
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's deactivation.
  *
- * @since      1.0.1
+ * @since      1.0.2
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
  * @author     Kunal Kumar help@fossengine.com
@@ -28,7 +28,7 @@ class Foss_Engine_Deactivator
      *
      * Long Description.
      *
-     * @since    1.0.1
+     * @since    1.0.2
      */
     public static function deactivate()
     {

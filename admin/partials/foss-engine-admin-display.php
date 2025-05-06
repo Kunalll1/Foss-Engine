@@ -4,7 +4,7 @@
  * Provide a admin area view for the plugin
  *
  * @link       https://fossengine.com/
- * @since      1.0.1
+ * @since      1.0.2
  *
  * @package    Foss Engine
  * @subpackage Foss_Engine/admin/partials

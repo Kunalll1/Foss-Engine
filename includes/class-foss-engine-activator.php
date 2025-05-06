@@ -4,7 +4,7 @@
  * Fired during plugin activation
  *
  * @link       https://fossengine.com/
- * @since      1.0.1
+ * @since      1.0.2
  *
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.1
+ * @since      1.0.2
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
  */
@@ -25,7 +25,7 @@ class Foss_Engine_Activator
     /**
      * Set up the database tables and plugin options on activation.
      *
-     * @since    1.0.1
+     * @since    1.0.2
      */
     public static function activate()
     {

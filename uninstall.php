@@ -4,7 +4,7 @@
  * Fired when the plugin is uninstalled.
  *
  * @link       https://fossengine.com/
- * @since      1.0.1
+ * @since      1.0.2
  *
  * @package     Foss Engine
  */

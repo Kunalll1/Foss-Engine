@@ -5,8 +5,8 @@
 **Donate link:** https://fossengine.com/  
 **Tags:** content generation, openai, artificial intelligence, content writing, csv upload  
 **Requires at least:** 5.0  
-**Tested up to:** 6.7  
-**Stable tag:** 1.0.1  
+**Tested up to:** 6.8  
+**Stable tag:** 1.0.2  
 **Requires PHP:** 7.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
@@ -82,11 +82,11 @@ Yes, you can regenerate content for any topic that has not been published yet.
 
 ## Changelog
 
-### 1.0.1
+### 1.0.2
 
 - Updated version with various improvements
 - Added DeepSeek integration for content generation
 
-### 1.0.1
+### 1.0.2
 
 Initial release
