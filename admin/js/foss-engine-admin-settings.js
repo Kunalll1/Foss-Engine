@@ -8,6 +8,15 @@
  * @since      1.0.2
  */
 
+// Check if fossEngineAdmin object exists
+if (typeof fossEngineAdmin === "undefined") {
+  // Create a fallback object to prevent errors
+  var fossEngineAdmin = {
+    showText: "Show",
+    hideText: "Hide",
+  };
+}
+
 jQuery(document).ready(function ($) {
   // Toggle API key visibility
   $("#toggle-api-key").on("click", function () {

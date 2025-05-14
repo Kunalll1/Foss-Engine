@@ -27,10 +27,14 @@ class FOSSEN_Admin
      */
     public function enqueue_styles()
     {
+        // Make sure we're in the admin area
+        if (!is_admin()) {
+            return;
+        }
+
         wp_enqueue_style(
             $this->plugin_name,
-            plugin_dir_url(__FILE__) . 'css/foss-engine-admin.css
-            ',
+            plugin_dir_url(__FILE__) . 'css/foss-engine-admin.css',
             array(),
             $this->version,
             'all'
@@ -42,6 +46,11 @@ class FOSSEN_Admin
      */
     public function enqueue_scripts()
     {
+        // Make sure we're in the admin area
+        if (!is_admin()) {
+            return;
+        }
+
         // Enqueue the admin script with stable version
         wp_enqueue_script(
             $this->plugin_name,
@@ -72,27 +81,32 @@ class FOSSEN_Admin
         // Get current screen
         $screen = get_current_screen();
 
-        // Register and enqueue the settings page script only on the plugin settings page
-        if ($screen && $screen->id === $this->plugin_name . '_page_' . $this->plugin_name . '-settings') {
-            // Register the settings script
-            wp_register_script(
-                $this->plugin_name . '-settings',
-                plugin_dir_url(__FILE__) . 'js/foss-engine-admin-settings.js',
-                array('jquery'),
-                $this->version,
-                true  // Load in footer
-            );
+        // Register the settings script
+        wp_register_script(
+            $this->plugin_name . '-settings',
+            plugin_dir_url(__FILE__) . 'js/foss-engine-admin-settings.js',
+            array('jquery'),
+            $this->version,
+            true  // Load in footer
+        );
 
-            // Localize the settings script with translations
-            wp_localize_script(
-                $this->plugin_name . '-settings',
-                'fossEngineAdmin',
-                array(
-                    'showText' => esc_html__('Show', 'Foss-Engine'),
-                    'hideText' => esc_html__('Hide', 'Foss-Engine')
-                )
-            );
+        // Localize the settings script with translations
+        wp_localize_script(
+            $this->plugin_name . '-settings',
+            'fossEngineAdmin',
+            array(
+                'showText' => esc_html__('Show', 'Foss-Engine'),
+                'hideText' => esc_html__('Hide', 'Foss-Engine')
+            )
+        );
 
+        // Enqueue the settings script on the plugin settings page
+        // Check for both possible screen ID formats
+        if ($screen && (
+            $screen->id === $this->plugin_name . '_page_' . $this->plugin_name . '-settings' ||
+            $screen->id === 'foss-engine_page_foss-engine-settings' ||
+            strpos($screen->id, $this->plugin_name . '-settings') !== false
+        )) {
             // Enqueue the settings script
             wp_enqueue_script($this->plugin_name . '-settings');
         }
@@ -246,6 +260,15 @@ class FOSSEN_Admin
         // Verify user has permission to access this page
         if (!current_user_can('manage_options')) {
             wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'Foss-Engine'));
+        }
+
+        // Add temporary debugging for screen ID
+        $screen = get_current_screen();
+        if ($screen) {
+            // Add a hidden div with screen ID for debugging
+            echo '<div id="foss-engine-debug" style="display:none;">';
+            echo 'Screen ID: ' . esc_html($screen->id);
+            echo '</div>';
         }
 
         include_once('partials/foss-engine-admin-settings.php');
