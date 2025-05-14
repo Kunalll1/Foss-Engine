@@ -20,7 +20,7 @@
  * @subpackage Foss_Engine/includes
  * @author     Kunal Kumar help@fossengine.com
  */
-class Foss_Engine_CSV
+class FOSSEN_CSV
 {
 
     /**
@@ -159,7 +159,7 @@ class Foss_Engine_CSV
 
     /**
      * Save topics to the database
-     * 
+     *
      * @param array $topics Array of topic strings to save
      * @return int|WP_Error Number of topics saved or error
      */

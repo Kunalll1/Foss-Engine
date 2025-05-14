@@ -7,7 +7,7 @@
  * @subpackage Foss_Engine/admin
  */
 
-class Foss_Engine_Admin
+class FOSSEN_Admin
 {
     // Plugin identifier and version
     private $plugin_name;
@@ -162,7 +162,7 @@ class Foss_Engine_Admin
         update_option('foss_engine_model', $model);
 
         // Test the connection
-        $openai = new Foss_Engine_OpenAI($api_key);
+        $openai = new FOSSEN_OpenAI($api_key);
         $result = $openai->test_connection();
 
         if (is_wp_error($result)) {
@@ -417,7 +417,7 @@ class Foss_Engine_Admin
         }
 
         // Process the CSV file
-        $csv_processor = new Foss_Engine_CSV();
+        $csv_processor = new FOSSEN_CSV();
         $topics = $csv_processor->process_csv($uploaded_file['file']);
 
         // Delete the file after processing
@@ -526,7 +526,7 @@ class Foss_Engine_Admin
 
         // Generate content using the selected AI provider
         try {
-            $openai = new Foss_Engine_OpenAI();
+            $openai = new FOSSEN_OpenAI();
             $result = $openai->generate_content($topic->topic);
 
             if (is_wp_error($result)) {

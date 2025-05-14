@@ -126,7 +126,7 @@ class Foss_Engine
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-foss-engine-admin.php';
 
-        $this->loader = new Foss_Engine_Loader();
+        $this->loader = new FOSSEN_Loader();
     }
 
     /**
@@ -140,7 +140,7 @@ class Foss_Engine
      */
     private function set_locale()
     {
-        $plugin_i18n = new Foss_Engine_i18n();
+        $plugin_i18n = new FOSSEN_i18n();
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
 
@@ -153,7 +153,7 @@ class Foss_Engine
      */
     private function define_admin_hooks()
     {
-        $plugin_admin = new Foss_Engine_Admin($this->get_plugin_name(), $this->get_version());
+        $plugin_admin = new FOSSEN_Admin($this->get_plugin_name(), $this->get_version());
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');

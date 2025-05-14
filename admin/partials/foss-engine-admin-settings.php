@@ -29,7 +29,7 @@ $deepseek_model = get_option('foss_engine_deepseek_model', 'deepseek-chat');
 // Test connection if API key is set for the active provider
 $connection_status = '';
 if ($ai_provider === 'openai' && !empty($openai_key)) {
-    $openai = new Foss_Engine_OpenAI($openai_key);
+    $openai = new FOSSEN_OpenAI($openai_key);
     $test_result = $openai->test_connection();
 
     if (is_wp_error($test_result)) {

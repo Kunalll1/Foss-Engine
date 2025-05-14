@@ -19,7 +19,7 @@
  * @package    Foss Engine
  * @subpackage Foss_Engine/includes
  */
-class Foss_Engine_Activator
+class FOSSEN_Activator
 {
 
     /**

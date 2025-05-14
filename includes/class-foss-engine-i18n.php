@@ -24,7 +24,7 @@
  * @subpackage Foss_Engine/includes
  * @author     Kunal Kumar help@fossengine.com
  */
-class Foss_Engine_i18n
+class FOSSEN_i18n
 {
 
     /**

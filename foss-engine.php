@@ -38,7 +38,7 @@ define('FOSS_ENGINE_VERSION', '1.0.2');
 function activate_foss_engine()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/class-foss-engine-activator.php';
-    Foss_Engine_Activator::activate();
+    FOSSEN_Activator::activate();
 }
 
 /**
@@ -47,7 +47,7 @@ function activate_foss_engine()
 function deactivate_foss_engine()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/class-foss-engine-deactivator.php';
-    Foss_Engine_Deactivator::deactivate();
+    FOSSEN_Deactivator::deactivate();
 }
 
 register_activation_hook(__FILE__, 'activate_foss_engine');
@@ -63,12 +63,12 @@ function foss_engine_check_for_updates()
     // If the stored version is older than current version, run migrations
     if (version_compare($stored_version, FOSS_ENGINE_VERSION, '<')) {
         // Include the activator class if not already included
-        if (!class_exists('Foss_Engine_Activator')) {
+        if (!class_exists('FOSSEN_Activator')) {
             require_once plugin_dir_path(__FILE__) . 'includes/class-foss-engine-activator.php';
         }
 
         // Run the legacy options migration
-        Foss_Engine_Activator::migrate_legacy_options();
+        FOSSEN_Activator::migrate_legacy_options();
 
         // Update the stored version
         update_option('foss_engine_version', FOSS_ENGINE_VERSION);
