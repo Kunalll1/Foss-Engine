@@ -32,5 +32,12 @@ class Foss_Engine_i18n
      *
      * @since    1.0.2
      */
-    public function load_plugin_textdomain() {}
+    public function load_plugin_textdomain()
+    {
+        load_plugin_textdomain(
+            'Foss-Engine',
+            false,
+            plugin_dir_path(dirname(__FILE__)) . 'languages/'
+        );
+    }
 }

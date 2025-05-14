@@ -28,7 +28,7 @@ function foss_engine_get_topic_content()
     // Check permissions
     if (!current_user_can('manage_options')) {
         wp_send_json_error(array(
-            'message' => __('You do not have permission to perform this action.', 'foss-engine')
+            'message' => __('You do not have permission to perform this action.', 'Foss-Engine')
         ));
     }
 
@@ -38,7 +38,7 @@ function foss_engine_get_topic_content()
     // Stronger validation
     if ($topic_id <= 0 || $topic_id > PHP_INT_MAX) {
         wp_send_json_error(array(
-            'message' => __('Invalid topic ID provided.', 'foss-engine')
+            'message' => __('Invalid topic ID provided.', 'Foss-Engine')
         ));
         exit; // Ensure execution stops here
     }
@@ -54,7 +54,7 @@ function foss_engine_get_topic_content()
 
         if (!foss_engine_table_exists('foss_engine_topics')) {
             wp_send_json_error(array(
-                'message' => __('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine')
+                'message' => __('Database table not found. Please deactivate and reactivate the plugin.', 'Foss-Engine')
             ));
             exit;
         }
@@ -69,7 +69,7 @@ function foss_engine_get_topic_content()
 
         if (!$topic) {
             wp_send_json_error(array(
-                'message' => __('Topic not found.', 'foss-engine')
+                'message' => __('Topic not found.', 'Foss-Engine')
             ));
         }
 
@@ -77,7 +77,7 @@ function foss_engine_get_topic_content()
         if ($wpdb->last_error) {
             // error_log('Foss Engine - Database Error: ' . $wpdb->last_error);
             wp_send_json_error(array(
-                'message' => __('Database error: ', 'foss-engine') . $wpdb->last_error
+                'message' => __('Database error: ', 'Foss-Engine') . $wpdb->last_error
             ));
         }
 
@@ -95,7 +95,7 @@ function foss_engine_get_topic_content()
     } catch (Exception $e) {
         // error_log('Foss Engine - Exception in get_topic_content: ' . $e->getMessage());
         wp_send_json_error(array(
-            'message' => __('An unexpected error occurred: ', 'foss-engine') . $e->getMessage()
+            'message' => __('An unexpected error occurred: ', 'Foss-Engine') . $e->getMessage()
         ));
     }
 }

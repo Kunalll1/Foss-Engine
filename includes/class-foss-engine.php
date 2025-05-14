@@ -74,7 +74,7 @@ class Foss_Engine
         } else {
             $this->version = '1.0.2';
         }
-        $this->plugin_name = 'foss-engine';
+        $this->plugin_name = 'Foss-Engine';
 
         $this->load_dependencies();
         $this->set_locale();
