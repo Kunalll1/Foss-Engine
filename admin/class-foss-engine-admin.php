@@ -441,7 +441,7 @@ class fossdein_admin
 
         // Process the CSV file
         $csv_processor = new fossdein_csv();
-        $topics = $csv_processor->process_csv($uploaded_file['file']);
+        $topics = $csv_processor->fossdin_process_csv($uploaded_file['file']);
 
         // Delete the file after processing
         wp_delete_file($uploaded_file['file']);
@@ -451,7 +451,7 @@ class fossdein_admin
         }
 
         // Save topics to the database
-        $result = $csv_processor->save_topics($topics);
+        $result = $csv_processor->fossdin_save_topics($topics);
         if (is_wp_error($result)) {
             $this->send_error_response($result);
         }

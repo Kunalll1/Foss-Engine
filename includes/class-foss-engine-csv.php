@@ -30,7 +30,7 @@ class fossdein_csv
      * @param    string    $file_path    Path to the uploaded CSV file.
      * @return   array|WP_Error          Array of topics or WP_Error on failure.
      */
-    public function process_csv($file_path)
+    public function fossdin_process_csv($file_path)
     {
         // File validation - existence and permissions
         if (!file_exists($file_path) || !is_readable($file_path)) {
@@ -93,9 +93,9 @@ class fossdein_csv
             // If it's not a header, add it to topics
             if (!$has_header && count($topics) < $max_topics) {
                 if (count($first_row) === 1 && !empty(trim($first_row[0]))) {
-                    $topics[] = $this->sanitize_topic(trim($first_row[0]));
+                    $topics[] = $this->fossdin_sanitize_topic(trim($first_row[0]));
                 } elseif (count($first_row) > 1 && !empty(trim($first_row[0]))) {
-                    $topics[] = $this->sanitize_topic(trim($first_row[0]));
+                    $topics[] = $this->fossdin_sanitize_topic(trim($first_row[0]));
                 }
             }
 
@@ -106,9 +106,9 @@ class fossdein_csv
 
                 if (!empty($row)) {
                     if (count($row) === 1 && !empty(trim($row[0]))) {
-                        $topics[] = $this->sanitize_topic(trim($row[0]));
+                        $topics[] = $this->fossdin_sanitize_topic(trim($row[0]));
                     } elseif (count($row) > 1 && !empty(trim($row[0]))) {
-                        $topics[] = $this->sanitize_topic(trim($row[0]));
+                        $topics[] = $this->fossdin_sanitize_topic(trim($row[0]));
                     }
                 }
 
@@ -140,7 +140,7 @@ class fossdein_csv
      * @param    string    $topic    The topic to sanitize
      * @return   string              Sanitized topic
      */
-    private function sanitize_topic($topic)
+    private function fossdin_sanitize_topic($topic)
     {
         // Apply WordPress sanitization
         $topic = sanitize_text_field($topic);
@@ -163,7 +163,7 @@ class fossdein_csv
      * @param array $topics Array of topic strings to save
      * @return int|WP_Error Number of topics saved or error
      */
-    public function save_topics($topics)
+    public function fossdin_save_topics($topics)
     {
         global $wpdb;
 
