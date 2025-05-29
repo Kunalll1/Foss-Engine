@@ -24,7 +24,7 @@ delete_option('foss_engine_deepseek_model');
 
 // Delete plugin database table
 global $wpdb;
-$table_name = $wpdb->prefix . 'content_generator_topics';
+$table_name = $wpdb->prefix . 'foss_engine_topics';
 $wpdb->query("DROP TABLE IF EXISTS $table_name");
 
 // Clear any transients
