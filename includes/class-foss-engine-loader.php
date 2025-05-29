@@ -115,7 +115,7 @@ class fossdein_loader
      *
      * @since    1.0.2
      */
-    public function run()
+    public function fossdein_fa_run()
     {
         foreach ($this->filters as $hook) {
             add_filter($hook['hook'], array($hook['component'], $hook['callback']), $hook['priority'], $hook['accepted_args']);

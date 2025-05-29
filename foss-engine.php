@@ -96,8 +96,8 @@ require plugin_dir_path(__FILE__) . 'includes/class-foss-engine.php';
  */
 function run_foss_engine()
 {
-    $plugin = new fossdein_main();
-    $plugin->run();
+    $plugin = new fossdein();
+    $plugin->fossdein_loader_run();
 }
 
 run_foss_engine();

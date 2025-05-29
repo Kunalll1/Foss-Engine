@@ -27,7 +27,7 @@
  * @subpackage foss_engine/includes
  * @author     Kunal Kumar help@fossengine.com
  */
-class fossdein_main
+class fossdein
 {
 
     /**
@@ -76,9 +76,9 @@ class fossdein_main
         }
         $this->plugin_name = 'foss-engine';
 
-        $this->load_dependencies();
-        $this->set_locale();
-        $this->define_admin_hooks();
+        $this->fossdein_load_dependencies();
+        $this->fossdein_set_locale();
+        $this->fossdein_define_admin_hooks();
     }
 
     /**
@@ -96,7 +96,7 @@ class fossdein_main
      * @since    1.0.2
      * @access   private
      */
-    private function load_dependencies()
+    private function fossdein_load_dependencies()
     {
 
         /**
@@ -138,7 +138,7 @@ class fossdein_main
      * @since    1.0.2
      * @access   private
      */
-    private function set_locale()
+    private function fossdein_set_locale()
     {
         $plugin_i18n = new fossdein_i18n();
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
@@ -151,7 +151,7 @@ class fossdein_main
      * @since    1.0.2
      * @access   private
      */
-    private function define_admin_hooks()
+    private function fossdein_define_admin_hooks()
     {
         $plugin_admin = new fossdein_admin($this->get_plugin_name(), $this->get_version());
 
@@ -184,9 +184,9 @@ class fossdein_main
      *
      * @since    1.0.2
      */
-    public function run()
+    public function fossdein_loader_run()
     {
-        $this->loader->run();
+        $this->loader->fossdein_fa_run();
     }
 
     /**
