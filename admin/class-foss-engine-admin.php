@@ -118,7 +118,7 @@ class fossdein_admin
      * @param string $nonce_action The nonce action to verify
      * @return bool|WP_Error Returns true if checks pass or WP_Error
      */
-    private function verify_ajax_request($nonce_action = 'foss_engine_nonce')
+    private function fossdein_verify_ajax_request($nonce_action = 'foss_engine_nonce')
     {
         // Check nonce
         if (!check_ajax_referer($nonce_action, 'nonce', false)) {
@@ -159,7 +159,7 @@ class fossdein_admin
         }
 
         // Verify nonce and permissions
-        $security_check = $this->verify_ajax_request('foss_engine_test_connection');
+        $security_check = $this->fossdein_verify_ajax_request('foss_engine_test_connection');
         if (is_wp_error($security_check)) {
             $this->fossdein_send_error_response($security_check);
         }
@@ -406,7 +406,7 @@ class fossdein_admin
         }
 
         // Verify AJAX request has proper nonce and permissions
-        $security_check = $this->verify_ajax_request();
+        $security_check = $this->fossdein_verify_ajax_request();
         if (is_wp_error($security_check)) {
             $this->fossdein_send_error_response($security_check);
         }
@@ -471,7 +471,7 @@ class fossdein_admin
      * @param int $topic_id The topic ID to retrieve
      * @return object|null Topic object or null if not found
      */
-    private function get_topic_by_id($topic_id)
+    private function fossdein_get_topic_by_id($topic_id)
     {
         global $wpdb;
         $cache_key = 'topic_' . $topic_id;
@@ -519,7 +519,7 @@ class fossdein_admin
         }
 
         // Verify AJAX request has proper nonce and permissions
-        $security_check = $this->verify_ajax_request();
+        $security_check = $this->fossdein_verify_ajax_request();
         if (is_wp_error($security_check)) {
             $this->fossdein_send_error_response($security_check);
         }
@@ -531,7 +531,7 @@ class fossdein_admin
         }
 
         // Get the topic
-        $topic = $this->get_topic_by_id($topic_id);
+        $topic = $this->fossdein_get_topic_by_id($topic_id);
         if (!$topic) {
             $this->fossdein_send_error_response(esc_html__('Topic not found.', 'foss-engine'));
         }
@@ -602,7 +602,7 @@ class fossdein_admin
         }
 
         // Verify AJAX request has proper nonce and permissions
-        $security_check = $this->verify_ajax_request();
+        $security_check = $this->fossdein_verify_ajax_request();
         if (is_wp_error($security_check)) {
             $this->fossdein_send_error_response($security_check);
         }
@@ -667,7 +667,7 @@ class fossdein_admin
         }
 
         // Verify AJAX request has proper nonce and permissions
-        $security_check = $this->verify_ajax_request();
+        $security_check = $this->fossdein_verify_ajax_request();
         if (is_wp_error($security_check)) {
             $this->fossdein_send_error_response($security_check);
         }
@@ -685,7 +685,7 @@ class fossdein_admin
         }
 
         // Get the topic
-        $topic = $this->get_topic_by_id($topic_id);
+        $topic = $this->fossdein_get_topic_by_id($topic_id);
         if (!$topic) {
             $this->fossdein_send_error_response(esc_html__('Topic not found.', 'foss-engine'));
         }
@@ -774,7 +774,7 @@ class fossdein_admin
         }
 
         // Verify AJAX request has proper nonce and permissions
-        $security_check = $this->verify_ajax_request();
+        $security_check = $this->fossdein_verify_ajax_request();
         if (is_wp_error($security_check)) {
             $this->fossdein_send_error_response($security_check);
         }
@@ -786,7 +786,7 @@ class fossdein_admin
         }
 
         // Get the topic
-        $topic = $this->get_topic_by_id($topic_id);
+        $topic = $this->fossdein_get_topic_by_id($topic_id);
         if (!$topic) {
             $this->fossdein_send_error_response(esc_html__('Topic not found.', 'foss-engine'));
         }
@@ -814,7 +814,7 @@ class fossdein_admin
         }
 
         // Verify AJAX request has proper nonce and permissions
-        $security_check = $this->verify_ajax_request();
+        $security_check = $this->fossdein_verify_ajax_request();
         if (is_wp_error($security_check)) {
             $this->fossdein_send_error_response($security_check);
         }
