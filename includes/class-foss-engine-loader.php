@@ -63,9 +63,9 @@ class fossdein_loader
      * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
      * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
      */
-    public function fossdin_register_action($hook, $component, $callback, $priority = 10, $accepted_args = 1)
+    public function fossdein_register_action($hook, $component, $callback, $priority = 10, $accepted_args = 1)
     {
-        $this->actions = $this->fossdin_store_hook($this->actions, $hook, $component, $callback, $priority, $accepted_args);
+        $this->actions = $this->fossdein_store_hook($this->actions, $hook, $component, $callback, $priority, $accepted_args);
     }
 
     /**
@@ -78,9 +78,9 @@ class fossdein_loader
      * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
      * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1
      */
-    public function fossdin_register_filter($hook, $component, $callback, $priority = 10, $accepted_args = 1)
+    public function fossdein_register_filter($hook, $component, $callback, $priority = 10, $accepted_args = 1)
     {
-        $this->filters = $this->fossdin_store_hook($this->filters, $hook, $component, $callback, $priority, $accepted_args);
+        $this->filters = $this->fossdein_store_hook($this->filters, $hook, $component, $callback, $priority, $accepted_args);
     }
 
     /**
@@ -97,7 +97,7 @@ class fossdein_loader
      * @param    int                  $accepted_args    The number of arguments that should be passed to the $callback.
      * @return   array                                  The collection of actions and filters registered with WordPress.
      */
-    private function fossdin_store_hook($hooks, $hook, $component, $callback, $priority, $accepted_args)
+    private function fossdein_store_hook($hooks, $hook, $component, $callback, $priority, $accepted_args)
     {
         $hooks[] = array(
             'hook'          => $hook,

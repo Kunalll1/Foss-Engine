@@ -27,7 +27,7 @@ class fossdein_activator
      *
      * @since    1.0.2
      */
-    public static function fossdin_db_activate()
+    public static function fossdein_db_activate()
     {
         global $wpdb;
 

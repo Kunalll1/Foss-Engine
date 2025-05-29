@@ -41,7 +41,7 @@ define('FOSS_ENGINE_VERSION', '1.0.2');
 function activate_foss_engine()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/class-foss-engine-activator.php';
-    fossdein_activator::fossdin_db_activate();
+    fossdein_activator::fossdein_db_activate();
 }
 
 /**
