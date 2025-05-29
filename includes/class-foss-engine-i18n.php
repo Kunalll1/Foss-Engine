@@ -22,7 +22,7 @@
  * @since      1.0.2
  * @package    foss engine
  * @subpackage foss_engine/includes
- * @author     Kunal Kumar help@fossengine.com
+ * @author     Designomate help@fossengine.com
  */
 class fossdein_i18n
 {
