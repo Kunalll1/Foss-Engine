@@ -6,7 +6,7 @@
  * @link       https://fossengine.com/
  * @since      1.0.2
  *
- * @package     Foss Engine
+ * @package     foss engine
  * @subpackage WP_Content_Generator/includes
  */
 
@@ -17,7 +17,7 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package     Foss Engine
+ * @package     foss engine
  * @subpackage WP_Content_Generator/includes
  * @author     Kunal Kumar help@fossengine.com
  */

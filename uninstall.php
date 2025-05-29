@@ -6,7 +6,7 @@
  * @link       https://fossengine.com/
  * @since      1.0.2
  *
- * @package     Foss Engine
+ * @package     foss engine
  */
 
 // If uninstall not called from WordPress, then exit.

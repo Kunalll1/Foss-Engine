@@ -4,7 +4,7 @@
  * Admin functionality of the Foss Engine plugin.
  *
  * @package    foss engine
- * @subpackage Foss_Engine/admin
+ * @subpackage foss_engine/admin
  */
 
 class fossdein_admin

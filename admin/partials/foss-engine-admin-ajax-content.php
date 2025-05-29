@@ -3,8 +3,8 @@
 /**
  * Handle AJAX request to get topic content
  *
- * @package     Foss Engine
- * @subpackage  Foss_Engine/admin
+ * @package     foss engine
+ * @subpackage  foss_engine/admin
  */
 
 // If this file is called directly, abort.

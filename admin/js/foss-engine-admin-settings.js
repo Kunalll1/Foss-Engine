@@ -4,7 +4,7 @@
  * Handles the toggling of API key visibility and provider settings display.
  *
  * @package    foss engine
- * @subpackage Foss_Engine/admin/js
+ * @subpackage foss_engine/admin/js
  * @since      1.0.2
  */
 

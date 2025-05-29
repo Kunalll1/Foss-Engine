@@ -9,7 +9,7 @@
  * @since      1.0.2
  *
  * @package    foss engine
- * @subpackage Foss_Engine/admin/partials
+ * @subpackage foss_engine/admin/partials
  */
 
 // If this file is called directly, abort.

@@ -5,7 +5,7 @@
  *
  * @link              https://fossengine.com/
  * @since             1.0.2
- * @package           Foss Engine
+ * @package           foss engine
  *
  * @wordpress-plugin
  * Plugin Name:       Foss Engine
