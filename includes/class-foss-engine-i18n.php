@@ -9,8 +9,8 @@
  * @link       https://fossengine.com/
  * @since      1.0.2
  *
- * @package    Foss Engine
- * @subpackage Foss_Engine/includes
+ * @package    foss engine
+ * @subpackage foss_engine/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.2
- * @package    Foss Engine
- * @subpackage Foss_Engine/includes
+ * @package    foss engine
+ * @subpackage foss_engine/includes
  * @author     Kunal Kumar help@fossengine.com
  */
-class FOSSEN_i18n
+class fossdein_i18n
 {
 
     /**
@@ -34,10 +34,10 @@ class FOSSEN_i18n
      */
     public function load_plugin_textdomain()
     {
-        load_plugin_textdomain(
-            'Foss-Engine',
-            false,
-            plugin_dir_path(dirname(__FILE__)) . 'languages/'
-        );
+        // load_plugin_textdomain(
+        //     'foss-engine',
+        //     false,
+        //     plugin_dir_path(dirname(__FILE__)) . 'languages/'
+        // );
     }
 }

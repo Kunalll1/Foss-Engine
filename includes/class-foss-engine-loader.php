@@ -21,7 +21,7 @@
  * @subpackage WP_Content_Generator/includes
  * @author     Kunal Kumar help@fossengine.com
  */
-class FOSSEN_Loader
+class fossdein_loader
 {
 
     /**

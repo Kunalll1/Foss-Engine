@@ -9,8 +9,8 @@
  * @link       https://fossengine.com/
  * @since      1.0.2
  *
- * @package    Foss Engine
- * @subpackage Foss_Engine/includes
+ * @package    foss engine
+ * @subpackage foss_engine/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.2
- * @package    Foss Engine
- * @subpackage Foss_Engine/includes
+ * @package    foss engine
+ * @subpackage foss_engine/includes
  * @author     Kunal Kumar help@fossengine.com
  */
-class Foss_Engine
+class fossdein_main
 {
 
     /**
@@ -74,7 +74,7 @@ class Foss_Engine
         } else {
             $this->version = '1.0.2';
         }
-        $this->plugin_name = 'Foss-Engine';
+        $this->plugin_name = 'foss-engine';
 
         $this->load_dependencies();
         $this->set_locale();
@@ -126,7 +126,7 @@ class Foss_Engine
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-foss-engine-admin.php';
 
-        $this->loader = new FOSSEN_Loader();
+        $this->loader = new fossdein_loader();
     }
 
     /**
@@ -140,7 +140,7 @@ class Foss_Engine
      */
     private function set_locale()
     {
-        $plugin_i18n = new FOSSEN_i18n();
+        $plugin_i18n = new fossdein_i18n();
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
 
@@ -153,7 +153,7 @@ class Foss_Engine
      */
     private function define_admin_hooks()
     {
-        $plugin_admin = new FOSSEN_Admin($this->get_plugin_name(), $this->get_version());
+        $plugin_admin = new fossdein_admin($this->get_plugin_name(), $this->get_version());
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');

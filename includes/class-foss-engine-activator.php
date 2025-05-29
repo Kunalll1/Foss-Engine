@@ -6,8 +6,8 @@
  * @link       https://fossengine.com/
  * @since      1.0.2
  *
- * @package    Foss Engine
- * @subpackage Foss_Engine/includes
+ * @package    foss engine
+ * @subpackage foss_engine/includes
  */
 
 /**
@@ -16,10 +16,10 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.2
- * @package    Foss Engine
- * @subpackage Foss_Engine/includes
+ * @package    foss engine
+ * @subpackage foss_engine/includes
  */
-class FOSSEN_Activator
+class fossdein_activator
 {
 
     /**

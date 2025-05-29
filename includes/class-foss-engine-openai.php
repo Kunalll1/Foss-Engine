@@ -6,8 +6,8 @@
  * @link       https://fossengine.com/
  * @since      1.0.2
  *
- * @package    Foss Engine
- * @subpackage Foss_Engine/includes
+ * @package    foss engine
+ * @subpackage foss_engine/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * Handles all API communication with OpenAI for content generation.
  *
  * @since      1.0.2
- * @package    Foss Engine
- * @subpackage Foss_Engine/includes
+ * @package    foss engine
+ * @subpackage foss_engine/includes
  * @author     Kunal Kumar help@fossengine.com
  */
-class FOSSEN_OpenAI
+class fossdein_openai
 {
 
     /**
@@ -113,7 +113,7 @@ class FOSSEN_OpenAI
     private function generate_content_openai($topic)
     {
         if (empty($this->api_key)) {
-            return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'Foss-Engine'));
+            return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'foss-engine'));
         }
 
         // Get and sanitize prompt template
@@ -206,7 +206,7 @@ class FOSSEN_OpenAI
         // Ensure the API key is valid
         if (empty($this->api_key) || strlen($this->api_key) < 20) {
             // error_log('Foss Engine - API Key appears to be invalid or too short: ' . substr($this->api_key, 0, 5) . '...');
-            return new WP_Error('invalid_api_key', __('The OpenAI API key appears to be invalid. It should be a long token starting with "sk-".', 'Foss-Engine'));
+            return new WP_Error('invalid_api_key', __('The OpenAI API key appears to be invalid. It should be a long token starting with "sk-".', 'foss-engine'));
         }
 
         // Make the API call
@@ -223,7 +223,7 @@ class FOSSEN_OpenAI
                 // error_log('Foss Engine - This is likely a connection error. Check server connectivity to api.openai.com.');
             }
 
-            return new WP_Error($error_code, __('API Connection Error: ', 'Foss-Engine') . $error_message);
+            return new WP_Error($error_code, __('API Connection Error: ', 'foss-engine') . $error_message);
         }
 
         // Log response status for debugging, but filter out sensitive data
@@ -256,14 +256,14 @@ class FOSSEN_OpenAI
         }
 
         if (isset($data['error'])) {
-            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'Foss-Engine');
+            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'foss-engine');
             // error_log('Foss Engine - OpenAI API Error: ' . $error_message);
             return new WP_Error('openai_api_error', $error_message);
         }
 
         if (!isset($data['choices'][0]['message']['content'])) {
             // error_log('Foss Engine - OpenAI API Invalid Response structure received');
-            return new WP_Error('invalid_response', __('Invalid response from OpenAI API.', 'Foss-Engine'));
+            return new WP_Error('invalid_response', __('Invalid response from OpenAI API.', 'foss-engine'));
         }
 
         return array(
@@ -284,7 +284,7 @@ class FOSSEN_OpenAI
     private function generate_content_deepseek($topic)
     {
         if (empty($this->deepseek_key)) {
-            return new WP_Error('missing_api_key', __('Deepseek API key is not set.', 'Foss-Engine'));
+            return new WP_Error('missing_api_key', __('Deepseek API key is not set.', 'foss-engine'));
         }
 
         // Get and sanitize prompt template
@@ -357,7 +357,7 @@ class FOSSEN_OpenAI
 
         // Ensure the API key is valid
         if (empty($this->deepseek_key) || strlen($this->deepseek_key) < 20) {
-            return new WP_Error('invalid_api_key', __('The Deepseek API key appears to be invalid. It should be a long token.', 'Foss-Engine'));
+            return new WP_Error('invalid_api_key', __('The Deepseek API key appears to be invalid. It should be a long token.', 'foss-engine'));
         }
 
         // Make the API call
@@ -367,7 +367,7 @@ class FOSSEN_OpenAI
         if (is_wp_error($response)) {
             $error_message = $response->get_error_message();
             $error_code = $response->get_error_code();
-            return new WP_Error($error_code, __('API Connection Error: ', 'Foss-Engine') . $error_message);
+            return new WP_Error($error_code, __('API Connection Error: ', 'foss-engine') . $error_message);
         }
 
         // Check HTTP response code
@@ -389,13 +389,13 @@ class FOSSEN_OpenAI
         $data = json_decode($body, true);
 
         if (isset($data['error'])) {
-            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with Deepseek API.', 'Foss-Engine');
+            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with Deepseek API.', 'foss-engine');
             return new WP_Error('deepseek_api_error', $error_message);
         }
 
         // Deepseek response structure is similar to OpenAI, but let's handle potential differences
         if (!isset($data['choices'][0]['message']['content'])) {
-            return new WP_Error('invalid_response', __('Invalid response from Deepseek API.', 'Foss-Engine'));
+            return new WP_Error('invalid_response', __('Invalid response from Deepseek API.', 'foss-engine'));
         }
 
         // Return in the same format as OpenAI for compatibility
@@ -432,7 +432,7 @@ class FOSSEN_OpenAI
     private function test_connection_openai()
     {
         if (empty($this->api_key)) {
-            return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'Foss-Engine'));
+            return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'foss-engine'));
         }
 
         // Get preferred model, default to GPT-3.5-Turbo if not set
@@ -502,7 +502,7 @@ class FOSSEN_OpenAI
         }
 
         if (isset($data['error'])) {
-            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'Foss-Engine');
+            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with OpenAI API.', 'foss-engine');
             // error_log('Foss Engine - OpenAI API Connection Test Error: ' . $error_message);
             return new WP_Error('openai_api_error', $error_message);
         }
@@ -519,7 +519,7 @@ class FOSSEN_OpenAI
     private function test_connection_deepseek()
     {
         if (empty($this->deepseek_key)) {
-            return new WP_Error('missing_api_key', __('Deepseek API key is not set.', 'Foss-Engine'));
+            return new WP_Error('missing_api_key', __('Deepseek API key is not set.', 'foss-engine'));
         }
 
         // Get preferred model, default to deepseek-chat if not set
@@ -581,7 +581,7 @@ class FOSSEN_OpenAI
         $data = json_decode($body, true);
 
         if (isset($data['error'])) {
-            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with Deepseek API.', 'Foss-Engine');
+            $error_message = isset($data['error']['message']) ? $data['error']['message'] : __('Unknown error occurred while communicating with Deepseek API.', 'foss-engine');
             return new WP_Error('deepseek_api_error', $error_message);
         }
 

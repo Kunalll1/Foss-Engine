@@ -1,21 +1,25 @@
+=== Foss Engine === <br>
 **Contributors:** designomate
 **Contributore URL:** https://www.designomate.com
 **Website:** https://fossengine.com/  
-**Tags:** content generation, artificial intelligence, content writing, SEO, alt text, meta title, meta description
+**Tags:** Content generation, AI, SEO, ALT text, Meta title, Meta description
 **Requires at least:** 5.0  
 **Tested up to:** 6.8  
 **Stable tag:** 1.0.2  
-**Requires PHP:** 7.2  
+**Requires at least:** 5.2 <br>
+**Requires PHP:** 7.4  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
-A WordPress plugin that generates content using OpenAI and DeepSeek based on topics from a CSV file. Users must provide their own API keys for content generation, giving them full control over usage and associated costs.
+=== Description ===
 
-## Description
+A WordPress plugin that uses OpenAI and DeepSeek to generate content from CSV topics. Users add their own API keys, controlling usage and costs.
+
+=== Foss Engine: Your AI Content Writing Companion ===
 
 Foss Engine is a powerful WordPress plugin that automates your content creation process by leveraging OpenAI and DeepSeek's API. This plugin allows you to upload a CSV file containing topics, generate content for each topic using OpenAI, edit the generated content, and publish it as WordPress posts or pages. Users must provide their own API keys for content generation, giving them full control over usage and associated costs.
 
-### Features
+=== Features ===
 
 - **OpenAI and DeepSeek API Integration**: Connect to OpenAI or DeepSeek API to generate high-quality content
 - **CSV Import**: Easily upload a CSV file with your desired topics
@@ -182,7 +186,7 @@ The plugin processes content generation requests securely and only when initiate
 
 API keys are stored locally on your WordPress site and not transmitted to any third party beyond OpenAI or DeepSeek, depending on your selection.
 
-## Changelog
+=== Changelog ===
 
 ### 1.0.3
 
