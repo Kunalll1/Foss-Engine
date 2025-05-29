@@ -15,12 +15,12 @@ if (!defined('WPINC')) {
 /**
  * Add the AJAX action to get topic content
  */
-add_action('wp_ajax_get_topic_content', 'foss_engine_get_topic_content');
+add_action('wp_ajax_get_topic_content', 'fossdin_get_topic_content');
 
 /**
  * Handle the AJAX request to get topic content
  */
-function foss_engine_get_topic_content()
+function fossdin_get_topic_content()
 {
     // Verify the nonce
     check_ajax_referer('foss_engine_nonce', 'nonce');
@@ -103,8 +103,8 @@ function foss_engine_get_topic_content()
 /**
  * Register the AJAX handler
  */
-function foss_engine_register_ajax_handlers()
+function fossdin_register_ajax_handlers()
 {
     // No need to register the handler here as we're using the wp_ajax_ hook directly
 }
-add_action('init', 'foss_engine_register_ajax_handlers');
+add_action('init', 'fossdin_register_ajax_handlers');
