@@ -141,7 +141,7 @@ class fossdein
     private function fossdein_set_locale()
     {
         $plugin_i18n = new fossdein_i18n();
-        $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
+        $this->loader->add_action('plugins_loaded', $plugin_i18n, 'fossdin_load_plugin_textdomain');
     }
 
     /**
