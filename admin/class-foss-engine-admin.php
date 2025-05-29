@@ -177,7 +177,7 @@ class fossdein_admin
 
         // Test the connection
         $openai = new fossdein_openai($api_key);
-        $result = $openai->test_connection();
+        $result = $openai->fossdein_verify_api_connection();
 
         if (is_wp_error($result)) {
             $this->fossdein_send_error_response($result);
@@ -550,7 +550,7 @@ class fossdein_admin
         // Generate content using the selected AI provider
         try {
             $openai = new fossdein_openai();
-            $result = $openai->generate_content($topic->topic);
+            $result = $openai->fossdein_create_ai_content($topic->topic);
 
             if (is_wp_error($result)) {
                 $this->fossdein_send_error_response($result);

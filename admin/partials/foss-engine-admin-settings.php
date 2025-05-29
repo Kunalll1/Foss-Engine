@@ -30,7 +30,7 @@ $deepseek_model = get_option('foss_engine_deepseek_model', 'deepseek-chat');
 $connection_status = '';
 if ($ai_provider === 'openai' && !empty($openai_key)) {
     $openai = new fossdein_openai($openai_key);
-    $test_result = $openai->test_connection();
+    $test_result = $openai->fossdein_verify_api_connection();
 
     if (is_wp_error($test_result)) {
         $connection_status = '<span class="connection-error">' . esc_html__('Connection Error: ', 'foss-engine') . esc_html($test_result->get_error_message()) . '</span>';

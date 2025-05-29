@@ -93,7 +93,7 @@ class fossdein_openai
      * @param    string    $topic    The topic to generate content for.
      * @return   array|WP_Error    Generated content or error.
      */
-    public function generate_content($topic)
+    public function fossdein_create_ai_content($topic)
     {
         // Check which provider to use
         if ($this->provider === 'deepseek') {
@@ -413,7 +413,7 @@ class fossdein_openai
      * @since    1.0.2
      * @return   boolean|WP_Error    True if successful, WP_Error otherwise.
      */
-    public function test_connection()
+    public function fossdein_verify_api_connection()
     {
         // Check which provider to use
         if ($this->provider === 'deepseek') {
