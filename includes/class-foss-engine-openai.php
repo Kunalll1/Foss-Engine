@@ -97,9 +97,9 @@ class fossdein_openai
     {
         // Check which provider to use
         if ($this->provider === 'deepseek') {
-            return $this->generate_content_deepseek($topic);
+            return $this->fossdin_generate_content_deepseek($topic);
         } else {
-            return $this->generate_content_openai($topic);
+            return $this->fossdin_generate_content_openai($topic);
         }
     }
 
@@ -110,7 +110,7 @@ class fossdein_openai
      * @param    string    $topic    The topic to generate content for.
      * @return   array|WP_Error    Generated content or error.
      */
-    private function generate_content_openai($topic)
+    private function fossdin_generate_content_openai($topic)
     {
         if (empty($this->api_key)) {
             return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'foss-engine'));
@@ -281,7 +281,7 @@ class fossdein_openai
      * @param    string    $topic    The topic to generate content for.
      * @return   array|WP_Error    Generated content or error.
      */
-    private function generate_content_deepseek($topic)
+    private function fossdin_generate_content_deepseek($topic)
     {
         if (empty($this->deepseek_key)) {
             return new WP_Error('missing_api_key', __('Deepseek API key is not set.', 'foss-engine'));
@@ -417,9 +417,9 @@ class fossdein_openai
     {
         // Check which provider to use
         if ($this->provider === 'deepseek') {
-            return $this->test_connection_deepseek();
+            return $this->fossdin_test_connection_deepseek();
         } else {
-            return $this->test_connection_openai();
+            return $this->fossdin_test_connection_openai();
         }
     }
 
@@ -429,7 +429,7 @@ class fossdein_openai
      * @since    1.0.2
      * @return   boolean|WP_Error    True if successful, WP_Error otherwise.
      */
-    private function test_connection_openai()
+    private function fossdin_test_connection_openai()
     {
         if (empty($this->api_key)) {
             return new WP_Error('missing_api_key', __('OpenAI API key is not set.', 'foss-engine'));
@@ -516,7 +516,7 @@ class fossdein_openai
      * @since    1.0.2
      * @return   boolean|WP_Error    True if successful, WP_Error otherwise.
      */
-    private function test_connection_deepseek()
+    private function fossdin_test_connection_deepseek()
     {
         if (empty($this->deepseek_key)) {
             return new WP_Error('missing_api_key', __('Deepseek API key is not set.', 'foss-engine'));
