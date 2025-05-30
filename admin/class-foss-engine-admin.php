@@ -25,7 +25,7 @@ class fossdein_admin
     /**
      * Register stylesheets for admin area
      */
-    public function enqueue_styles()
+    public function fossdein_enqueue_styles()
     {
         // Make sure we're in the admin area
         if (!is_admin()) {
@@ -44,7 +44,7 @@ class fossdein_admin
     /**
      * Register JavaScript for admin area
      */
-    public function enqueue_scripts()
+    public function fossdein_enqueue_scripts()
     {
         // Make sure we're in the admin area
         if (!is_admin()) {
@@ -150,7 +150,7 @@ class fossdein_admin
     /**
      * Test OpenAI API connection via AJAX
      */
-    public function test_openai_connection()
+    public function fossdein_test_openai_connection()
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_test_connection', 'nonce', false)) {
@@ -191,7 +191,7 @@ class fossdein_admin
     /**
      * Add admin menu pages
      */
-    public function add_plugin_admin_menu()
+    public function fossdein_admin_menu()
     {
         // Main menu
         add_menu_page(
@@ -199,7 +199,7 @@ class fossdein_admin
             esc_html__('Foss Engine', 'foss-engine'),
             'manage_options',
             $this->plugin_name,
-            array($this, 'display_plugin_setup_page'),
+            array($this, 'fossdein_setup_page'),
             plugin_dir_url(__DIR__) . 'icon.png',
             30
         );
@@ -211,7 +211,7 @@ class fossdein_admin
             esc_html__('Settings', 'foss-engine'),
             'manage_options',
             $this->plugin_name . '-settings',
-            array($this, 'display_plugin_settings_page')
+            array($this, 'fossdein_settings_page')
         );
 
         // Topic management submenu
@@ -221,14 +221,14 @@ class fossdein_admin
             esc_html__('Topics', 'foss-engine'),
             'manage_options',
             $this->plugin_name . '-topics',
-            array($this, 'display_plugin_topics_page')
+            array($this, 'fossdein_topics_page')
         );
     }
 
     /**
      * Add settings action link to plugins page
      */
-    public function add_action_links($links)
+    public function fossdein_action_links($links)
     {
         // Verify nonce when processing admin actions
         if (isset($_GET['_wpnonce']) && !wp_verify_nonce(sanitize_key($_GET['_wpnonce']), 'plugin_action')) {
@@ -245,7 +245,7 @@ class fossdein_admin
     /**
      * Display admin pages - each loads a partial template
      */
-    public function display_plugin_setup_page()
+    public function fossdein_setup_page()
     {
         // Verify user has permission to access this page
         if (!current_user_can('manage_options')) {
@@ -255,7 +255,7 @@ class fossdein_admin
         include_once('partials/foss-engine-admin-display.php');
     }
 
-    public function display_plugin_settings_page()
+    public function fossdein_settings_page()
     {
         // Verify user has permission to access this page
         if (!current_user_can('manage_options')) {
@@ -274,7 +274,7 @@ class fossdein_admin
         include_once('partials/foss-engine-admin-settings.php');
     }
 
-    public function display_plugin_topics_page()
+    public function fossdein_topics_page()
     {
         // Verify user has permission to access this page
         if (!current_user_can('manage_options')) {
@@ -287,14 +287,14 @@ class fossdein_admin
     /**
      * Register plugin settings
      */
-    public function options_update()
+    public function fossdein_options_update()
     {
         // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingDynamic -- sanitize_callback is always set and safe.
         register_setting(
             $this->plugin_name,
             'foss_engine_openai_key',
             array(
-                'sanitize_callback' => array($this, 'sanitize_api_key'),
+                'sanitize_callback' => array($this, 'fossdein_sanitize_api_key'),
                 'default' => '',
             )
         );
@@ -324,7 +324,7 @@ class fossdein_admin
             $this->plugin_name,
             'foss_engine_provider',
             array(
-                'sanitize_callback' => array($this, 'sanitize_provider'),
+                'sanitize_callback' => array($this, 'fossdein_sanitize_provider'),
                 'default' => 'openai'
             )
         );
@@ -353,7 +353,7 @@ class fossdein_admin
     /**
      * Sanitize API key setting
      */
-    public function sanitize_api_key($input)
+    public function fossdein_sanitize_api_key($input)
     {
         return sanitize_text_field($input);
     }
@@ -361,7 +361,7 @@ class fossdein_admin
     /**
      * Sanitize provider setting
      */
-    public function sanitize_provider($input)
+    public function fossdein_sanitize_provider($input)
     {
         $input = sanitize_text_field($input);
 
@@ -397,7 +397,7 @@ class fossdein_admin
     /**
      * Handle CSV file upload for importing topics
      */
-    public function handle_csv_upload()
+    public function fossdein_csv_upload()
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
@@ -510,7 +510,7 @@ class fossdein_admin
     /**
      * Generate content for a topic
      */
-    public function generate_content()
+    public function fossdein_generate_topic_content()
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
@@ -593,7 +593,7 @@ class fossdein_admin
     /**
      * Save edited content
      */
-    public function save_content()
+    public function fossdein_save_edited_content()
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
@@ -658,7 +658,7 @@ class fossdein_admin
     /**
      * Publish content as a post or page
      */
-    public function publish_content()
+    public function fossdein_choose_content_type()
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
@@ -757,15 +757,15 @@ class fossdein_admin
     /**
      * Regenerate content alias - calls generate_content()
      */
-    public function regenerate_content()
+    public function fossdein_regenerate_content()
     {
-        $this->generate_content();
+        $this->fossdein_generate_topic_content();
     }
 
     /**
      * Get topic content for editing
      */
-    public function get_topic_content()
+    public function fossdein_content_editing()
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {
@@ -805,7 +805,7 @@ class fossdein_admin
     /**
      * Get pending topics
      */
-    public function get_pending_topics()
+    public function fossdein_pending_topics()
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('foss_engine_nonce', 'nonce', false)) {

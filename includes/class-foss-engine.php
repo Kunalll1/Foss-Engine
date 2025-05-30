@@ -155,28 +155,28 @@ class fossdein
     {
         $plugin_admin = new fossdein_admin($this->get_plugin_name(), $this->get_version());
 
-        $this->loader->fossdein_register_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
-        $this->loader->fossdein_register_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        $this->loader->fossdein_register_action('admin_enqueue_scripts', $plugin_admin, 'fossdein_enqueue_styles');
+        $this->loader->fossdein_register_action('admin_enqueue_scripts', $plugin_admin, 'fossdein_enqueue_scripts');
 
         // Add menu item
-        $this->loader->fossdein_register_action('admin_menu', $plugin_admin, 'add_plugin_admin_menu');
+        $this->loader->fossdein_register_action('admin_menu', $plugin_admin, 'fossdein_admin_menu');
 
         // Add Settings link to the plugin
         $plugin_basename = plugin_basename(plugin_dir_path(__DIR__) . $this->plugin_name . '.php');
-        $this->loader->fossdein_register_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links');
+        $this->loader->fossdein_register_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'fossdein_action_links');
 
         // Save/Update our plugin options
-        $this->loader->fossdein_register_action('admin_init', $plugin_admin, 'options_update');
+        $this->loader->fossdein_register_action('admin_init', $plugin_admin, 'fossdein_options_update');
 
         // AJAX handlers
-        $this->loader->fossdein_register_action('wp_ajax_upload_csv', $plugin_admin, 'handle_csv_upload');
-        $this->loader->fossdein_register_action('wp_ajax_generate_content', $plugin_admin, 'generate_content');
-        $this->loader->fossdein_register_action('wp_ajax_save_content', $plugin_admin, 'save_content');
-        $this->loader->fossdein_register_action('wp_ajax_publish_content', $plugin_admin, 'publish_content');
-        $this->loader->fossdein_register_action('wp_ajax_regenerate_content', $plugin_admin, 'regenerate_content');
-        $this->loader->fossdein_register_action('wp_ajax_get_pending_topics', $plugin_admin, 'get_pending_topics');
-        $this->loader->fossdein_register_action('wp_ajax_test_openai_connection', $plugin_admin, 'test_openai_connection');
-        $this->loader->fossdein_register_action('wp_ajax_get_topic_content', $plugin_admin, 'get_topic_content');
+        $this->loader->fossdein_register_action('wp_ajax_upload_csv', $plugin_admin, 'fossdein_csv_upload');
+        $this->loader->fossdein_register_action('wp_ajax_generate_content', $plugin_admin, 'fossdein_generate_topic_content');
+        $this->loader->fossdein_register_action('wp_ajax_save_content', $plugin_admin, 'fossdein_save_edited_content');
+        $this->loader->fossdein_register_action('wp_ajax_publish_content', $plugin_admin, 'fossdein_choose_content_type');
+        $this->loader->fossdein_register_action('wp_ajax_regenerate_content', $plugin_admin, 'fossdein_regenerate_content');
+        $this->loader->fossdein_register_action('wp_ajax_get_pending_topics', $plugin_admin, 'fossdein_pending_topics');
+        $this->loader->fossdein_register_action('wp_ajax_test_openai_connection', $plugin_admin, 'fossdein_test_openai_connection');
+        $this->loader->fossdein_register_action('wp_ajax_get_topic_content', $plugin_admin, 'fossdein_content_editing');
     }
 
     /**
