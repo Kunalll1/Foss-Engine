@@ -20,7 +20,7 @@
  * @subpackage foss_engine/includes
  * @author     Designomate help@fossengine.com
  */
-class fossdein_deactivator
+class fossenginedein_deactivator
 {
 
     /**

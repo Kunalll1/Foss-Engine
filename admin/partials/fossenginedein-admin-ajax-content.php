@@ -15,20 +15,20 @@ if (!defined('WPINC')) {
 /**
  * Add the AJAX action to get topic content
  */
-add_action('wp_ajax_get_topic_content', 'fossdein_get_topic_content');
+add_action('wp_ajax_get_topic_content', 'fossenginedein_get_topic_content');
 
 /**
  * Handle the AJAX request to get topic content
  */
-function fossdein_get_topic_content()
+function fossenginedein_get_topic_content()
 {
     // Verify the nonce
-    check_ajax_referer('foss_engine_nonce', 'nonce');
+    check_ajax_referer('fossenginedein_nonce', 'nonce');
 
     // Check permissions
     if (!current_user_can('manage_options')) {
         wp_send_json_error(array(
-            'message' => __('You do not have permission to perform this action.', 'foss-engine')
+            'message' => __('You do not have permission to perform this action.', 'fossenginedein')
         ));
     }
 
@@ -38,23 +38,23 @@ function fossdein_get_topic_content()
     // Stronger validation
     if ($topic_id <= 0 || $topic_id > PHP_INT_MAX) {
         wp_send_json_error(array(
-            'message' => __('Invalid topic ID provided.', 'foss-engine')
+            'message' => __('Invalid topic ID provided.', 'fossenginedein')
         ));
         exit; // Ensure execution stops here
     }
 
     try {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'foss_engine_topics';
+        $table_name = $wpdb->prefix . 'fossenginedein_topics';
 
         // Check if table exists first
-        if (!function_exists('foss_engine_table_exists')) {
-            require_once plugin_dir_path(dirname(dirname(__FILE__))) . 'includes/class-foss-engine.php';
+        if (!function_exists('fossenginedein_table_exists')) {
+            require_once plugin_dir_path(dirname(dirname(__FILE__))) . 'includes/class-fossenginedein.php';
         }
 
-        if (!foss_engine_table_exists('foss_engine_topics')) {
+        if (!fossenginedein_table_exists('fossenginedein_topics')) {
             wp_send_json_error(array(
-                'message' => __('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine')
+                'message' => __('Database table not found. Please deactivate and reactivate the plugin.', 'fossenginedein')
             ));
             exit;
         }
@@ -69,7 +69,7 @@ function fossdein_get_topic_content()
 
         if (!$topic) {
             wp_send_json_error(array(
-                'message' => __('Topic not found.', 'foss-engine')
+                'message' => __('Topic not found.', 'fossenginedein')
             ));
         }
 
@@ -77,7 +77,7 @@ function fossdein_get_topic_content()
         if ($wpdb->last_error) {
             // error_log('Foss Engine - Database Error: ' . $wpdb->last_error);
             wp_send_json_error(array(
-                'message' => __('Database error: ', 'foss-engine') . $wpdb->last_error
+                'message' => __('Database error: ', 'fossenginedein') . $wpdb->last_error
             ));
         }
 
@@ -95,7 +95,7 @@ function fossdein_get_topic_content()
     } catch (Exception $e) {
         // error_log('Foss Engine - Exception in get_topic_content: ' . $e->getMessage());
         wp_send_json_error(array(
-            'message' => __('An unexpected error occurred: ', 'foss-engine') . $e->getMessage()
+            'message' => __('An unexpected error occurred: ', 'fossenginedein') . $e->getMessage()
         ));
     }
 }
@@ -103,8 +103,8 @@ function fossdein_get_topic_content()
 /**
  * Register the AJAX handler
  */
-function fossdein_register_ajax_handlers()
+function fossenginedein_register_ajax_handlers()
 {
     // No need to register the handler here as we're using the wp_ajax_ hook directly
 }
-add_action('init', 'fossdein_register_ajax_handlers');
+add_action('init', 'fossenginedein_register_ajax_handlers');

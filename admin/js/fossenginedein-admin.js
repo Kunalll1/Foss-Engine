@@ -9,7 +9,7 @@
       var fileInput = $("#csv_file")[0];
       if (fileInput.files.length === 0) {
         alert(
-          foss_engine_ajax.i18n.error +
+          fossenginedein_ajax.i18n.error +
             ": " +
             "Please select a CSV file to upload."
         );
@@ -18,14 +18,14 @@
 
       var formData = new FormData();
       formData.append("action", "upload_csv");
-      formData.append("nonce", foss_engine_ajax.nonce);
+      formData.append("nonce", fossenginedein_ajax.nonce);
       formData.append("csv_file", fileInput.files[0]);
 
       $("#upload-progress").show();
       $("#upload-results").hide();
 
       $.ajax({
-        url: foss_engine_ajax.ajax_url,
+        url: fossenginedein_ajax.ajax_url,
         type: "POST",
         data: formData,
         contentType: false,
@@ -77,15 +77,15 @@
         .prop("disabled", true)
         .html(
           '<span class="spinner is-active" style="float: none; margin-top: 0;"></span> ' +
-            foss_engine_ajax.i18n.generating
+            fossenginedein_ajax.i18n.generating
         );
 
       $.ajax({
-        url: foss_engine_ajax.ajax_url,
+        url: fossenginedein_ajax.ajax_url,
         type: "POST",
         data: {
           action: "generate_content",
-          nonce: foss_engine_ajax.nonce,
+          nonce: fossenginedein_ajax.nonce,
           topic_id: topicId,
         },
         success: function (response) {
@@ -109,7 +109,7 @@
 
             // Show success message
             showNotification(
-              foss_engine_ajax.i18n.success,
+              fossenginedein_ajax.i18n.success,
               response.data.message,
               "success"
             );
@@ -118,7 +118,7 @@
             button.prop("disabled", false).text("Generate");
             // Show error message
             showNotification(
-              foss_engine_ajax.i18n.error,
+              fossenginedein_ajax.i18n.error,
               response.data.message,
               "error"
             );
@@ -156,7 +156,7 @@
 
           // Also show in the notification
           showNotification(
-            foss_engine_ajax.i18n.error,
+            fossenginedein_ajax.i18n.error,
             "Content generation failed. See alert for details.",
             "error"
           );
@@ -166,7 +166,7 @@
 
     // Regenerate content
     $(".topics-table").on("click", ".regenerate-content-button", function () {
-      if (!confirm(foss_engine_ajax.i18n.confirm_regenerate)) {
+      if (!confirm(fossenginedein_ajax.i18n.confirm_regenerate)) {
         return;
       }
 
@@ -178,15 +178,15 @@
         .prop("disabled", true)
         .html(
           '<span class="spinner is-active" style="float: none; margin-top: 0;"></span> ' +
-            foss_engine_ajax.i18n.generating
+            fossenginedein_ajax.i18n.generating
         );
 
       $.ajax({
-        url: foss_engine_ajax.ajax_url,
+        url: fossenginedein_ajax.ajax_url,
         type: "POST",
         data: {
           action: "regenerate_content",
-          nonce: foss_engine_ajax.nonce,
+          nonce: fossenginedein_ajax.nonce,
           topic_id: topicId,
         },
         success: function (response) {
@@ -196,14 +196,14 @@
           if (response.success) {
             // Show success message
             showNotification(
-              foss_engine_ajax.i18n.success,
+              fossenginedein_ajax.i18n.success,
               response.data.message,
               "success"
             );
           } else {
             // Show error message
             showNotification(
-              foss_engine_ajax.i18n.error,
+              fossenginedein_ajax.i18n.error,
               response.data.message,
               "error"
             );
@@ -214,7 +214,7 @@
           button.prop("disabled", false).text("Regenerate");
           // Show error message
           showNotification(
-            foss_engine_ajax.i18n.error,
+            fossenginedein_ajax.i18n.error,
             "An unexpected error occurred. Please try again.",
             "error"
           );
@@ -239,18 +239,18 @@
       ) {
         tinymce
           .get("topic-content-editor")
-          .setContent("<p>" + foss_engine_ajax.i18n.loading + "</p>");
+          .setContent("<p>" + fossenginedein_ajax.i18n.loading + "</p>");
       } else {
-        $("#topic-content-editor").val(foss_engine_ajax.i18n.loading);
+        $("#topic-content-editor").val(fossenginedein_ajax.i18n.loading);
       }
 
       // Fetch the content from the database
       $.ajax({
-        url: foss_engine_ajax.ajax_url,
+        url: fossenginedein_ajax.ajax_url,
         type: "POST",
         data: {
           action: "get_topic_content",
-          nonce: foss_engine_ajax.nonce,
+          nonce: fossenginedein_ajax.nonce,
           topic_id: topicId,
         },
         success: function (response) {
@@ -362,14 +362,14 @@
 
       // Disable button and show saving state
       var button = $(this);
-      button.prop("disabled", true).text(foss_engine_ajax.i18n.saving);
+      button.prop("disabled", true).text(fossenginedein_ajax.i18n.saving);
 
       $.ajax({
-        url: foss_engine_ajax.ajax_url,
+        url: fossenginedein_ajax.ajax_url,
         type: "POST",
         data: {
           action: "save_content",
-          nonce: foss_engine_ajax.nonce,
+          nonce: fossenginedein_ajax.nonce,
           topic_id: topicId,
           content: content,
         },
@@ -382,14 +382,14 @@
             $("#content-editor-modal").hide();
             // Show success message
             showNotification(
-              foss_engine_ajax.i18n.success,
+              fossenginedein_ajax.i18n.success,
               response.data.message,
               "success"
             );
           } else {
             // Show error message
             showNotification(
-              foss_engine_ajax.i18n.error,
+              fossenginedein_ajax.i18n.error,
               response.data.message,
               "error"
             );
@@ -400,7 +400,7 @@
           button.prop("disabled", false).text("Save Content");
           // Show error message
           showNotification(
-            foss_engine_ajax.i18n.error,
+            fossenginedein_ajax.i18n.error,
             "An unexpected error occurred while saving content.",
             "error"
           );
@@ -427,14 +427,14 @@
 
       // Disable button and show publishing state
       var button = $(this);
-      button.prop("disabled", true).text(foss_engine_ajax.i18n.publishing);
+      button.prop("disabled", true).text(fossenginedein_ajax.i18n.publishing);
 
       $.ajax({
-        url: foss_engine_ajax.ajax_url,
+        url: fossenginedein_ajax.ajax_url,
         type: "POST",
         data: {
           action: "publish_content",
-          nonce: foss_engine_ajax.nonce,
+          nonce: fossenginedein_ajax.nonce,
           topic_id: topicId,
           publish_type: publishType,
         },
@@ -461,14 +461,14 @@
 
             // Show success message
             showNotification(
-              foss_engine_ajax.i18n.success,
+              fossenginedein_ajax.i18n.success,
               response.data.message,
               "success"
             );
           } else {
             // Show error message
             showNotification(
-              foss_engine_ajax.i18n.error,
+              fossenginedein_ajax.i18n.error,
               response.data.message,
               "error"
             );
@@ -481,7 +481,7 @@
           $("#publish-options-modal").hide();
           // Show error message
           showNotification(
-            foss_engine_ajax.i18n.error,
+            fossenginedein_ajax.i18n.error,
             "An unexpected error occurred while publishing content.",
             "error"
           );
@@ -528,7 +528,7 @@
           .prop("disabled", false)
           .text("Generate Content for All Pending Topics");
         showNotification(
-          foss_engine_ajax.i18n.success,
+          fossenginedein_ajax.i18n.success,
           "Completed generating content for all pending topics.",
           "success"
         );
@@ -544,15 +544,15 @@
         .prop("disabled", true)
         .html(
           '<span class="spinner is-active" style="float: none; margin-top: 0;"></span> ' +
-            foss_engine_ajax.i18n.generating
+            fossenginedein_ajax.i18n.generating
         );
 
       $.ajax({
-        url: foss_engine_ajax.ajax_url,
+        url: fossenginedein_ajax.ajax_url,
         type: "POST",
         data: {
           action: "generate_content",
-          nonce: foss_engine_ajax.nonce,
+          nonce: fossenginedein_ajax.nonce,
           topic_id: topicId,
         },
         success: function (response) {
@@ -598,8 +598,8 @@
     // Helper function to show notifications
     function showNotification(title, message, type) {
       // Create notification container if it doesn't exist
-      if ($("#foss-engine-notifications").length === 0) {
-        $("body").append('<div id="foss-engine-notifications"></div>');
+      if ($("#fossenginedein-notifications").length === 0) {
+        $("body").append('<div id="fossenginedein-notifications"></div>');
       }
 
       // Create notification element
@@ -621,7 +621,7 @@
       );
 
       // Add to container
-      $("#foss-engine-notifications").append(notification);
+      $("#fossenginedein-notifications").append(notification);
 
       // Auto-remove after 5 seconds
       setTimeout(function () {
@@ -642,7 +642,7 @@
 
     // Hook into the WordPress get_topic_content AJAX handler
     $(document).on(
-      "foss-engine-get-topic-content-response",
+      "fossenginedein-get-topic-content-response",
       function (e, response) {
         if (response.success) {
           // Set the content in the editor

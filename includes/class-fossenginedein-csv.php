@@ -20,7 +20,7 @@
  * @subpackage foss_engine/includes
  * @author     Designomate help@fossengine.com
  */
-class fossdein_csv
+class fossenginedein_csv
 {
 
     /**
@@ -30,38 +30,38 @@ class fossdein_csv
      * @param    string    $file_path    Path to the uploaded CSV file.
      * @return   array|WP_Error          Array of topics or WP_Error on failure.
      */
-    public function fossdein_process_csv($file_path)
+    public function fossenginedein_process_csv($file_path)
     {
         // File validation - existence and permissions
         if (!file_exists($file_path) || !is_readable($file_path)) {
-            return new WP_Error('file_not_found', __('The uploaded CSV file could not be found or is not readable.', 'foss-engine'));
+            return new WP_Error('file_not_found', __('The uploaded CSV file could not be found or is not readable.', 'fossenginedein'));
         }
 
         // Additional file validation - check file type and extension
         $file_info = wp_check_filetype(basename($file_path));
         if ($file_info['ext'] !== 'csv') {
-            return new WP_Error('invalid_file_type', __('The uploaded file is not a valid CSV file.', 'foss-engine'));
+            return new WP_Error('invalid_file_type', __('The uploaded file is not a valid CSV file.', 'fossenginedein'));
         }
 
         // Size validation
         $filesize = filesize($file_path);
-        $max_size = apply_filters('foss_engine_max_csv_size', 1048576); // 1MB default
+        $max_size = apply_filters('fossenginedein_max_csv_size', 1048576); // 1MB default
 
         if ($filesize <= 0) {
-            return new WP_Error('empty_file', __('The uploaded CSV file is empty.', 'foss-engine'));
+            return new WP_Error('empty_file', __('The uploaded CSV file is empty.', 'fossenginedein'));
         }
 
         if ($filesize > $max_size) {
             return new WP_Error('file_too_large', sprintf(
                 /* translators: %s: maximum allowed file size (e.g. "2 MB") */
-                __('The uploaded CSV file exceeds the maximum allowed size of %s.', 'foss-engine'),
+                __('The uploaded CSV file exceeds the maximum allowed size of %s.', 'fossenginedein'),
                 size_format($max_size)
             ));
         }
 
         $topics = array();
         $line_count = 0;
-        $max_topics = apply_filters('foss_engine_max_csv_topics', 100);
+        $max_topics = apply_filters('fossenginedein_max_csv_topics', 100);
 
         // Use WP_Filesystem
         global $wp_filesystem;
@@ -73,14 +73,14 @@ class fossdein_csv
         try {
             $file_contents = $wp_filesystem->get_contents($file_path);
             if ($file_contents === false) {
-                return new WP_Error('file_open_error', __('Could not open the CSV file.', 'foss-engine'));
+                return new WP_Error('file_open_error', __('Could not open the CSV file.', 'fossenginedein'));
             }
 
             // Convert file contents into lines
             $lines = preg_split('/\r\n|\r|\n/', $file_contents);
 
             if (empty($lines) || !is_array($lines)) {
-                return new WP_Error('csv_read_error', __('Could not read the CSV file.', 'foss-engine'));
+                return new WP_Error('csv_read_error', __('Could not read the CSV file.', 'fossenginedein'));
             }
 
             // Parse CSV lines
@@ -93,9 +93,9 @@ class fossdein_csv
             // If it's not a header, add it to topics
             if (!$has_header && count($topics) < $max_topics) {
                 if (count($first_row) === 1 && !empty(trim($first_row[0]))) {
-                    $topics[] = $this->fossdein_sanitize_topic(trim($first_row[0]));
+                    $topics[] = $this->fossenginedein_sanitize_topic(trim($first_row[0]));
                 } elseif (count($first_row) > 1 && !empty(trim($first_row[0]))) {
-                    $topics[] = $this->fossdein_sanitize_topic(trim($first_row[0]));
+                    $topics[] = $this->fossenginedein_sanitize_topic(trim($first_row[0]));
                 }
             }
 
@@ -106,9 +106,9 @@ class fossdein_csv
 
                 if (!empty($row)) {
                     if (count($row) === 1 && !empty(trim($row[0]))) {
-                        $topics[] = $this->fossdein_sanitize_topic(trim($row[0]));
+                        $topics[] = $this->fossenginedein_sanitize_topic(trim($row[0]));
                     } elseif (count($row) > 1 && !empty(trim($row[0]))) {
-                        $topics[] = $this->fossdein_sanitize_topic(trim($row[0]));
+                        $topics[] = $this->fossenginedein_sanitize_topic(trim($row[0]));
                     }
                 }
 
@@ -122,7 +122,7 @@ class fossdein_csv
 
         // Final validation
         if (empty($topics)) {
-            return new WP_Error('no_topics', __('No valid topics were found in the CSV file.', 'foss-engine'));
+            return new WP_Error('no_topics', __('No valid topics were found in the CSV file.', 'fossenginedein'));
         }
 
         // Security measure: limit number of topics
@@ -140,7 +140,7 @@ class fossdein_csv
      * @param    string    $topic    The topic to sanitize
      * @return   string              Sanitized topic
      */
-    private function fossdein_sanitize_topic($topic)
+    private function fossenginedein_sanitize_topic($topic)
     {
         // Apply WordPress sanitization
         $topic = sanitize_text_field($topic);
@@ -149,7 +149,7 @@ class fossdein_csv
         $topic = wp_strip_all_tags($topic);
 
         // Enforce length limits
-        $max_length = apply_filters('foss_engine_max_topic_length', 255);
+        $max_length = apply_filters('fossenginedein_max_topic_length', 255);
         if (strlen($topic) > $max_length) {
             $topic = substr($topic, 0, $max_length - 3) . '...';
         }
@@ -163,24 +163,24 @@ class fossdein_csv
      * @param array $topics Array of topic strings to save
      * @return int|WP_Error Number of topics saved or error
      */
-    public function fossdein_save_topics($topics)
+    public function fossenginedein_save_topics($topics)
     {
         global $wpdb;
 
         // Security: validate input
         if (!is_array($topics)) {
-            return new WP_Error('invalid_input', __('Invalid topics data provided.', 'foss-engine'));
+            return new WP_Error('invalid_input', __('Invalid topics data provided.', 'fossenginedein'));
         }
 
-        $table_name = $wpdb->prefix . 'foss_engine_topics';
+        $table_name = $wpdb->prefix . 'fossenginedein_topics';
 
         // Check if table exists first
-        if (!function_exists('foss_engine_table_exists')) {
-            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine.php';
+        if (!function_exists('fossenginedein_table_exists')) {
+            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-fossenginedein.php';
         }
 
-        if (!foss_engine_table_exists('foss_engine_topics')) {
-            return new WP_Error('table_not_found', __('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
+        if (!fossenginedein_table_exists('fossenginedein_topics')) {
+            return new WP_Error('table_not_found', __('Database table not found. Please deactivate and reactivate the plugin.', 'fossenginedein'));
         }
 
         $count = 0;
@@ -219,7 +219,7 @@ class fossdein_csv
                     $count++;
                 } else {
                     // Log the error
-                    error_log("FOSS Engine: Failed to insert topic: " . $wpdb->last_error);
+                    error_log("FossEngineDein: Failed to insert topic: " . $wpdb->last_error);
                 }
             }
 
@@ -232,7 +232,7 @@ class fossdein_csv
         }
 
         // Clear any cached topics
-        wp_cache_delete('pending_topics', 'foss_engine');
+        wp_cache_delete('pending_topics', 'fossenginedein');
 
         return $count;
     }

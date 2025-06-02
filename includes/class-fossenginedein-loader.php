@@ -21,7 +21,7 @@
  * @subpackage WP_Content_Generator/includes
  * @author     Designomate help@fossengine.com
  */
-class fossdein_loader
+class fossenginedein_loader
 {
 
     /**
@@ -63,9 +63,9 @@ class fossdein_loader
      * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
      * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
      */
-    public function fossdein_register_action($hook, $component, $callback, $priority = 10, $accepted_args = 1)
+    public function fossenginedein_register_action($hook, $component, $callback, $priority = 10, $accepted_args = 1)
     {
-        $this->actions = $this->fossdein_store_hook($this->actions, $hook, $component, $callback, $priority, $accepted_args);
+        $this->actions = $this->fossenginedein_store_hook($this->actions, $hook, $component, $callback, $priority, $accepted_args);
     }
 
     /**
@@ -78,9 +78,9 @@ class fossdein_loader
      * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
      * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1
      */
-    public function fossdein_register_filter($hook, $component, $callback, $priority = 10, $accepted_args = 1)
+    public function fossenginedein_register_filter($hook, $component, $callback, $priority = 10, $accepted_args = 1)
     {
-        $this->filters = $this->fossdein_store_hook($this->filters, $hook, $component, $callback, $priority, $accepted_args);
+        $this->filters = $this->fossenginedein_store_hook($this->filters, $hook, $component, $callback, $priority, $accepted_args);
     }
 
     /**
@@ -97,7 +97,7 @@ class fossdein_loader
      * @param    int                  $accepted_args    The number of arguments that should be passed to the $callback.
      * @return   array                                  The collection of actions and filters registered with WordPress.
      */
-    private function fossdein_store_hook($hooks, $hook, $component, $callback, $priority, $accepted_args)
+    private function fossenginedein_store_hook($hooks, $hook, $component, $callback, $priority, $accepted_args)
     {
         $hooks[] = array(
             'hook'          => $hook,
@@ -115,7 +115,7 @@ class fossdein_loader
      *
      * @since    1.0.2
      */
-    public function fossdein_fa_run()
+    public function fossenginedein_fa_run()
     {
         foreach ($this->filters as $hook) {
             add_filter($hook['hook'], array($hook['component'], $hook['callback']), $hook['priority'], $hook['accepted_args']);

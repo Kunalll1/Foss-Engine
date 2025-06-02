@@ -16,29 +16,29 @@ if (!defined('WPINC')) {
 }
 
 // Check which provider is selected
-$ai_provider = get_option('foss_engine_provider', 'openai');
+$ai_provider = get_option('fossenginedein_provider', 'openai');
 
 // Check if the appropriate API key is set based on selected provider
 $api_key_set = false;
 $api_key_message = '';
 
 if ($ai_provider === 'openai') {
-    $openai_key = get_option('foss_engine_openai_key', '');
+    $openai_key = get_option('fossenginedein_openai_key', '');
     $api_key_set = !empty($openai_key);
     $api_key_message = 'OpenAI API key is not set. Please configure it in the';
 } else {
-    $deepseek_key = get_option('foss_engine_deepseek_key', '');
+    $deepseek_key = get_option('fossenginedein_deepseek_key', '');
     $api_key_set = !empty($deepseek_key);
     $api_key_message = 'Deepseek API key is not set. Please configure it in the';
 }
 
 // Get topics from database
 global $wpdb;
-$table_name = $wpdb->prefix . 'foss_engine_topics';
+$table_name = $wpdb->prefix . 'fossenginedein_topics';
 $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC");
 ?>
 
-<div class="wrap foss-engine-admin">
+<div class="wrap fossenginedein-admin">
     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
     <?php if (!$api_key_set): ?>
@@ -48,9 +48,9 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
                 // Create a single literal string with placeholders
                 $message_text = sprintf(
                     /* translators: %1$s is dynamic text like "OpenAI API key is not set...", %2$s is the Settings page URL */
-                    __('%1$s <a href="%2$s">Settings</a> page.', 'foss-engine'),
+                    __('%1$s <a href="%2$s">Settings</a> page.', 'fossenginedein'),
                     esc_html($api_key_message),
-                    esc_url(admin_url('admin.php?page=foss-engine-settings'))
+                    esc_url(admin_url('admin.php?page=fossenginedein-settings'))
                 );
 
                 // Safely output the string
@@ -65,28 +65,28 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
         </div>
     <?php endif; ?>
 
-    <div class="foss-engine-container">
-        <div class="foss-engine-section">
-            <h2><?php esc_html_e('Upload CSV File', 'foss-engine'); ?></h2>
+    <div class="fossenginedein-container">
+        <div class="fossenginedein-section">
+            <h2><?php esc_html_e('Upload CSV File', 'fossenginedein'); ?></h2>
             <form id="csv-upload-form" enctype="multipart/form-data">
                 <input type="file" name="csv_file" id="csv_file" accept=".csv" required />
-                <button type="submit" class="button button-primary"><?php esc_html_e('Upload and Import', 'foss-engine'); ?></button>
+                <button type="submit" class="button button-primary"><?php esc_html_e('Upload and Import', 'fossenginedein'); ?></button>
                 <div id="upload-progress" style="display: none;">
                     <span class="spinner is-active"></span>
-                    <span><?php esc_html_e('Uploading...', 'foss-engine'); ?></span>
+                    <span><?php esc_html_e('Uploading...', 'fossenginedein'); ?></span>
                 </div>
                 <div id="upload-results" class="upload-results"></div>
             </form>
         </div>
 
-        <div class="foss-engine-section">
-            <h2><?php esc_html_e('Manage Topics', 'foss-engine'); ?></h2>
+        <div class="fossenginedein-section">
+            <h2><?php esc_html_e('Manage Topics', 'fossenginedein'); ?></h2>
 
             <div id="topics-table-wrapper">
                 <div class="tablenav top">
                     <div class="alignleft actions bulkactions">
                         <button id="generate-all-button" class="button button-primary" <?php echo !$api_key_set ? 'disabled' : ''; ?>>
-                            <?php esc_html_e('Generate Content for All Pending Topics', 'foss-engine'); ?>
+                            <?php esc_html_e('Generate Content for All Pending Topics', 'fossenginedein'); ?>
                         </button>
                     </div>
                     <div class="tablenav-pages">
@@ -94,7 +94,7 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
                             <?php
                             echo esc_html(sprintf(
                                 /* translators: %s: number of topics */
-                                _n('%s topic', '%s topics', count($topics), 'foss-engine'),
+                                _n('%s topic', '%s topics', count($topics), 'fossenginedein'),
                                 number_format_i18n(count($topics))
                             ));
                             ?>
@@ -106,16 +106,16 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
                 <table class="wp-list-table widefat fixed striped topics-table">
                     <thead>
                         <tr>
-                            <th scope="col" class="manage-column column-topic"><?php esc_html_e('Topic', 'foss-engine'); ?></th>
-                            <th scope="col" class="manage-column column-status"><?php esc_html_e('Status', 'foss-engine'); ?></th>
-                            <th scope="col" class="manage-column column-date"><?php esc_html_e('Date Added', 'foss-engine'); ?></th>
-                            <th scope="col" class="manage-column column-actions"><?php esc_html_e('Actions', 'foss-engine'); ?></th>
+                            <th scope="col" class="manage-column column-topic"><?php esc_html_e('Topic', 'fossenginedein'); ?></th>
+                            <th scope="col" class="manage-column column-status"><?php esc_html_e('Status', 'fossenginedein'); ?></th>
+                            <th scope="col" class="manage-column column-date"><?php esc_html_e('Date Added', 'fossenginedein'); ?></th>
+                            <th scope="col" class="manage-column column-actions"><?php esc_html_e('Actions', 'fossenginedein'); ?></th>
                         </tr>
                     </thead>
                     <tbody id="the-list">
                         <?php if (empty($topics)): ?>
                             <tr class="no-items">
-                                <td class="colspanchange" colspan="4"><?php esc_html_e('No topics found. Upload a CSV file to get started.', 'foss-engine'); ?></td>
+                                <td class="colspanchange" colspan="4"><?php esc_html_e('No topics found. Upload a CSV file to get started.', 'fossenginedein'); ?></td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($topics as $topic): ?>
@@ -128,13 +128,13 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
                                             <?php
                                             switch ($topic->status) {
                                                 case 'pending':
-                                                    esc_html_e('Pending', 'foss-engine');
+                                                    esc_html_e('Pending', 'fossenginedein');
                                                     break;
                                                 case 'generated':
-                                                    esc_html_e('Generated', 'foss-engine');
+                                                    esc_html_e('Generated', 'fossenginedein');
                                                     break;
                                                 case 'published':
-                                                    esc_html_e('Published', 'foss-engine');
+                                                    esc_html_e('Published', 'fossenginedein');
                                                     break;
                                                 default:
                                                     echo esc_html(ucfirst($topic->status));
@@ -148,17 +148,17 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
                                     <td class="column-actions">
                                         <?php if ($topic->status === 'pending'): ?>
                                             <button class="button generate-content-button" data-id="<?php echo esc_attr($topic->id); ?>" <?php echo !$api_key_set ? 'disabled' : ''; ?>>
-                                                <?php esc_html_e('Generate', 'foss-engine'); ?>
+                                                <?php esc_html_e('Generate', 'fossenginedein'); ?>
                                             </button>
                                         <?php elseif ($topic->status === 'generated'): ?>
                                             <button class="button button-primary edit-content-button" data-id="<?php echo esc_attr($topic->id); ?>">
-                                                <?php esc_html_e('Edit', 'foss-engine'); ?>
+                                                <?php esc_html_e('Edit', 'fossenginedein'); ?>
                                             </button>
                                             <button class="button regenerate-content-button" data-id="<?php echo esc_attr($topic->id); ?>" <?php echo !$api_key_set ? 'disabled' : ''; ?>>
-                                                <?php esc_html_e('Regenerate', 'foss-engine'); ?>
+                                                <?php esc_html_e('Regenerate', 'fossenginedein'); ?>
                                             </button>
                                         <?php elseif ($topic->status === 'published'): ?>
-                                            <span class="published-status"><?php esc_html_e('Content Published', 'foss-engine'); ?></span>
+                                            <span class="published-status"><?php esc_html_e('Content Published', 'fossenginedein'); ?></span>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
@@ -175,12 +175,12 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close">&times;</span>
-                <h2 id="modal-title"><?php esc_html_e('Edit Content', 'foss-engine'); ?></h2>
+                <h2 id="modal-title"><?php esc_html_e('Edit Content', 'fossenginedein'); ?></h2>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="editing-topic-id" value="">
                 <div class="topic-title-container">
-                    <h3><?php esc_html_e('Topic:', 'foss-engine'); ?> <span id="editing-topic-title"></span></h3>
+                    <h3><?php esc_html_e('Topic:', 'fossenginedein'); ?> <span id="editing-topic-title"></span></h3>
                 </div>
                 <div class="content-editor-container">
                     <?php
@@ -197,9 +197,9 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="save-content-button" class="button button-primary"><?php esc_html_e('Save Content', 'foss-engine'); ?></button>
-                <button id="publish-content-button" class="button button-primary"><?php esc_html_e('Approve & Publish', 'foss-engine'); ?></button>
-                <button id="cancel-edit-button" class="button"><?php esc_html_e('Cancel', 'foss-engine'); ?></button>
+                <button id="save-content-button" class="button button-primary"><?php esc_html_e('Save Content', 'fossenginedein'); ?></button>
+                <button id="publish-content-button" class="button button-primary"><?php esc_html_e('Approve & Publish', 'fossenginedein'); ?></button>
+                <button id="cancel-edit-button" class="button"><?php esc_html_e('Cancel', 'fossenginedein'); ?></button>
             </div>
         </div>
     </div>
@@ -209,26 +209,26 @@ $topics = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC
         <div class="modal-content" style="width: 400px;">
             <div class="modal-header">
                 <span class="close">&times;</span>
-                <h2><?php esc_html_e('Publish Options', 'foss-engine'); ?></h2>
+                <h2><?php esc_html_e('Publish Options', 'fossenginedein'); ?></h2>
             </div>
             <div class="modal-body">
-                <p><?php esc_html_e('How would you like to publish this content?', 'foss-engine'); ?></p>
+                <p><?php esc_html_e('How would you like to publish this content?', 'fossenginedein'); ?></p>
                 <div class="publish-options">
                     <label>
                         <input type="radio" name="publish-type" value="post" checked>
-                        <?php esc_html_e('As a Post', 'foss-engine'); ?>
+                        <?php esc_html_e('As a Post', 'fossenginedein'); ?>
                     </label>
                     <br>
                     <label>
                         <input type="radio" name="publish-type" value="page">
-                        <?php esc_html_e('As a Page', 'foss-engine'); ?>
+                        <?php esc_html_e('As a Page', 'fossenginedein'); ?>
                     </label>
                 </div>
-                <p class="description"><?php esc_html_e('The content will be created as a draft, which you can review before publishing.', 'foss-engine'); ?></p>
+                <p class="description"><?php esc_html_e('The content will be created as a draft, which you can review before publishing.', 'fossenginedein'); ?></p>
             </div>
             <div class="modal-footer">
-                <button id="confirm-publish-button" class="button button-primary"><?php esc_html_e('Publish', 'foss-engine'); ?></button>
-                <button id="cancel-publish-button" class="button"><?php esc_html_e('Cancel', 'foss-engine'); ?></button>
+                <button id="confirm-publish-button" class="button button-primary"><?php esc_html_e('Publish', 'fossenginedein'); ?></button>
+                <button id="cancel-publish-button" class="button"><?php esc_html_e('Cancel', 'fossenginedein'); ?></button>
             </div>
         </div>
     </div>

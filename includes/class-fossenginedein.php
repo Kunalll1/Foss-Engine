@@ -27,7 +27,7 @@
  * @subpackage foss_engine/includes
  * @author     Designomate help@fossengine.com
  */
-class fossdein
+class fossenginedein
 {
 
     /**
@@ -69,16 +69,16 @@ class fossdein
      */
     public function __construct()
     {
-        if (defined('FOSS_ENGINE_VERSION')) {
-            $this->version = FOSS_ENGINE_VERSION;
+        if (defined('FOSSENGINEDEIN_VERSION')) {
+            $this->version = FOSSENGINEDEIN_VERSION;
         } else {
             $this->version = '1.0.2';
         }
-        $this->plugin_name = 'foss-engine';
+        $this->plugin_name = 'fossenginedein';
 
-        $this->fossdein_load_dependencies();
-        $this->fossdein_set_locale();
-        $this->fossdein_define_admin_hooks();
+        $this->fossenginedein_load_dependencies();
+        $this->fossenginedein_set_locale();
+        $this->fossenginedein_define_admin_hooks();
     }
 
     /**
@@ -96,37 +96,37 @@ class fossdein
      * @since    1.0.2
      * @access   private
      */
-    private function fossdein_load_dependencies()
+    private function fossenginedein_load_dependencies()
     {
 
         /**
          * The class responsible for orchestrating the actions and filters of the
          * core plugin.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine-loader.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-fossenginedein-loader.php';
 
         /**
          * The class responsible for defining internationalization functionality
          * of the plugin.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine-i18n.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-fossenginedein-i18n.php';
 
         /**
          * The class responsible for OpenAI API interactions.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine-openai.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-fossenginedein-openai.php';
 
         /**
          * The class responsible for CSV file handling.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-foss-engine-csv.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-fossenginedein-csv.php';
 
         /**
          * The class responsible for defining all actions that occur in the admin area.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-foss-engine-admin.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-fossenginedein-admin.php';
 
-        $this->loader = new fossdein_loader();
+        $this->loader = new fossenginedein_loader();
     }
 
     /**
@@ -138,10 +138,10 @@ class fossdein
      * @since    1.0.2
      * @access   private
      */
-    private function fossdein_set_locale()
+    private function fossenginedein_set_locale()
     {
-        $plugin_i18n = new fossdein_i18n();
-        $this->loader->fossdein_register_action('plugins_loaded', $plugin_i18n, 'fossdein_load_plugin_textdomain');
+        $plugin_i18n = new fossenginedein_i18n();
+        $this->loader->fossenginedein_register_action('plugins_loaded', $plugin_i18n, 'fossenginedein_load_plugin_textdomain');
     }
 
     /**
@@ -151,32 +151,32 @@ class fossdein
      * @since    1.0.2
      * @access   private
      */
-    private function fossdein_define_admin_hooks()
+    private function fossenginedein_define_admin_hooks()
     {
-        $plugin_admin = new fossdein_admin($this->get_plugin_name(), $this->get_version());
+        $plugin_admin = new fossenginedein_admin($this->get_plugin_name(), $this->get_version());
 
-        $this->loader->fossdein_register_action('admin_enqueue_scripts', $plugin_admin, 'fossdein_enqueue_styles');
-        $this->loader->fossdein_register_action('admin_enqueue_scripts', $plugin_admin, 'fossdein_enqueue_scripts');
+        $this->loader->fossenginedein_register_action('admin_enqueue_scripts', $plugin_admin, 'fossenginedein_enqueue_styles');
+        $this->loader->fossenginedein_register_action('admin_enqueue_scripts', $plugin_admin, 'fossenginedein_enqueue_scripts');
 
         // Add menu item
-        $this->loader->fossdein_register_action('admin_menu', $plugin_admin, 'fossdein_admin_menu');
+        $this->loader->fossenginedein_register_action('admin_menu', $plugin_admin, 'fossenginedein_admin_menu');
 
         // Add Settings link to the plugin
         $plugin_basename = plugin_basename(plugin_dir_path(__DIR__) . $this->plugin_name . '.php');
-        $this->loader->fossdein_register_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'fossdein_action_links');
+        $this->loader->fossenginedein_register_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'fossenginedein_action_links');
 
         // Save/Update our plugin options
-        $this->loader->fossdein_register_action('admin_init', $plugin_admin, 'fossdein_options_update');
+        $this->loader->fossenginedein_register_action('admin_init', $plugin_admin, 'fossenginedein_options_update');
 
         // AJAX handlers
-        $this->loader->fossdein_register_action('wp_ajax_upload_csv', $plugin_admin, 'fossdein_csv_upload');
-        $this->loader->fossdein_register_action('wp_ajax_generate_content', $plugin_admin, 'fossdein_generate_topic_content');
-        $this->loader->fossdein_register_action('wp_ajax_save_content', $plugin_admin, 'fossdein_save_edited_content');
-        $this->loader->fossdein_register_action('wp_ajax_publish_content', $plugin_admin, 'fossdein_choose_content_type');
-        $this->loader->fossdein_register_action('wp_ajax_regenerate_content', $plugin_admin, 'fossdein_regenerate_content');
-        $this->loader->fossdein_register_action('wp_ajax_get_pending_topics', $plugin_admin, 'fossdein_pending_topics');
-        $this->loader->fossdein_register_action('wp_ajax_test_openai_connection', $plugin_admin, 'fossdein_test_openai_connection');
-        $this->loader->fossdein_register_action('wp_ajax_get_topic_content', $plugin_admin, 'fossdein_content_editing');
+        $this->loader->fossenginedein_register_action('wp_ajax_upload_csv', $plugin_admin, 'fossenginedein_csv_upload');
+        $this->loader->fossenginedein_register_action('wp_ajax_generate_content', $plugin_admin, 'fossenginedein_generate_topic_content');
+        $this->loader->fossenginedein_register_action('wp_ajax_save_content', $plugin_admin, 'fossenginedein_save_edited_content');
+        $this->loader->fossenginedein_register_action('wp_ajax_publish_content', $plugin_admin, 'fossenginedein_choose_content_type');
+        $this->loader->fossenginedein_register_action('wp_ajax_regenerate_content', $plugin_admin, 'fossenginedein_regenerate_content');
+        $this->loader->fossenginedein_register_action('wp_ajax_get_pending_topics', $plugin_admin, 'fossenginedein_pending_topics');
+        $this->loader->fossenginedein_register_action('wp_ajax_test_openai_connection', $plugin_admin, 'fossenginedein_test_openai_connection');
+        $this->loader->fossenginedein_register_action('wp_ajax_get_topic_content', $plugin_admin, 'fossenginedein_content_editing');
     }
 
     /**
@@ -184,9 +184,9 @@ class fossdein
      *
      * @since    1.0.2
      */
-    public function fossdein_loader_run()
+    public function fossenginedein_loader_run()
     {
-        $this->loader->fossdein_fa_run();
+        $this->loader->fossenginedein_fa_run();
     }
 
     /**
@@ -230,7 +230,7 @@ class fossdein
  * @param string $table_name The table name without prefix
  * @return boolean True if table exists, false otherwise
  */
-function foss_engine_table_exists($table_name)
+function fossenginedein_table_exists($table_name)
 {
     global $wpdb;
     $full_table_name = $wpdb->prefix . $table_name;

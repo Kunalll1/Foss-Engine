@@ -24,7 +24,7 @@
  * @subpackage foss_engine/includes
  * @author     Designomate help@fossengine.com
  */
-class fossdein_i18n
+class fossenginedein_i18n
 {
 
     /**
@@ -32,10 +32,10 @@ class fossdein_i18n
      *
      * @since    1.0.2
      */
-    public function fossdein_load_plugin_textdomain()
+    public function fossenginedein_load_plugin_textdomain()
     {
         // load_plugin_textdomain(
-        //     'foss-engine',
+        //     'fossenginedein',
         //     false,
         //     plugin_dir_path(dirname(__FILE__)) . 'languages/'
         // );

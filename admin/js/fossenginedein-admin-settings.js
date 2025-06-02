@@ -20,7 +20,7 @@ if (typeof fossEngineAdmin === "undefined") {
 jQuery(document).ready(function ($) {
   // Toggle API key visibility
   $("#toggle-api-key").on("click", function () {
-    var $apiKey = $("#foss_engine_openai_key");
+    var $apiKey = $("#fossenginedein_openai_key");
     var $button = $(this);
 
     if ($apiKey.attr("type") === "password") {
@@ -34,7 +34,7 @@ jQuery(document).ready(function ($) {
 
   // Toggle Deepseek API key visibility
   $("#toggle-deepseek-key").on("click", function () {
-    var $apiKey = $("#foss_engine_deepseek_key");
+    var $apiKey = $("#fossenginedein_deepseek_key");
     var $button = $(this);
 
     if ($apiKey.attr("type") === "password") {
@@ -47,7 +47,7 @@ jQuery(document).ready(function ($) {
   });
 
   // Toggle between OpenAI and Deepseek settings
-  $('input[name="foss_engine_provider"]').on("change", function () {
+  $('input[name="fossenginedein_provider"]').on("change", function () {
     if ($(this).val() === "openai") {
       $("#openai-settings").show();
       $("#deepseek-settings").hide();

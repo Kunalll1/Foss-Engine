@@ -3,11 +3,11 @@
  * included in this file.
  */
 
-.foss-engine-admin .foss-engine-container {
+.fossenginedein-admin .fossenginedein-container {
   margin-top: 20px;
 }
 
-.foss-engine-admin .foss-engine-section {
+.fossenginedein-admin .fossenginedein-section {
   background: #fff;
   padding: 20px;
   margin-bottom: 20px;
@@ -15,55 +15,55 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 }
 
-.foss-engine-admin .foss-engine-quick-access {
+.fossenginedein-admin .fossenginedein-quick-access {
   margin-top: 15px;
 }
 
-.foss-engine-admin .foss-engine-quick-access .button {
+.fossenginedein-admin .fossenginedein-quick-access .button {
   margin-right: 10px;
 }
 
 /* Settings page styles */
-.foss-engine-admin .connection-success {
+.fossenginedein-admin .connection-success {
   color: #46b450;
   font-weight: bold;
 }
 
-.foss-engine-admin .connection-error {
+.fossenginedein-admin .connection-error {
   color: #dc3232;
   font-weight: bold;
 }
 
-.foss-engine-admin .api-connection-status {
+.fossenginedein-admin .api-connection-status {
   margin-top: 8px;
 }
 
 /* Topics Management page styles */
-.foss-engine-admin .upload-results {
+.fossenginedein-admin .upload-results {
   margin-top: 15px;
 }
 
-.foss-engine-admin .topics-table {
+.fossenginedein-admin .topics-table {
   margin-top: 15px;
 }
 
-.foss-engine-admin .column-topic {
+.fossenginedein-admin .column-topic {
   width: 35%;
 }
 
-.foss-engine-admin .column-status {
+.fossenginedein-admin .column-status {
   width: 15%;
 }
 
-.foss-engine-admin .column-date {
+.fossenginedein-admin .column-date {
   width: 20%;
 }
 
-.foss-engine-admin .column-actions {
+.fossenginedein-admin .column-actions {
   width: 30%;
 }
 
-.foss-engine-admin .status-badge {
+.fossenginedein-admin .status-badge {
   display: inline-block;
   padding: 3px 8px;
   border-radius: 3px;
@@ -71,32 +71,32 @@
   font-weight: bold;
 }
 
-.foss-engine-admin .status-pending {
+.fossenginedein-admin .status-pending {
   background-color: #f8dda7;
   color: #94660c;
 }
 
-.foss-engine-admin .status-generated {
+.fossenginedein-admin .status-generated {
   background-color: #c6e1c6;
   color: #5b9a68;
 }
 
-.foss-engine-admin .status-published {
+.fossenginedein-admin .status-published {
   background-color: #c8d7e1;
   color: #2e4453;
 }
 
-.foss-engine-admin .published-status {
+.fossenginedein-admin .published-status {
   color: #2e4453;
   font-style: italic;
 }
 
-.foss-engine-admin .regenerate-content-button {
+.fossenginedein-admin .regenerate-content-button {
   margin-left: 5px;
 }
 
 /* Modal styles */
-.foss-engine-admin .modal {
+.fossenginedein-admin .modal {
   display: none;
   position: fixed;
   z-index: 999999;
@@ -108,7 +108,7 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.foss-engine-admin .modal-content {
+.fossenginedein-admin .modal-content {
   position: relative;
   background-color: #fefefe;
   margin: 5% auto;
@@ -119,27 +119,27 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-.foss-engine-admin .modal-header {
+.fossenginedein-admin .modal-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #e5e5e5;
   margin-bottom: 15px;
 }
 
-.foss-engine-admin .modal-header h2 {
+.fossenginedein-admin .modal-header h2 {
   margin: 0;
 }
 
-.foss-engine-admin .modal-body {
+.fossenginedein-admin .modal-body {
   margin-bottom: 20px;
 }
 
-.foss-engine-admin .modal-footer {
+.fossenginedein-admin .modal-footer {
   padding-top: 10px;
   border-top: 1px solid #e5e5e5;
   text-align: right;
 }
 
-.foss-engine-admin .close {
+.fossenginedein-admin .close {
   color: #aaa;
   float: right;
   font-size: 28px;
@@ -148,37 +148,37 @@
   cursor: pointer;
 }
 
-.foss-engine-admin .close:hover,
-.foss-engine-admin .close:focus {
+.fossenginedein-admin .close:hover,
+.fossenginedein-admin .close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
 
-.foss-engine-admin .topic-title-container {
+.fossenginedein-admin .topic-title-container {
   margin-bottom: 15px;
 }
 
-.foss-engine-admin .content-editor-container {
+.fossenginedein-admin .content-editor-container {
   min-height: 400px;
 }
 
-.foss-engine-admin #cancel-edit-button,
-.foss-engine-admin #cancel-publish-button {
+.fossenginedein-admin #cancel-edit-button,
+.fossenginedein-admin #cancel-publish-button {
   margin-left: 10px;
 }
 
-.foss-engine-admin .publish-options {
+.fossenginedein-admin .publish-options {
   margin: 15px 0;
 }
 
-.foss-engine-admin .publish-options label {
+.fossenginedein-admin .publish-options label {
   display: block;
   margin-bottom: 10px;
 }
 
 /* Notifications */
-#foss-engine-notifications {
+#fossenginedein-notifications {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -186,7 +186,7 @@
   width: 300px;
 }
 
-#foss-engine-notifications .notification {
+#fossenginedein-notifications .notification {
   background-color: #fff;
   padding: 15px;
   margin-bottom: 10px;
@@ -196,25 +196,25 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-#foss-engine-notifications .notification-success {
+#fossenginedein-notifications .notification-success {
   border-left: 4px solid #46b450;
 }
 
-#foss-engine-notifications .notification-error {
+#fossenginedein-notifications .notification-error {
   border-left: 4px solid #dc3232;
 }
 
-#foss-engine-notifications .notification h4 {
+#fossenginedein-notifications .notification h4 {
   margin: 0 0 5px 0;
   font-size: 14px;
 }
 
-#foss-engine-notifications .notification p {
+#fossenginedein-notifications .notification p {
   margin: 0;
   font-size: 13px;
 }
 
-#foss-engine-notifications .notification button.close-notification {
+#fossenginedein-notifications .notification button.close-notification {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -227,7 +227,7 @@
   line-height: 1;
 }
 
-#foss-engine-notifications .notification button.close-notification:hover {
+#fossenginedein-notifications .notification button.close-notification:hover {
   color: #666;
 }
 

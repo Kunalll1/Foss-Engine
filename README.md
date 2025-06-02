@@ -3,10 +3,10 @@
 **Contributore URL:** https://www.designomate.com
 **Website:** https://fossengine.com/  
 **Tags:** Content generation, AI, SEO, ALT text, Meta title, Meta description
-**Requires at least:** 5.0  
+**Requires at least:** 6.6  
 **Tested up to:** 6.8  
 **Stable tag:** 1.0.2  
-**Requires at least:** 5.2 <br>
+**Requires at least:** 6.6 <br>
 **Requires PHP:** 7.4  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
