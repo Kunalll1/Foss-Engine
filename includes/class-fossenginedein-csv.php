@@ -34,13 +34,13 @@ class fossenginedein_csv
     {
         // File validation - existence and permissions
         if (!file_exists($file_path) || !is_readable($file_path)) {
-            return new WP_Error('file_not_found', __('The uploaded CSV file could not be found or is not readable.', 'fossenginedein'));
+            return new WP_Error('file_not_found', __('The uploaded CSV file could not be found or is not readable.', 'foss-engine'));
         }
 
         // Additional file validation - check file type and extension
         $file_info = wp_check_filetype(basename($file_path));
         if ($file_info['ext'] !== 'csv') {
-            return new WP_Error('invalid_file_type', __('The uploaded file is not a valid CSV file.', 'fossenginedein'));
+            return new WP_Error('invalid_file_type', __('The uploaded file is not a valid CSV file.', 'foss-engine'));
         }
 
         // Size validation
@@ -48,13 +48,13 @@ class fossenginedein_csv
         $max_size = apply_filters('fossenginedein_max_csv_size', 1048576); // 1MB default
 
         if ($filesize <= 0) {
-            return new WP_Error('empty_file', __('The uploaded CSV file is empty.', 'fossenginedein'));
+            return new WP_Error('empty_file', __('The uploaded CSV file is empty.', 'foss-engine'));
         }
 
         if ($filesize > $max_size) {
             return new WP_Error('file_too_large', sprintf(
                 /* translators: %s: maximum allowed file size (e.g. "2 MB") */
-                __('The uploaded CSV file exceeds the maximum allowed size of %s.', 'fossenginedein'),
+                __('The uploaded CSV file exceeds the maximum allowed size of %s.', 'foss-engine'),
                 size_format($max_size)
             ));
         }
@@ -73,14 +73,14 @@ class fossenginedein_csv
         try {
             $file_contents = $wp_filesystem->get_contents($file_path);
             if ($file_contents === false) {
-                return new WP_Error('file_open_error', __('Could not open the CSV file.', 'fossenginedein'));
+                return new WP_Error('file_open_error', __('Could not open the CSV file.', 'foss-engine'));
             }
 
             // Convert file contents into lines
             $lines = preg_split('/\r\n|\r|\n/', $file_contents);
 
             if (empty($lines) || !is_array($lines)) {
-                return new WP_Error('csv_read_error', __('Could not read the CSV file.', 'fossenginedein'));
+                return new WP_Error('csv_read_error', __('Could not read the CSV file.', 'foss-engine'));
             }
 
             // Parse CSV lines
@@ -122,7 +122,7 @@ class fossenginedein_csv
 
         // Final validation
         if (empty($topics)) {
-            return new WP_Error('no_topics', __('No valid topics were found in the CSV file.', 'fossenginedein'));
+            return new WP_Error('no_topics', __('No valid topics were found in the CSV file.', 'foss-engine'));
         }
 
         // Security measure: limit number of topics
@@ -169,7 +169,7 @@ class fossenginedein_csv
 
         // Security: validate input
         if (!is_array($topics)) {
-            return new WP_Error('invalid_input', __('Invalid topics data provided.', 'fossenginedein'));
+            return new WP_Error('invalid_input', __('Invalid topics data provided.', 'foss-engine'));
         }
 
         $table_name = $wpdb->prefix . 'fossenginedein_topics';
@@ -180,7 +180,7 @@ class fossenginedein_csv
         }
 
         if (!fossenginedein_table_exists('fossenginedein_topics')) {
-            return new WP_Error('table_not_found', __('Database table not found. Please deactivate and reactivate the plugin.', 'fossenginedein'));
+            return new WP_Error('table_not_found', __('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
         }
 
         $count = 0;
@@ -232,7 +232,7 @@ class fossenginedein_csv
         }
 
         // Clear any cached topics
-        wp_cache_delete('pending_topics', 'fossenginedein');
+        wp_cache_delete('pending_topics', 'foss-engine');
 
         return $count;
     }

@@ -35,7 +35,7 @@ class fossenginedein_i18n
     public function fossenginedein_load_plugin_textdomain()
     {
         // load_plugin_textdomain(
-        //     'fossenginedein',
+        //     'foss-engine',
         //     false,
         //     plugin_dir_path(dirname(__FILE__)) . 'languages/'
         // );

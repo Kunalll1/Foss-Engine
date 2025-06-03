@@ -74,7 +74,7 @@ class fossenginedein
         } else {
             $this->version = '1.0.2';
         }
-        $this->plugin_name = 'fossenginedein';
+        $this->plugin_name = 'foss-engine';
 
         $this->fossenginedein_load_dependencies();
         $this->fossenginedein_set_locale();
