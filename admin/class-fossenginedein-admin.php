@@ -66,15 +66,15 @@ class fossenginedein_admin
             'plugin_version' => $this->version,
             'debug_mode' => defined('WP_DEBUG') && WP_DEBUG,
             'i18n' => array(
-                'error' => esc_html__('Error', 'fossenginedein'),
-                'success' => esc_html__('Success', 'fossenginedein'),
-                'confirm_regenerate' => esc_html__('Are you sure you want to regenerate this content? The current content will be lost.', 'fossenginedein'),
-                'generating' => esc_html__('Generating content...', 'fossenginedein'),
-                'saving' => esc_html__('Saving...', 'fossenginedein'),
-                'publishing' => esc_html__('Publishing...', 'fossenginedein'),
-                'loading' => esc_html__('Loading...', 'fossenginedein'),
-                'confirm_publish' => esc_html__('Are you sure you want to publish this content?', 'fossenginedein'),
-                'troubleshooting' => esc_html__('If you continue to experience issues, try selecting the GPT-3.5 Turbo model in settings and ensure your API key has the correct permissions.', 'fossenginedein'),
+                'error' => esc_html__('Error', 'foss-engine'),
+                'success' => esc_html__('Success', 'foss-engine'),
+                'confirm_regenerate' => esc_html__('Are you sure you want to regenerate this content? The current content will be lost.', 'foss-engine'),
+                'generating' => esc_html__('Generating content...', 'foss-engine'),
+                'saving' => esc_html__('Saving...', 'foss-engine'),
+                'publishing' => esc_html__('Publishing...', 'foss-engine'),
+                'loading' => esc_html__('Loading...', 'foss-engine'),
+                'confirm_publish' => esc_html__('Are you sure you want to publish this content?', 'foss-engine'),
+                'troubleshooting' => esc_html__('If you continue to experience issues, try selecting the GPT-3.5 Turbo model in settings and ensure your API key has the correct permissions.', 'foss-engine'),
             )
         ));
 
@@ -95,8 +95,8 @@ class fossenginedein_admin
             $this->plugin_name . '-settings',
             'fossEngineAdmin',
             array(
-                'showText' => esc_html__('Show', 'fossenginedein'),
-                'hideText' => esc_html__('Hide', 'fossenginedein')
+                'showText' => esc_html__('Show', 'foss-engine'),
+                'hideText' => esc_html__('Hide', 'foss-engine')
             )
         );
 
@@ -122,12 +122,12 @@ class fossenginedein_admin
     {
         // Check nonce
         if (!check_ajax_referer($nonce_action, 'nonce', false)) {
-            return new WP_Error('invalid_nonce', esc_html__('Security check failed.', 'fossenginedein'));
+            return new WP_Error('invalid_nonce', esc_html__('Security check failed.', 'foss-engine'));
         }
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            return new WP_Error('insufficient_permissions', esc_html__('You do not have permission to perform this action.', 'fossenginedein'));
+            return new WP_Error('insufficient_permissions', esc_html__('You do not have permission to perform this action.', 'foss-engine'));
         }
 
         return true;
@@ -154,7 +154,7 @@ class fossenginedein_admin
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('fossenginedein_test_connection', 'nonce', false)) {
-            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'fossenginedein')));
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
             return;
         }
 
@@ -169,7 +169,7 @@ class fossenginedein_admin
         $model = isset($_POST['model']) ? sanitize_text_field(wp_unslash($_POST['model'])) : 'gpt-3.5-turbo';
 
         if (empty($api_key)) {
-            $this->fossenginedein_send_error_response(esc_html__('API key is required.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('API key is required.', 'foss-engine'));
         }
 
         // Set the model for testing
@@ -183,7 +183,7 @@ class fossenginedein_admin
             $this->fossenginedein_send_error_response($result);
         } else {
             wp_send_json_success(array(
-                'message' => esc_html__('Connection successful!', 'fossenginedein')
+                'message' => esc_html__('Connection successful!', 'foss-engine')
             ));
         }
     }
@@ -195,8 +195,8 @@ class fossenginedein_admin
     {
         // Main menu
         add_menu_page(
-            esc_html__('Foss Engine', 'fossenginedein'),
-            esc_html__('Foss Engine', 'fossenginedein'),
+            esc_html__('Foss Engine', 'foss-engine'),
+            esc_html__('Foss Engine', 'foss-engine'),
             'manage_options',
             $this->plugin_name,
             array($this, 'fossenginedein_setup_page'),
@@ -207,8 +207,8 @@ class fossenginedein_admin
         // Settings submenu
         add_submenu_page(
             $this->plugin_name,
-            esc_html__('Foss Engine Settings', 'fossenginedein'),
-            esc_html__('Settings', 'fossenginedein'),
+            esc_html__('Foss Engine Settings', 'foss-engine'),
+            esc_html__('Settings', 'foss-engine'),
             'manage_options',
             $this->plugin_name . '-settings',
             array($this, 'fossenginedein_settings_page')
@@ -217,8 +217,8 @@ class fossenginedein_admin
         // Topic management submenu
         add_submenu_page(
             $this->plugin_name,
-            esc_html__('Topics Management', 'fossenginedein'),
-            esc_html__('Topics', 'fossenginedein'),
+            esc_html__('Topics Management', 'foss-engine'),
+            esc_html__('Topics', 'foss-engine'),
             'manage_options',
             $this->plugin_name . '-topics',
             array($this, 'fossenginedein_topics_page')
@@ -232,12 +232,12 @@ class fossenginedein_admin
     {
         // Verify nonce when processing admin actions
         if (isset($_GET['_wpnonce']) && !wp_verify_nonce(sanitize_key($_GET['_wpnonce']), 'plugin_action')) {
-            wp_die(esc_html__('Security check failed.', 'fossenginedein'));
+            wp_die(esc_html__('Security check failed.', 'foss-engine'));
         }
 
         $settings_link = array(
             '<a href="' . admin_url('admin.php?page=' . $this->plugin_name . '-settings') . '">' .
-                esc_html__('Settings', 'fossenginedein') . '</a>',
+                esc_html__('Settings', 'foss-engine') . '</a>',
         );
         return array_merge($settings_link, $links);
     }
@@ -249,7 +249,7 @@ class fossenginedein_admin
     {
         // Verify user has permission to access this page
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'fossenginedein'));
+            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'foss-engine'));
         }
 
         include_once('partials/fossenginedein-admin-display.php');
@@ -259,7 +259,7 @@ class fossenginedein_admin
     {
         // Verify user has permission to access this page
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'fossenginedein'));
+            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'foss-engine'));
         }
 
         // Add temporary debugging for screen ID
@@ -278,7 +278,7 @@ class fossenginedein_admin
     {
         // Verify user has permission to access this page
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'fossenginedein'));
+            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'foss-engine'));
         }
 
         include_once('partials/fossenginedein-admin-topics.php');
@@ -379,18 +379,18 @@ class fossenginedein_admin
     private function fossenginedein_get_upload_error_message($error_code)
     {
         $error_messages = array(
-            UPLOAD_ERR_INI_SIZE => esc_html__('The uploaded file exceeds the upload_max_filesize directive in php.ini.', 'fossenginedein'),
-            UPLOAD_ERR_FORM_SIZE => esc_html__('The uploaded file exceeds the MAX_FILE_SIZE directive specified in the HTML form.', 'fossenginedein'),
-            UPLOAD_ERR_PARTIAL => esc_html__('The uploaded file was only partially uploaded.', 'fossenginedein'),
-            UPLOAD_ERR_NO_FILE => esc_html__('No file was uploaded.', 'fossenginedein'),
-            UPLOAD_ERR_NO_TMP_DIR => esc_html__('Missing a temporary folder.', 'fossenginedein'),
-            UPLOAD_ERR_CANT_WRITE => esc_html__('Failed to write file to disk.', 'fossenginedein'),
-            UPLOAD_ERR_EXTENSION => esc_html__('A PHP extension stopped the file upload.', 'fossenginedein')
+            UPLOAD_ERR_INI_SIZE => esc_html__('The uploaded file exceeds the upload_max_filesize directive in php.ini.', 'foss-engine'),
+            UPLOAD_ERR_FORM_SIZE => esc_html__('The uploaded file exceeds the MAX_FILE_SIZE directive specified in the HTML form.', 'foss-engine'),
+            UPLOAD_ERR_PARTIAL => esc_html__('The uploaded file was only partially uploaded.', 'foss-engine'),
+            UPLOAD_ERR_NO_FILE => esc_html__('No file was uploaded.', 'foss-engine'),
+            UPLOAD_ERR_NO_TMP_DIR => esc_html__('Missing a temporary folder.', 'foss-engine'),
+            UPLOAD_ERR_CANT_WRITE => esc_html__('Failed to write file to disk.', 'foss-engine'),
+            UPLOAD_ERR_EXTENSION => esc_html__('A PHP extension stopped the file upload.', 'foss-engine')
         );
 
         return isset($error_messages[$error_code])
             ? $error_messages[$error_code]
-            : esc_html__('Unknown upload error.', 'fossenginedein');
+            : esc_html__('Unknown upload error.', 'foss-engine');
     }
 
 
@@ -401,7 +401,7 @@ class fossenginedein_admin
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('fossenginedein_nonce', 'nonce', false)) {
-            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'fossenginedein')));
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
             return;
         }
 
@@ -435,7 +435,7 @@ class fossenginedein_admin
         }
 
         if (!isset($uploaded_file['file']) || !file_exists($uploaded_file['file'])) {
-            $this->fossenginedein_send_error_response(esc_html__('Upload failed. Could not process the file.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Upload failed. Could not process the file.', 'foss-engine'));
             return;
         }
 
@@ -459,7 +459,7 @@ class fossenginedein_admin
         wp_send_json_success(array(
             'message' => sprintf(
                 /* translators: %d: Number of topics imported */
-                esc_html__('%d topics imported successfully.', 'fossenginedein'),
+                esc_html__('%d topics imported successfully.', 'foss-engine'),
                 $result
             ),
             'topics_count' => $result
@@ -475,7 +475,7 @@ class fossenginedein_admin
     {
         global $wpdb;
         $cache_key = 'topic_' . $topic_id;
-        $topic = wp_cache_get($cache_key, 'fossenginedein');
+        $topic = wp_cache_get($cache_key, 'foss-engine');
 
         if (!$topic) {
             $table_name = $wpdb->prefix . 'fossenginedein_topics';
@@ -486,7 +486,7 @@ class fossenginedein_admin
             }
 
             if (!fossenginedein_table_exists('fossenginedein_topics')) {
-                $this->fossenginedein_send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'fossenginedein'));
+                $this->fossenginedein_send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
                 return null;
             }
 
@@ -500,7 +500,7 @@ class fossenginedein_admin
             );
 
             if ($topic) {
-                wp_cache_set($cache_key, $topic, 'fossenginedein', 3600); // Cache for 1 hour
+                wp_cache_set($cache_key, $topic, 'foss-engine', 3600); // Cache for 1 hour
             }
         }
 
@@ -514,7 +514,7 @@ class fossenginedein_admin
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('fossenginedein_nonce', 'nonce', false)) {
-            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'fossenginedein')));
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
             return;
         }
 
@@ -527,13 +527,13 @@ class fossenginedein_admin
         // Get topic ID
         $topic_id = isset($_POST['topic_id']) ? intval($_POST['topic_id']) : 0;
         if ($topic_id <= 0) {
-            $this->fossenginedein_send_error_response(esc_html__('Invalid topic ID.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Invalid topic ID.', 'foss-engine'));
         }
 
         // Get the topic
         $topic = $this->fossenginedein_get_topic_by_id($topic_id);
         if (!$topic) {
-            $this->fossenginedein_send_error_response(esc_html__('Topic not found.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Topic not found.', 'foss-engine'));
         }
 
         // Check if the OpenAI API key is set
@@ -542,9 +542,9 @@ class fossenginedein_admin
         $deepseek_key = get_option('fossenginedein_deepseek_key');
 
         if ($ai_provider === 'openai' && empty($openai_key)) {
-            $this->fossenginedein_send_error_response(esc_html__('OpenAI API key is not set. Please configure it in the settings.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('OpenAI API key is not set. Please configure it in the settings.', 'foss-engine'));
         } elseif ($ai_provider === 'deepseek' && empty($deepseek_key)) {
-            $this->fossenginedein_send_error_response(esc_html__('Deepseek API key is not set. Please configure it in the settings.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Deepseek API key is not set. Please configure it in the settings.', 'foss-engine'));
         }
 
         // Generate content using the selected AI provider
@@ -556,7 +556,7 @@ class fossenginedein_admin
                 $this->fossenginedein_send_error_response($result);
             }
         } catch (Exception $e) {
-            $this->fossenginedein_send_error_response(esc_html__('An unexpected error occurred during content generation: ', 'fossenginedein') . $e->getMessage());
+            $this->fossenginedein_send_error_response(esc_html__('An unexpected error occurred during content generation: ', 'foss-engine') . $e->getMessage());
         }
 
         // Update the topic in the database
@@ -564,8 +564,8 @@ class fossenginedein_admin
         $table_name = $wpdb->prefix . 'fossenginedein_topics';
 
         // Clear cache first
-        wp_cache_delete('topic_' . $topic_id, 'fossenginedein');
-        wp_cache_delete('pending_topics', 'fossenginedein');
+        wp_cache_delete('topic_' . $topic_id, 'foss-engine');
+        wp_cache_delete('pending_topics', 'foss-engine');
 
         $update_result = $wpdb->update(
             $table_name,
@@ -580,11 +580,11 @@ class fossenginedein_admin
         );
 
         if ($update_result === false) {
-            $this->fossenginedein_send_error_response(esc_html__('Failed to update content in the database.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Failed to update content in the database.', 'foss-engine'));
         }
 
         wp_send_json_success(array(
-            'message' => esc_html__('Content generated successfully.', 'fossenginedein'),
+            'message' => esc_html__('Content generated successfully.', 'foss-engine'),
             'content' => $result['content'],
             'tokens' => $result['total_tokens']
         ));
@@ -597,7 +597,7 @@ class fossenginedein_admin
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('fossenginedein_nonce', 'nonce', false)) {
-            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'fossenginedein')));
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
             return;
         }
 
@@ -612,11 +612,11 @@ class fossenginedein_admin
         $content = isset($_POST['content']) ? wp_kses_post(wp_unslash($_POST['content'])) : '';
 
         if ($topic_id <= 0) {
-            $this->fossenginedein_send_error_response(esc_html__('Invalid topic ID.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Invalid topic ID.', 'foss-engine'));
         }
 
         if (empty($content)) {
-            $this->fossenginedein_send_error_response(esc_html__('Content cannot be empty.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Content cannot be empty.', 'foss-engine'));
         }
 
         global $wpdb;
@@ -628,12 +628,12 @@ class fossenginedein_admin
         }
 
         if (!fossenginedein_table_exists('fossenginedein_topics')) {
-            $this->fossenginedein_send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
         }
 
         // Clear all related caches
-        wp_cache_delete('topic_' . $topic_id, 'fossenginedein');
-        wp_cache_delete('pending_topics', 'fossenginedein');
+        wp_cache_delete('topic_' . $topic_id, 'foss-engine');
+        wp_cache_delete('pending_topics', 'foss-engine');
 
         $update_result = $wpdb->update(
             $table_name,
@@ -647,11 +647,11 @@ class fossenginedein_admin
         );
 
         if ($update_result === false) {
-            $this->fossenginedein_send_error_response(esc_html__('Failed to save content.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Failed to save content.', 'foss-engine'));
         }
 
         wp_send_json_success(array(
-            'message' => esc_html__('Content saved successfully.', 'fossenginedein')
+            'message' => esc_html__('Content saved successfully.', 'foss-engine')
         ));
     }
 
@@ -662,7 +662,7 @@ class fossenginedein_admin
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('fossenginedein_nonce', 'nonce', false)) {
-            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'fossenginedein')));
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
             return;
         }
 
@@ -677,21 +677,21 @@ class fossenginedein_admin
         $publish_type = isset($_POST['publish_type']) ? sanitize_text_field(wp_unslash($_POST['publish_type'])) : 'post';
 
         if ($topic_id <= 0) {
-            $this->fossenginedein_send_error_response(esc_html__('Invalid topic ID.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Invalid topic ID.', 'foss-engine'));
         }
 
         if (!in_array($publish_type, array('post', 'page'))) {
-            $this->fossenginedein_send_error_response(esc_html__('Invalid publish type.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Invalid publish type.', 'foss-engine'));
         }
 
         // Get the topic
         $topic = $this->fossenginedein_get_topic_by_id($topic_id);
         if (!$topic) {
-            $this->fossenginedein_send_error_response(esc_html__('Topic not found.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Topic not found.', 'foss-engine'));
         }
 
         if (empty($topic->content)) {
-            $this->fossenginedein_send_error_response(esc_html__('Cannot publish empty content.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Cannot publish empty content.', 'foss-engine'));
         }
 
         // Create post/page - this is a WordPress API, not a direct DB query
@@ -719,12 +719,12 @@ class fossenginedein_admin
         }
 
         if (!fossenginedein_table_exists('fossenginedein_topics')) {
-            $this->fossenginedein_send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
         }
 
         // Clear all related caches
-        wp_cache_delete('topic_' . $topic_id, 'fossenginedein');
-        wp_cache_delete('pending_topics', 'fossenginedein');
+        wp_cache_delete('topic_' . $topic_id, 'foss-engine');
+        wp_cache_delete('pending_topics', 'foss-engine');
 
         $update_result = $wpdb->update(
             $table_name,
@@ -738,13 +738,13 @@ class fossenginedein_admin
         );
 
         if ($update_result === false) {
-            $this->fossenginedein_send_error_response(esc_html__('Published content but failed to update topic status.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Published content but failed to update topic status.', 'foss-engine'));
         }
 
         wp_send_json_success(array(
             'message' => sprintf(
                 /* translators: 1: Content type (post/page), 2: Edit URL, 3: Content type again */
-                esc_html__('Content published as a %1$s (draft). <a href="%2$s" target="_blank">Edit %3$s</a>', 'fossenginedein'),
+                esc_html__('Content published as a %1$s (draft). <a href="%2$s" target="_blank">Edit %3$s</a>', 'foss-engine'),
                 $publish_type,
                 esc_url(get_edit_post_link($post_id)),
                 $publish_type
@@ -769,7 +769,7 @@ class fossenginedein_admin
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('fossenginedein_nonce', 'nonce', false)) {
-            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'fossenginedein')));
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
             return;
         }
 
@@ -782,17 +782,17 @@ class fossenginedein_admin
         // Get topic ID
         $topic_id = isset($_POST['topic_id']) ? intval($_POST['topic_id']) : 0;
         if ($topic_id <= 0) {
-            $this->fossenginedein_send_error_response(esc_html__('Invalid topic ID.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Invalid topic ID.', 'foss-engine'));
         }
 
         // Get the topic
         $topic = $this->fossenginedein_get_topic_by_id($topic_id);
         if (!$topic) {
-            $this->fossenginedein_send_error_response(esc_html__('Topic not found.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Topic not found.', 'foss-engine'));
         }
 
         if (empty($topic->content)) {
-            $this->fossenginedein_send_error_response(esc_html__('No content found for this topic. Please generate content first.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('No content found for this topic. Please generate content first.', 'foss-engine'));
         }
 
         wp_send_json_success(array(
@@ -809,7 +809,7 @@ class fossenginedein_admin
     {
         // Direct nonce verification for coding standards compliance
         if (!isset($_POST['nonce']) || !check_ajax_referer('fossenginedein_nonce', 'nonce', false)) {
-            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'fossenginedein')));
+            wp_send_json_error(array('message' => esc_html__('Security check failed.', 'foss-engine')));
             return;
         }
 
@@ -828,12 +828,12 @@ class fossenginedein_admin
         }
 
         if (!fossenginedein_table_exists('fossenginedein_topics')) {
-            $this->fossenginedein_send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'fossenginedein'));
+            $this->fossenginedein_send_error_response(esc_html__('Database table not found. Please deactivate and reactivate the plugin.', 'foss-engine'));
         }
 
         // Get pending and generated topics with caching
         $cache_key = 'pending_topics';
-        $topics = wp_cache_get($cache_key, 'fossenginedein');
+        $topics = wp_cache_get($cache_key, 'foss-engine');
 
         if (!$topics) {
             // This is a custom table so we need to use $wpdb - properly prepared
@@ -846,7 +846,7 @@ class fossenginedein_admin
             );
 
             if ($topics) {
-                wp_cache_set($cache_key, $topics, 'fossenginedein', 60); // Cache for 1 minute
+                wp_cache_set($cache_key, $topics, 'foss-engine', 60); // Cache for 1 minute
             }
         }
 

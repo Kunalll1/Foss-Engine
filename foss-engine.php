@@ -38,7 +38,7 @@ define('FOSSENGINEDEIN_VERSION', '1.0.2');
 /**
  * The code that runs during plugin activation.
  */
-function activate_fossenginedein()
+function fossenginedein_activate()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/class-fossenginedein-activator.php';
     fossenginedein_activator::fossenginedein_db_activate();
@@ -47,14 +47,14 @@ function activate_fossenginedein()
 /**
  * The code that runs during plugin deactivation.
  */
-function deactivate_fossenginedein()
+function fossenginedein_deactivate()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/class-fossenginedein-deactivator.php';
     fossenginedein_deactivator::deactivate();
 }
 
-register_activation_hook(__FILE__, 'activate_fossenginedein');
-register_deactivation_hook(__FILE__, 'deactivate_fossenginedein');
+register_activation_hook(__FILE__, 'fossenginedein_activate');
+register_deactivation_hook(__FILE__, 'fossenginedein_deactivate');
 
 /**
  * Run migrations for existing installations when plugin is updated
@@ -94,10 +94,10 @@ require plugin_dir_path(__FILE__) . 'includes/class-fossenginedein.php';
  *
  * @since    1.0.2
  */
-function run_fossenginedein()
+function fossenginedein_run()
 {
     $plugin = new fossenginedein();
     $plugin->fossenginedein_loader_run();
 }
 
-run_fossenginedein();
+fossenginedein_run();

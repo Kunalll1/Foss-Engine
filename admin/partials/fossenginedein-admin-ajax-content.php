@@ -81,10 +81,10 @@ function fossenginedein_get_topic_content()
             ));
         }
 
-        // Log success for debugging
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            // error_log('Foss Engine - Topic content retrieved successfully for ID: ' . $topic_id);
-        }
+        // // Log success for debugging
+        // if (defined('WP_DEBUG') && WP_DEBUG) {
+        //     // error_log('Foss Engine - Topic content retrieved successfully for ID: ' . $topic_id);
+        // }
 
         // Sanitize and escape the content before sending it back
         wp_send_json_success(array(
