@@ -2,7 +2,7 @@
 **Contributors:** designomate
 **Contributore URL:** https://www.designomate.com
 **Website:** https://fossengine.com/  
-**Tags:** Content generation, AI, SEO, ALT text, Meta title, Meta description
+**Tags:** Content generation, AI, OpenAI, DeepSeek
 **Requires at least:** 6.6  
 **Tested up to:** 6.8  
 **Stable tag:** 1.0.2  
@@ -13,7 +13,7 @@
 
 === Description ===
 
-A WordPress plugin that uses OpenAI and DeepSeek to generate content from CSV topics. Users add their own API keys, controlling usage and costs.
+Uses OpenAI & DeepSeek to generate content from CSV topics. Users add API keys to control usage, cost & bulk-generate content.
 
 === Foss Engine: Your AI Content Writing Companion ===
 

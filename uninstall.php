@@ -25,27 +25,13 @@ delete_option('fossenginedein_deepseek_model');
 // Delete plugin database table
 global $wpdb;
 $table_name = $wpdb->prefix . 'fossenginedein_topics';
-$wpdb->query("DROP TABLE IF EXISTS $table_name");
+$wpdb->query("DROP TABLE IF EXISTS " . esc_sql($table_name));
 
-// Also delete old table if it exists
-$old_table_name = $wpdb->prefix . 'foss_engine_topics';
-$wpdb->query("DROP TABLE IF EXISTS $old_table_name");
 
 // Clear any transients
 delete_transient('fossenginedein_pending_topics');
-delete_transient('foss_engine_pending_topics'); // Legacy cleanup
 
-// Legacy cleanup (in case any installations used the old prefixes)
+// Legacy cleanup (in case any installations used the old prefix)
 delete_option('wp_content_generator_openai_key');
 delete_option('wp_content_generator_prompt_template');
 delete_transient('wp_content_generator_pending_topics');
-
-// Clean up old foss_engine_ options
-delete_option('foss_engine_openai_key');
-delete_option('foss_engine_prompt_template');
-delete_option('foss_engine_model');
-delete_option('foss_engine_provider');
-delete_option('foss_engine_deepseek_key');
-delete_option('foss_engine_deepseek_model');
-delete_option('fossenginedein_version');
-delete_option('foss_engine_version');

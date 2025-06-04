@@ -334,7 +334,7 @@ class fossenginedein_admin
             $this->plugin_name,
             'fossenginedein_deepseek_key',
             array(
-                'sanitize_callback' => array($this, 'sanitize_api_key'),
+                'sanitize_callback' => array($this, 'fossenginedein_sanitize_api_key'),
                 'default' => '',
             )
         );
